@@ -9,4 +9,4 @@ before_install:
  - chmod +x gradlew
  
 notifications:
-  slack: sepr-group:l15KLKyBIMboFmpdIVJVB6S7
+  slack: j-b-t:SJeUtxrLr4RhYEB6rSOsK2Oj
