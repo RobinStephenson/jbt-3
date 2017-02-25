@@ -3,7 +3,8 @@
  *      Minor style changes (ie. adding brackets to one line if)
  *      Removed hasRoboticon which could be calculated when needed rather than having to be updated in many places.
  *      Split InstallRoboticon into smaller methods
- *      Delted removeOwner as it was unused and untested
+ *      Deleted removeOwner as it was unused and untested
+ *      Made x, y private as they were never accessed outside the class, and shouldnt be
  */
 
 package io.github.teamfractal.entity;
@@ -19,7 +20,7 @@ public class LandPlot {
     private static final int IndexOre = 0;
     private static final int IndexEnergy = 1;
     private static final int IndexFood = 2;
-    int x, y;
+    private int x, y;
 
     /**
      * Saved modifiers for LandPlot.
