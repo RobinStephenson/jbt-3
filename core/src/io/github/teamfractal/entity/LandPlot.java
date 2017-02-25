@@ -3,6 +3,7 @@
  *      Minor style changes (ie. adding brackets to one line if)
  *      Removed hasRoboticon which could be calculated when needed rather than having to be updated in many places.
  *      Split InstallRoboticon into smaller methods
+ *      Delted removeOwner as it was unused and untested
  */
 
 package io.github.teamfractal.entity;
@@ -105,15 +106,6 @@ public class LandPlot {
         return getOwner() != null;
     }
 
-    /**
-     * Removes the owner of the tile
-     */
-    public void removeOwner() {
-        if (!hasOwner()) {
-            return;
-        }
-        owner.removeLandPlot(this);
-    }
 
     /**
      * Retrieves the overlays for the specific tile
