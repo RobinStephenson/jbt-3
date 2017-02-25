@@ -148,14 +148,10 @@ public class Player {
         switch (type) {
             case ENERGY:
                 return getEnergy();
-
             case ORE:
                 return getOre();
-
             case FOOD:
                 return getFood();
-
-
             default:
                 throw new NotCommonResourceException(type);
         }
