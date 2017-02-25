@@ -8,7 +8,7 @@
 package io.github.teamfractal.entity;
 
 import io.github.teamfractal.entity.enums.ResourceType;
-import io.github.teamfractal.exception.AlreadyInstalledException;
+import io.github.teamfractal.exception.AlreadyInstalledElsewhereException;
 import io.github.teamfractal.exception.NotInstalledException;
 
 public class Roboticon {
@@ -61,9 +61,9 @@ public class Roboticon {
      * @param landplot which roboticon is installed to
      * @return true if roboticon is installed, false if not
      */
-    public synchronized void setInstalledLandPlot(LandPlot landplot) throws AlreadyInstalledException {
+    public synchronized void setInstalledLandPlot(LandPlot landplot) throws AlreadyInstalledElsewhereException {
         if (isInstalled()) {
-            throw new AlreadyInstalledException("This roboticon is already installed");
+            throw new AlreadyInstalledElsewhereException();
         }
         if (landplot == null) {
             throw new NullPointerException("Given landplot cannot be null");

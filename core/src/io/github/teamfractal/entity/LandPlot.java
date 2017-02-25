@@ -11,7 +11,7 @@ package io.github.teamfractal.entity;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import io.github.teamfractal.entity.enums.ResourceType;
-import io.github.teamfractal.exception.AlreadyInstalledException;
+import io.github.teamfractal.exception.AlreadyInstalledElsewhereException;
 import io.github.teamfractal.exception.InvalidResourceTypeException;
 import io.github.teamfractal.exception.NotCommonResourceException;
 import io.github.teamfractal.util.PlotManager;
@@ -143,11 +143,6 @@ public class LandPlot {
      * @param roboticon    The roboticon to be installed.
      */
     public synchronized boolean installRoboticon(Roboticon roboticon) {
-        // Check if supplied roboticon is already installed.
-        if (roboticon.isInstalled()) {
-            return false;
-        }
-
         boolean installedSuccessfully = tryInstallRoboticon(roboticon);
         if (installedSuccessfully) {
             installedRoboticon = roboticon;
@@ -178,7 +173,7 @@ public class LandPlot {
     private synchronized boolean tryInstallRoboticon(Roboticon roboticon) {
         try {
             roboticon.setInstalledLandPlot(this);
-        } catch (AlreadyInstalledException ex) {
+        } catch (AlreadyInstalledElsewhereException ex) {
             return false;
         }
         return true;

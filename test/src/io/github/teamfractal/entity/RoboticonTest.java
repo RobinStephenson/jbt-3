@@ -8,9 +8,8 @@ package io.github.teamfractal.entity;
 
 import io.github.teamfractal.TesterFile;
 import io.github.teamfractal.entity.enums.ResourceType;
-import io.github.teamfractal.exception.AlreadyInstalledException;
+import io.github.teamfractal.exception.AlreadyInstalledElsewhereException;
 import io.github.teamfractal.exception.NotInstalledException;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -47,7 +46,7 @@ public class RoboticonTest extends TesterFile {
      * landplot getters and setters happy path
      */
     @Test
-    public void setLandPlotTest() throws AlreadyInstalledException {
+    public void setLandPlotTest() throws AlreadyInstalledElsewhereException {
         LandPlot plot = new LandPlot(0, 0, 0);
         roboticon.setInstalledLandPlot(plot);
         assertEquals(roboticon.getInstalledLandPlot(), plot);
@@ -59,7 +58,7 @@ public class RoboticonTest extends TesterFile {
      * setInstalledLandPlot should throw an exception if the given landplot is null
      */
     @Test(expected = NullPointerException.class)
-    public void setNullPlotTest() throws AlreadyInstalledException {
+    public void setNullPlotTest() throws AlreadyInstalledElsewhereException {
         roboticon.setInstalledLandPlot(null);
     }
 
@@ -67,8 +66,8 @@ public class RoboticonTest extends TesterFile {
     /**
      * setInstalledLandPlot should throw an exception if roboticon is already installed somewhere
      */
-    @Test(expected = AlreadyInstalledException.class)
-    public void alreadyInstalledSetPlotTest() throws AlreadyInstalledException {
+    @Test(expected = AlreadyInstalledElsewhereException.class)
+    public void alreadyInstalledSetPlotTest() throws AlreadyInstalledElsewhereException {
         LandPlot plot = new LandPlot(0, 0, 0);
         LandPlot anotherPlot = new LandPlot(1,1,1);
         roboticon.setInstalledLandPlot(plot);
@@ -79,7 +78,7 @@ public class RoboticonTest extends TesterFile {
      * getLandPlot should return the plot the roboticon is installed on, if installed
      */
     @Test
-    public void getLandPlotTest() throws AlreadyInstalledException {
+    public void getLandPlotTest() throws AlreadyInstalledElsewhereException {
         LandPlot plot = new LandPlot(0, 0, 0);
         roboticon.setInstalledLandPlot(plot);
         assertEquals(roboticon.getInstalledLandPlot(), plot);
@@ -99,7 +98,7 @@ public class RoboticonTest extends TesterFile {
      * removeFromLandPlot should update isInstalled
      */
     @Test
-    public void removeFromPlotTest() throws AlreadyInstalledException, NotInstalledException {
+    public void removeFromPlotTest() throws AlreadyInstalledElsewhereException, NotInstalledException {
         LandPlot plot = new LandPlot(0, 0, 0);
         roboticon.setInstalledLandPlot(plot);
         roboticon.removeFromLandPlot();
