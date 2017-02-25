@@ -143,6 +143,9 @@ public class LandPlot {
      * @param roboticon    The roboticon to be installed.
      */
     public synchronized boolean installRoboticon(Roboticon roboticon) {
+        if (hasRoboticon()) {
+            return false;
+        }
         boolean installedSuccessfully = tryInstallRoboticon(roboticon);
         if (installedSuccessfully) {
             installedRoboticon = roboticon;
