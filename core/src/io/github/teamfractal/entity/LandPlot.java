@@ -155,15 +155,30 @@ public class LandPlot {
         }
 
         if (roboticon.getCustomisation() != ResourceType.Unknown){
+            // installing a roboticon with a customisation
             int index = resourceTypeToIndex(roboticon.getCustomisation());
-            if (roboticon.setInstalledLandplot(this)) {
+            boolean success = false;
+            try {
+                roboticon.setInstalledLandPlot(this);
+                success = true;
+            } catch (Exception ex) {
+                return false;
+            }
+            if (success) {
                 productionModifiers[index] += 1;
                 this.installedRoboticon = roboticon;
                 return true;
             }
-        }
-        else{
-            if (roboticon.setInstalledLandplot(this)) {
+        } else {
+            // installing a roboticon without a customisation
+            boolean success = false;
+            try {
+                roboticon.setInstalledLandPlot(this);
+                success = true;
+            } catch (Exception ex) {
+                return false;
+            }
+            if (success) {
                 this.installedRoboticon = roboticon;
                 return true;
             }
