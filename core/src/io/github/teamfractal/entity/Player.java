@@ -57,10 +57,6 @@ public class Player {
         }
     }
 
-    public void setGamblingMoney(int money){
-        setMoney(money);
-    }
-
     public int getOre() {
         return ore;
     }
