@@ -150,7 +150,6 @@ public class LandPlot {
 
     /**
      * Install a roboticon to this LandPlot.
-     *
      * @param roboticon    The roboticon to be installed.
      */
     public synchronized boolean installRoboticon(Roboticon roboticon) {
@@ -195,7 +194,7 @@ public class LandPlot {
     /**
      * Calculate the amount of resources to be produced.
      *
-     * @return The amount of resources to be produced in an 2D array.
+     * @return The amount of resources to be produced in an array.
      */
     public int[] produceResources() {
         int[] produced = new int[3];
@@ -214,8 +213,9 @@ public class LandPlot {
         if (this.hasRoboticon){
             int resIndex = resourceTypeToIndex(resource);
             return (int) ((float) productionAmounts[resIndex] * productionModifiers[resIndex]);
+        } else {
+            return 0;
         }
-        else return 0;
     }
 
     /**
