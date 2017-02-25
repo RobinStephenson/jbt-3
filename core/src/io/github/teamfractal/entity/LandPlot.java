@@ -1,15 +1,8 @@
-/**
- * @author DRTN
- * Team Website with download:
- * https://misterseph.github.io/DuckRelatedFractalProject/
- *
- * This Class contains either modifications or is entirely new in Assessment 3
- *
- * If you are in any doubt a complete changelog can be found here:
- * https://github.com/NotKieran/DRTN-Fractal/compare/Fractal_Initial...development
- *
- * And a more concise report can be found in our Change3 document.
- **/
+/*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
+ *  JBT Changes to this file:
+ *      Minor style changes (ie. adding brackets to one line if)
+ *      Removed hasRoboticon which could be calculated when needed rather than having to be updated in many places.
+ */
 
 package io.github.teamfractal.entity;
 
@@ -46,9 +39,11 @@ public class LandPlot {
      * [ Ore, Energy, Food ]
      */
     private int[] productionAmounts;
-    private boolean owned;
+
+    /**
+     * the roboticon installed on this tile
+     */
     private Roboticon installedRoboticon;
-    private boolean hasRoboticon;
 
     /**
      * Initialise LandPlot with specific base amount of resources.
@@ -59,7 +54,6 @@ public class LandPlot {
      */
     public LandPlot(int ore, int energy, int food) {
         this.productionAmounts = new int[]{ore, energy, food};
-        this.owned = false;
     }
 
     public TiledMapTileLayer.Cell getMapTile() {
@@ -210,7 +204,7 @@ public class LandPlot {
      * @return          Calculated amount of resource to be generated.
      */
     public int produceResource(ResourceType resource) {
-        if (this.hasRoboticon){
+        if (hasRoboticon()){
             int resIndex = resourceTypeToIndex(resource);
             return (int) ((float) productionAmounts[resIndex] * productionModifiers[resIndex]);
         } else {
@@ -219,7 +213,7 @@ public class LandPlot {
     }
 
     /**
-     * Gets the index of the specific resource
+     * Gets the production of the specific resource
      * @param resource The resource selected
      * @return The index of the resource
      */
@@ -233,14 +227,7 @@ public class LandPlot {
      * @return True if the tile contains a roboticon, false otherwise
      */
     public boolean hasRoboticon(){
-        return this.hasRoboticon;
+        return this.installedRoboticon != null;
     }
 
-    /**
-     * Setter for hasRoboticon
-     * @param roboticonInstalled The boolean that hasRoboticon is to be changed to
-     */
-    public void setHasRoboticon(boolean roboticonInstalled){
-        this.hasRoboticon = roboticonInstalled;
-    }
 }
