@@ -1,20 +1,13 @@
-/**
- * @author DRTN
- * Team Website with download:
- * https://misterseph.github.io/DuckRelatedFractalProject/
- *
- * This Class contains either modifications or is entirely new in Assessment 3
- *
- * If you are in any doubt a complete changelog can be found here:
- * https://github.com/NotKieran/DRTN-Fractal/compare/Fractal_Initial...development
- *
- * And a more concise report can be found in our Change3 document.
- **/
+/*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
+ *  JBT Changes to this file:
+ *      Added new tests to handle more paths / increase coverage
+ */
 
 package io.github.teamfractal.entity;
 
 import io.github.teamfractal.TesterFile;
 import io.github.teamfractal.entity.enums.ResourceType;
+import io.github.teamfractal.exception.InvalidResourceTypeException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -98,4 +91,60 @@ public class LandPlotTest extends TesterFile {
         assertArrayEquals(new int[] {6, 0, 0}, plot.produceResources());
     }
 
+    // JBT created this test
+    /**
+     * hasRoboticon should return whether a roboticon is installed
+     */
+    @Test
+    public void hasRoboticonTest() {
+        assertFalse(plot.hasRoboticon());
+        Roboticon roboticon = new Roboticon(0);
+        plot.installRoboticon(roboticon);
+        assertTrue(plot.hasRoboticon());
+    }
+
+    // JBT created this test
+    /**
+     * getResource should return the amount of the given resource on the tile
+     */
+    @Test
+    public void getResourceTest() {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                for (int k = 0; k < 5; k++) {
+                    LandPlot plot = new LandPlot(i, j, k);
+                    assertEquals(plot.getResource(ResourceType.ORE), i);
+                    assertEquals(plot.getResource(ResourceType.ENERGY), j);
+                    assertEquals(plot.getResource(ResourceType.FOOD), k);
+                }
+            }
+        }
+    }
+
+    // JBT created this test
+    /**
+     * getResource should throw an InvalidResourceTypeException if given ResourceType.CUSTOMISATION
+     */
+    @Test(expected = InvalidResourceTypeException.class)
+    public void getResourceTypeCustomisationTest() {
+        plot.getResource(ResourceType.CUSTOMISATION);
+    }
+
+    // JBT created this test
+    /**
+     * getResource should throw an InvalidResourceTypeException if given ResourceType.ROBOTICON
+     */
+    @Test(expected = InvalidResourceTypeException.class)
+    public void getResourceTypeRoboticonTest() {
+        plot.getResource(ResourceType.CUSTOMISATION);
+    }
+
+    // JBT created this test
+    /**
+     * getResource should throw an InvalidResourceTypeException if given ResourceType.Unknown
+     */
+    @Test(expected = InvalidResourceTypeException.class)
+    public void getResourceTypeUnknownTest() {
+        plot.getResource(ResourceType.Unknown);
+    }
 }
