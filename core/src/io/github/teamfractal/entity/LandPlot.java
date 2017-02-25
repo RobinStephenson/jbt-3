@@ -161,7 +161,7 @@ public class LandPlot {
      * update the production modifiers based on a new roboticon
      * @param roboticon the roboticon which has just been installed
      */
-    public void updateProductionModifiers(Roboticon roboticon) {
+    private synchronized void updateProductionModifiers(Roboticon roboticon) {
         ResourceType customisation = installedRoboticon.getCustomisation();
         if (customisation != ResourceType.Unknown) {
             int resourceIndex = resourceTypeToIndex(customisation);
@@ -175,7 +175,7 @@ public class LandPlot {
      * @param roboticon the roboticon to install
      * @return true on success, false on failure
      */
-    private boolean tryInstallRoboticon(Roboticon roboticon) {
+    private synchronized boolean tryInstallRoboticon(Roboticon roboticon) {
         try {
             roboticon.setInstalledLandPlot(this);
         } catch (AlreadyInstalledException ex) {
