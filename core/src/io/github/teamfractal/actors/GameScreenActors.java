@@ -448,7 +448,6 @@ public class GameScreenActors {
         selectedPlot.installRoboticon(roboticon);
         TiledMapTileLayer.Cell roboticonTile = selectedPlot.getRoboticonTile();
         roboticonTile.setTile(screen.getResourcePlayerTile(selectedPlot.getOwner(),roboticon.getCustomisation()));
-        selectedPlot.setHasRoboticon(true);
     }
 
     public void switchNextButton() {
