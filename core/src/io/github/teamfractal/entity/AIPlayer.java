@@ -151,14 +151,10 @@ public class AIPlayer extends Player {
                                 break;
                             }
                             break;
-                        default:
-
                     }
-
                 }
             }
             game.nextPhase();
-
         } finally {
             game.nextPhase();
         }
@@ -172,18 +168,15 @@ public class AIPlayer extends Player {
     private void phase3() {
         for (LandPlot aLandPlot : this.landList) {
             if (!aLandPlot.hasRoboticon()) {
-                for (Roboticon aRoboticon: this.roboticonList
-                     ) { if (!aRoboticon.isInstalled()){
+                for (Roboticon aRoboticon: this.roboticonList) {
+                    if (!aRoboticon.isInstalled()) {
                         game.gameScreen.getActors().installRoboticonFunction(aLandPlot,aRoboticon);
-                }
-
+                    }
                 }
             }
-
-            }
+        }
         game.gameScreen.getActors().nextButtonFunction();
     }
-    
 
     /**
      * Function simulating the Player interaction during Phase 5.
@@ -210,8 +203,6 @@ public class AIPlayer extends Player {
                 buyResources(ResourceType.FOOD);
             }
         }
-
-
         game.nextPhase();
     }
 
@@ -234,5 +225,4 @@ public class AIPlayer extends Player {
         this.purchaseResourceFromMarket(5, game.market, type);
         System.out.println("Buying: 5 " + type);
     }
-
 }
