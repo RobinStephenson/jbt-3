@@ -131,7 +131,7 @@ public class LandPlot {
      * Get the type index from the {@link ResourceType}
      * @param resource   The {@link ResourceType}
      * @return           The index.
-     * @throws InvalidResourceTypeException Exception is thrown if the resource index is invalid.
+     * @throws NotCommonResourceException Exception is thrown if the resource is invalid.
      */
     private int resourceTypeToIndex(ResourceType resource) {
         switch (resource) {
