@@ -20,9 +20,9 @@ import io.github.teamfractal.exception.NotCommonResourceException;
 import io.github.teamfractal.util.PlotManager;
 
 public class LandPlot {
-    private final int IndexOre = 0;
-    private final int IndexEnergy = 1;
-    private final int IndexFood = 2;
+    private static final int IndexOre = 0;
+    private static final int IndexEnergy = 1;
+    private static final int IndexFood = 2;
     int x, y;
 
     /**
@@ -139,13 +139,12 @@ public class LandPlot {
      * @return           The index.
      * @throws NotCommonResourceException Exception is thrown if the resource is invalid.
      */
-    private int resourceTypeToIndex(ResourceType resource) {
+    private static int resourceTypeToIndex(ResourceType resource) {
         switch (resource) {
             case ORE:    return IndexOre;
             case FOOD:   return IndexFood;
             case ENERGY: return IndexEnergy;
         }
-
         throw new NotCommonResourceException(resource);
     }
 
