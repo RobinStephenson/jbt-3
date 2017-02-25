@@ -151,6 +151,15 @@ public class LandPlot {
         return installedSuccessfully;
     }
 
+    // JBT created this method
+    /**
+     * get the roboticon installed on this tile
+     * @return the roboticon installed on this tile, null if none is installed
+     */
+    public Roboticon getInstalledRoboticon() {
+        return installedRoboticon;
+    }
+
     // JBT Created this method
     /**
      * update the production modifiers based on a new roboticon
