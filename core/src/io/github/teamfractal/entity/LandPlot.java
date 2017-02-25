@@ -30,9 +30,15 @@ public class LandPlot {
      * [ Ore, Energy, Food ]
      */
     float[] productionModifiers = {0, 0, 0};
+
+    // the different map layers for this tile
     private TiledMapTileLayer.Cell mapTile;
     private TiledMapTileLayer.Cell playerTile;
     private TiledMapTileLayer.Cell roboticonTile;
+
+    /**
+     * the owner of the tile
+     */
     private Player owner;
 
     /**
@@ -107,15 +113,15 @@ public class LandPlot {
      * Removes the owner of the tile
      */
     public void removeOwner() {
-        if (!hasOwner())
-            return ;
-
+        if (!hasOwner()) {
+            return;
+        }
         owner.removeLandPlot(this);
     }
 
     /**
      * Retrieves the overlays for the specific tile
-     * @param plotManager The plotmanager storing the images of the current mao
+     * @param plotManager The plotmanager storing the images of the current map
      * @param x The x coordinate of the tile
      * @param y The y coordinate if the tile
      */

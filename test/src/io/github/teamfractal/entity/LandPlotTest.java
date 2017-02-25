@@ -50,7 +50,7 @@ public class LandPlotTest extends TesterFile {
         }
         assertArrayEquals(new int[] {1, 1, 0},intProductionModifiers);
 
-        Roboticon roboticon3= new Roboticon(0);
+        Roboticon roboticon3 = new Roboticon(0);
         roboticon3.setCustomisation(ResourceType.ORE);
         assertTrue(plot.installRoboticon(roboticon3));
         for (int i = 0; i < 3; i++) {
