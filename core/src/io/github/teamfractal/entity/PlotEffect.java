@@ -213,6 +213,7 @@ public class PlotEffect extends Array<Float[]> {
             //Restore the original production modifiers of the aforementioned plot
         }
     }
+
     /**
      * Reverts all affected tiles back to their original states
      */
@@ -221,6 +222,7 @@ public class PlotEffect extends Array<Float[]> {
             revert();
         }
     }
+
     /**
      * Swaps the positions of the first two values within the internal stack
      */
