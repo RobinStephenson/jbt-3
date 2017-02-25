@@ -1,6 +1,6 @@
 package io.github.teamfractal.exception;
 
-public class NotEnoughMoneyException extends RuntimeException {
+public class NotEnoughMoneyException extends TransactionException {
 	/**
 	 * Constructs an <code>NotEnoughMoneyException</code> with no
 	 * detail message.
