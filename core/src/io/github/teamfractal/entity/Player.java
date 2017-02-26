@@ -4,6 +4,7 @@
  *      Renamed some methods
  *          Some had the Type in the method name
  *          Some were misleading in that they could silently fail, prepended try to them
+ *      Deleted unused and untested methods
  */
 
 
@@ -307,18 +308,6 @@ public class Player {
      */
     void addLandPlot(LandPlot landPlot) {
         if (landPlot != null && !landList.contains(landPlot) && landPlot.getOwner() == this) {
-            landList.add(landPlot);
-        }
-    }
-
-    /**
-     * Remove the LandPlot from the user.
-     *
-     * @param landPlot  LandPlot to be removed from the user.
-     *                  <code>this_user</code> must be the current owner first.
-     */
-    void removeLandPlot(LandPlot landPlot) {
-        if (landPlot != null && landList.contains(landPlot) && landPlot.getOwner() == this) {
             landList.add(landPlot);
         }
     }
