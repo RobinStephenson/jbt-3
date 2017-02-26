@@ -41,7 +41,7 @@ public class PlayerTest extends TesterFile {
     /**
      * trying to set Money to a negative amount should throw an UnsupportedOperationException
      */
-    @Test(expected = UnsupportedOperationException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setNegativeMoney() {
         player.setMoney(-1);
     }

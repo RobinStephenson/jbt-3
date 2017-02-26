@@ -13,7 +13,9 @@ import com.badlogic.gdx.utils.Array;
 import io.github.teamfractal.RoboticonQuest;
 import io.github.teamfractal.entity.enums.PurchaseStatus;
 import io.github.teamfractal.entity.enums.ResourceType;
+import io.github.teamfractal.exception.InvalidResourceTypeException;
 import io.github.teamfractal.exception.NotCommonResourceException;
+import io.github.teamfractal.exception.NotEnoughMoneyException;
 import io.github.teamfractal.exception.NotEnoughResourceException;
 
 import java.util.ArrayList;
@@ -46,7 +48,7 @@ public class Player {
      */
     public synchronized void setMoney(int money){
         if (money < 0) {
-            this.money = 0;
+            throw new IllegalArgumentException("money cannot be negative");
         } else {
             this.money = money;
         }
@@ -62,10 +64,11 @@ public class Player {
      *     if amount less than 0 then the amount is set to 0.
      * </p>
      * @param amount The new amount for ore.
+     * @throws IllegalArgumentException if amount is negative
      */
     synchronized void setOre(int amount) {
         if (amount < 0) {
-            this.ore = 0;
+            throw new IllegalArgumentException("amount cannot be negative");
         } else {
             this.ore = amount;
         }
@@ -85,7 +88,7 @@ public class Player {
 
     synchronized void setEnergy(int amount) {
         if (amount < 0) {
-            this.energy = 0;
+            throw new IllegalArgumentException("amount cannot be negative");
         } else {
             this.energy = amount;
         }
@@ -104,7 +107,7 @@ public class Player {
      */
     synchronized void setFood(int amount) {
         if (amount < 0) {
-            this.food = 0;
+            throw new IllegalArgumentException("amount cannot be negative");
         } else {
             this.food = amount;
         }
@@ -159,22 +162,27 @@ public class Player {
      * @return returns purchase status
      */
     public PurchaseStatus purchaseRoboticonsFromMarket(int amount, Market market) {
-        Random random = new Random();
-
+        if (market == null) {
+            throw new NullPointerException("market cannot be null");
+        }
         if (!market.hasEnoughResources(ResourceType.ROBOTICON, amount)) {
-            return PurchaseStatus.FailMarketNotEnoughResource;
+            throw new NotEnoughResourceException();
+        }
+        if (amount <= 0) {
+            throw new IllegalArgumentException("amount cannot be <= 0");
         }
 
         int cost = amount * market.getSellPrice(ResourceType.ROBOTICON);
         int money = getMoney();
         if (cost > money) {
-            return PurchaseStatus.FailPlayerNotEnoughMoney;
+            throw new NotEnoughMoneyException();
         }
 
+        Random random = new Random();
         market.sellResource(ResourceType.ROBOTICON, amount);
         setMoney(money - cost);
         for (int roboticon = 0; roboticon < amount; roboticon++) {
-            roboticonList.add(new Roboticon(random.nextInt(10000)));
+            roboticonList.add(new Roboticon(random.nextInt()));
         }
 
         return PurchaseStatus.Success;
@@ -188,16 +196,17 @@ public class Player {
      * @return            Purchase status.
      */
     public PurchaseStatus purchaseCustomisationFromMarket(ResourceType resource,
-                                                          Roboticon roboticon, Market market) {
+                                                          Roboticon roboticon,
+                                                          Market market) {
 
-        if (!market.hasEnoughResources(ResourceType.CUSTOMISATION, 1)) {
-            return PurchaseStatus.FailMarketNotEnoughResource;
+        if (resource != ResourceType.FOOD && resource != ResourceType.ENERGY && resource != ResourceType.ORE) {
+            throw new InvalidResourceTypeException();
         }
 
         int cost = market.getSellPrice(ResourceType.CUSTOMISATION);
         int money = getMoney();
         if (cost > money) {
-            return PurchaseStatus.FailPlayerNotEnoughMoney;
+            throw new NotEnoughMoneyException();
         }
 
         market.sellResource(ResourceType.CUSTOMISATION, 1);
@@ -216,14 +225,17 @@ public class Player {
      * @return           If the purchase was success or not.
      */
     public PurchaseStatus purchaseResourceFromMarket(int amount, Market market, ResourceType resource) {
+        if (amount < 1) {
+            throw new IllegalArgumentException("amount cannot be < 1");
+        }
         if (!market.hasEnoughResources(resource, amount)) {
-            return PurchaseStatus.FailMarketNotEnoughResource;
+            throw new NotEnoughResourceException();
         }
 
         int cost = amount * market.getSellPrice(resource);
         int money = getMoney();
         if (cost > money) {
-            return PurchaseStatus.FailPlayerNotEnoughMoney;
+            throw new NotEnoughMoneyException();
         }
 
         market.sellResource(resource, amount);
