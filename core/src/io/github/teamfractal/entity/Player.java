@@ -24,7 +24,6 @@ public class Player {
     public RoboticonQuest game;
     Array<Roboticon> roboticonList;
     ArrayList<LandPlot> landList = new ArrayList<LandPlot>();
-    //<editor-fold desc="Resource getter and setter">
     private int money = 100;
     private int ore = 0;
     private int energy = 0;
@@ -162,7 +161,6 @@ public class Player {
     public PurchaseStatus purchaseRoboticonsFromMarket(int amount, Market market) {
         Random random = new Random();
 
-
         if (!market.hasEnoughResources(ResourceType.ROBOTICON, amount)) {
             return PurchaseStatus.FailMarketNotEnoughResource;
         }
@@ -184,7 +182,7 @@ public class Player {
 
     /**
      * Purchase roboticon customisation from the market.
-     * @param resource    The resource type.
+     * @param resource    The resource type of the customisation
      * @param roboticon   The roboticon to be customised.
      * @param market      The market.
      * @return            Purchase status.
@@ -274,7 +272,6 @@ public class Player {
         for (LandPlot plot : landList) {
             energy += plot.produceResource(ResourceType.ENERGY);
             ore += plot.produceResource(ResourceType.ORE);
-
             food += plot.produceResource(ResourceType.FOOD);
         }
     }
