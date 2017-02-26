@@ -68,13 +68,13 @@ public class PlotEffectSource extends Array<PlotEffect> {
                 "80% for this turn.", new Float[]{(float) 1, (float) 1, (float) 0.2}, new Runnable() {
             @Override
             public void run() {
-                if (game.getPlayer().getLandList().size() == 0) {
+                if (game.getPlayer().getOwnedPlots().size() == 0) {
                     return;
                 }
 
-                LandPlot foodProducer = game.getPlayer().getLandList().get(0);
+                LandPlot foodProducer = game.getPlayer().getOwnedPlots().get(0);
 
-                for (LandPlot plot : game.getPlayer().getLandList()) {
+                for (LandPlot plot : game.getPlayer().getOwnedPlots()) {
                     if (plot.getResource(ResourceType.FOOD) > foodProducer.getResource(ResourceType.FOOD)) {
                         foodProducer = plot;
                     }
@@ -89,11 +89,11 @@ public class PlotEffectSource extends Array<PlotEffect> {
                 "\nhas caused all other production values to drop to 0.", new Float[]{(float) 0, (float) 0, (float) 2}, new Runnable() {
             @Override
             public void  run() {
-                if (game.getPlayer().getLandList().size() == 0) {
+                if (game.getPlayer().getOwnedPlots().size() == 0) {
                     return;
                 }
 
-                for (LandPlot plot : game.getPlayer().getLandList()) {
+                for (LandPlot plot : game.getPlayer().getOwnedPlots()) {
                     spicy.impose(plot, 1);
                 }
 
@@ -107,11 +107,11 @@ public class PlotEffectSource extends Array<PlotEffect> {
                 new Float[]{(float) 0.1, (float) 1, (float) 1}, new Runnable() {
             @Override
             public void run() {
-                if (game.getPlayer().getLandList().size() == 0) {
+                if (game.getPlayer().getOwnedPlots().size() == 0) {
                     return;
                 }
 
-                for (LandPlot plot : game.getPlayer().getLandList()) {
+                for (LandPlot plot : game.getPlayer().getOwnedPlots()) {
                     earthquakeDisaster.impose(plot, 1);
                 }
 
@@ -125,11 +125,11 @@ public class PlotEffectSource extends Array<PlotEffect> {
          new Float[]{(float) 1, (float) 0.5, (float) 1.6}, new Runnable(){
             @Override
             public void run() {
-                if (game.getPlayer().getLandList().size() == 0) {
+                if (game.getPlayer().getOwnedPlots().size() == 0) {
                     return;
                 }
 
-                for (LandPlot plot : game.getPlayer().getLandList()) {
+                for (LandPlot plot : game.getPlayer().getOwnedPlots()) {
                     tornado.impose(plot, 1);
                 }
 
@@ -143,11 +143,11 @@ public class PlotEffectSource extends Array<PlotEffect> {
                 new Float[]{(float) 0.7, (float) 0.7, (float) 0.7}, new Runnable(){
             @Override
             public void run() {
-                if (game.getPlayer().getLandList().size() == 0) {
+                if (game.getPlayer().getOwnedPlots().size() == 0) {
                     return;
                 }
 
-                for (LandPlot plot : game.getPlayer().getLandList()) {
+                for (LandPlot plot : game.getPlayer().getOwnedPlots()) {
                     strike.impose(plot, 1);
                 }
 

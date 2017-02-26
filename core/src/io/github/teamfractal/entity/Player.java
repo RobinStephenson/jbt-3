@@ -390,7 +390,7 @@ public class Player {
      * Returns the array of plots owned by this player
      * @return ArrayList of LandPlot The array of plots owned by this player
      */
-    public ArrayList<LandPlot> getLandList() {
+    public ArrayList<LandPlot> getOwnedPlots() {
         return landList;
     }
 
