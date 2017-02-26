@@ -1,15 +1,11 @@
-/**
- * @author DRTN
- * Team Website with download:
- * https://misterseph.github.io/DuckRelatedFractalProject/
- *
- * This Class contains either modifications or is entirely new in Assessment 3
- *
- * If you are in any doubt a complete changelog can be found here:
- * https://github.com/NotKieran/DRTN-Fractal/compare/Fractal_Initial...development
- *
- * And a more concise report can be found in our Change3 document.
- **/
+/*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
+ *  JBT Changes to this file:
+ *      Updated documentation
+ *      Renamed some methods
+ *          Some had the Type in the method name
+ *          Some were misleading in that they could silently fail, prepended try to them
+ */
+
 
 package io.github.teamfractal.entity;
 
@@ -259,7 +255,7 @@ public class Player {
      * Player add a landplot to their inventory for gold
      * @param plot           The landplot to purchase
      */
-    public synchronized boolean purchaseLandPlot(LandPlot plot){
+    public synchronized boolean tryPurchaseLandPlot(LandPlot plot){
         if (plot.hasOwner() || money < 10) {
             return false;
         }

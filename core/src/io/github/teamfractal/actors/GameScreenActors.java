@@ -364,7 +364,7 @@ public class GameScreenActors {
 		}
 
 		Player player = game.getPlayer();
-		if (player.purchaseLandPlot(selectedPlot)) {
+		if (player.tryPurchaseLandPlot(selectedPlot)) {
 			TiledMapTileLayer.Cell playerTile = selectedPlot.getPlayerTile();
 			playerTile.setTile(screen.getPlayerTile(player));
 			textUpdate();
