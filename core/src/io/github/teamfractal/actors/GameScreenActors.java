@@ -30,6 +30,7 @@ import io.github.teamfractal.entity.LandPlot;
 import io.github.teamfractal.entity.Player;
 import io.github.teamfractal.entity.Roboticon;
 import io.github.teamfractal.entity.enums.ResourceType;
+import io.github.teamfractal.exception.TransactionException;
 import io.github.teamfractal.screens.AbstractAnimationScreen;
 import io.github.teamfractal.screens.GameScreen;
 
@@ -361,13 +362,17 @@ public class GameScreenActors {
         }
 
         Player player = game.getPlayer();
-        if (player.tryPurchaseLandPlot(selectedPlot)) {
-            TiledMapTileLayer.Cell playerTile = selectedPlot.getPlayerTile();
-            playerTile.setTile(screen.getPlayerTile(player));
-            textUpdate();
-
-            nextButton.setVisible(true);
+        try {
+            player.tryPurchaseLandPlot(selectedPlot);
+        } catch (TransactionException ex ) {
+            return;
         }
+
+        TiledMapTileLayer.Cell playerTile = selectedPlot.getPlayerTile();
+        playerTile.setTile(screen.getPlayerTile(player));
+        textUpdate();
+
+        nextButton.setVisible(true);
     }
 
     /**
@@ -438,7 +443,7 @@ public class GameScreenActors {
             } else listUpdated = false;
         }
     }
-    
+
     /**
      * Installs the specified roboticon on the specified land plot.
      * @param selectedPlot The plot that has been selected
