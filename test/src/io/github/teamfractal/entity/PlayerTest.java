@@ -203,7 +203,7 @@ public class PlayerTest extends TesterFile {
         Market market = new Market();
         market.setRoboticon(1);
         player.setMoney(market.getSellPrice(ResourceType.ROBOTICON));
-        System.out.println(player.purchaseRoboticonsFromMarket(1, market));
+        player.purchaseRoboticonsFromMarket(1, market);
         assertEquals(0, player.getMoney());
     }
 
