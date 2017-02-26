@@ -245,6 +245,17 @@ public class PlayerTest extends TesterFile {
 
     // Test Created by JBT
     /**
+     * purchaseCustomisationFromMarket should throw an exception if the given roboticon is null
+     */
+    @Test(expected = NullPointerException.class)
+    public void purchaseCustomisationNullRoboticon() {
+        Market market = new Market();
+        player.setMoney(Integer.MAX_VALUE);
+        player.purchaseCustomisationFromMarket(ResourceType.FOOD, null, market);
+    }
+
+    // Test Created by JBT
+    /**
      * purchaseCustomisationFromMarket should throw an exception if the player does not have enough money
      */
     @Test(expected = NotEnoughMoneyException.class)
