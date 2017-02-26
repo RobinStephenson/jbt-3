@@ -168,7 +168,7 @@ public class GameScreenActors {
 		Table t = installRoboticonTable;
 
 		installRoboticonSelect = new SelectBox<String>(game.skin);
-		installRoboticonSelect.setItems(game.getPlayer().getRoboticonAmountList());
+		installRoboticonSelect.setItems(game.getPlayer().getRoboticonQuantities());
 
 		Label installRoboticonLabel = new Label("Install Roboticon", new Label.LabelStyle(game.smallFontLight.font(), Color.WHITE));
 		installRoboticonBtn = new TextButton("Confirm", game.skin);
@@ -267,7 +267,7 @@ public class GameScreenActors {
 	 * Update the dropdown list of roboticon available.
 	 */
 	private void updateRoboticonList() {
-		installRoboticonSelect.setItems(game.getPlayer().getRoboticonAmountList());
+		installRoboticonSelect.setItems(game.getPlayer().getRoboticonQuantities());
 	}
 
 	/**
@@ -386,7 +386,7 @@ public class GameScreenActors {
         plotStatsTable.setVisible(false);
         hideInstallRoboticon();
         game.nextPhase();
-        installRoboticonSelect.setItems(game.getPlayer().getRoboticonAmountList());
+        installRoboticonSelect.setItems(game.getPlayer().getRoboticonQuantities());
         textUpdate();
     }
 	/**

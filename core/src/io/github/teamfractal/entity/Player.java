@@ -324,7 +324,7 @@ public class Player {
      *
      * @return  The string list of roboticons.
      */
-    public Array<String> getRoboticonAmountList() {
+    public Array<String> getRoboticonQuantities() {
         int ore = 0;
         int energy = 0;
         int food = 0;
