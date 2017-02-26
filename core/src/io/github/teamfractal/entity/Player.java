@@ -188,6 +188,12 @@ public class Player {
      * @throws NotEnoughMoneyException if the player does not have enough moeny for the transaction
      */
     public void purchaseCustomisationFromMarket(ResourceType resource, Roboticon roboticon, Market market) {
+        if (market == null) {
+            throw new NullPointerException("market cannot be null");
+        }
+        if (roboticon == null) {
+            throw new NullPointerException("roboticon cannot be null");
+        }
         if (resource != ResourceType.FOOD && resource != ResourceType.ENERGY && resource != ResourceType.ORE) {
             throw new InvalidResourceTypeException();
         }
