@@ -257,7 +257,7 @@ public class Player {
      * Player add a landplot to their inventory for gold
      * @param plot           The landplot to purchase
      */
-    public synchronized void tryPurchaseLandPlot(LandPlot plot){
+    public synchronized void purchaseLandPlot(LandPlot plot){
         if (money < 10) {
             throw new NotEnoughMoneyException();
         }

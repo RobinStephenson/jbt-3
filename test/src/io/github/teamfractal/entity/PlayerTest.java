@@ -371,10 +371,10 @@ public class PlayerTest extends TesterFile {
 
     // Test created by JBT
     /**
-     * tryPurchaseLandPlot should throw an exception if the given plot is null
+     * purchaseLandPlot should throw an exception if the given plot is null
      */
     @Test(expected = NullPointerException.class)
     public void purchaseNullLandPlot() {
-        player.tryPurchaseLandPlot(null);
+        player.purchaseLandPlot(null);
     }
 }

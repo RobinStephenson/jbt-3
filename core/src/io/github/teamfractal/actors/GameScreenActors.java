@@ -363,7 +363,7 @@ public class GameScreenActors {
 
         Player player = game.getPlayer();
         try {
-            player.tryPurchaseLandPlot(selectedPlot);
+            player.purchaseLandPlot(selectedPlot);
         } catch (TransactionException ex ) {
             return;
         }
