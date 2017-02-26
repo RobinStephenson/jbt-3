@@ -16,9 +16,6 @@ import io.github.teamfractal.RoboticonQuest;
 import io.github.teamfractal.entity.enums.ResourceType;
 import io.github.teamfractal.exception.TransactionException;
 
-/**
- * Created by Joseph on 17/02/2017.
- */
 public class ResourceMarketActors extends Table {
 
     /**
