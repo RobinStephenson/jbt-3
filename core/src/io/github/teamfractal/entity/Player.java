@@ -2,8 +2,7 @@
  *  JBT Changes to this file:
  *      Updated documentation
  *      Renamed some methods
- *          Some had the Type in the method name
- *          Some were misleading in that they could silently fail, prepended try to them
+ *          Some had the return Type in the method name
  *      Throw exceptions instead of returning a enum
  *      Added throws to documentation
  *      Deleted unused and untested methods
