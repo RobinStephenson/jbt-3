@@ -403,6 +403,7 @@ public class PlayerTest extends TesterFile {
     @Test
     public void produceCorrectAmounts()
     {
+        //Create a player
         Player player2 = new Player(game);
 
         //Ensure player 2 has no resources
@@ -444,5 +445,16 @@ public class PlayerTest extends TesterFile {
         assertEquals(0 ,player2.getResource(ResourceType.ORE));
         assertEquals(5 ,player2.getResource(ResourceType.ENERGY));
         assertEquals(6 ,player2.getResource(ResourceType.FOOD));
+    }
+
+    //Added by JBT
+    @Test
+    public void getScore()
+    {
+        Player player2 = new Player(game);
+        player2.setFood(2);
+        player2.setEnergy(1);
+        player2.setOre(3);
+        assertEquals(6, player2.calculateScore());
     }
 }
