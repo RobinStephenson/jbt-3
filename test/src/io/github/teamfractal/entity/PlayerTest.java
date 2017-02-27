@@ -9,14 +9,12 @@ package io.github.teamfractal.entity;
 import io.github.teamfractal.RoboticonQuest;
 import io.github.teamfractal.TesterFile;
 import io.github.teamfractal.entity.enums.ResourceType;
-import io.github.teamfractal.exception.InvalidResourceTypeException;
-import io.github.teamfractal.exception.NotCommonResourceException;
-import io.github.teamfractal.exception.NotEnoughMoneyException;
-import io.github.teamfractal.exception.NotEnoughResourceException;
+import io.github.teamfractal.exception.*;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.lwjgl.Sys;
 
 import static org.junit.Assert.assertEquals;
 
@@ -25,10 +23,11 @@ public class PlayerTest extends TesterFile {
     public final ExpectedException exception = ExpectedException.none();
 
     private Player player;
+    private RoboticonQuest game;  //Added by JBT
 
     @Before
     public void setUp() {
-        RoboticonQuest game = new RoboticonQuest();
+        game = new RoboticonQuest();
         player = new Player(game);
     }
 
@@ -376,5 +375,28 @@ public class PlayerTest extends TesterFile {
     @Test(expected = NullPointerException.class)
     public void purchaseNullLandPlot() {
         player.purchaseLandPlot(null);
+    }
+
+    // Test created by JBT
+    /**
+     * purchaseLandPlot should throw an exception if the player cannot afford the tile
+     */
+    @Test(expected = NotEnoughMoneyException.class)
+    public void cantAffordLandPlot() {
+        player.setMoney(5);
+        LandPlot plot = new LandPlot(1,2,2);
+        player.purchaseLandPlot(plot);
+    }
+
+    // Test created by JBT
+    /**
+     * purchaseLandPlot should throw an exception if the tile is already owned
+     */
+    @Test(expected = PlotAleadyOwnedException.class)
+    public void landPlotAlreadyOwned() {
+        player.setMoney(20);
+        LandPlot plot = new LandPlot(1,2,2);
+        player.purchaseLandPlot(plot);
+        player.purchaseLandPlot(plot);
     }
 }

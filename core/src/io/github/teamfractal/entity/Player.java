@@ -257,16 +257,20 @@ public class Player {
      * @param plot           The landplot to purchase
      */
     public synchronized void purchaseLandPlot(LandPlot plot){
-        if (money < 10) {
-            throw new NotEnoughMoneyException();
+        if(plot == null) {
+            throw new NullPointerException("Tile is null");
         }
         if (plot.hasOwner()) {
             throw new PlotAleadyOwnedException();
+        }
+        if (money < 10) {
+            throw new NotEnoughMoneyException();
         }
 
         landList.add(plot);
         this.setMoney(this.getMoney() - 10);
         plot.setOwner(this);
+
         game.landPurchasedThisTurn();
     }
 
