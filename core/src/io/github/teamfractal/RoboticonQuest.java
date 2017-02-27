@@ -37,7 +37,6 @@ import java.util.Random;
  * It will set up all the necessary classes.
  */
 public class RoboticonQuest extends Game {
-    private static RoboticonQuest instance;
 	public Skin skin;
     public PlotManager plotManager;
 
@@ -75,12 +74,7 @@ public class RoboticonQuest extends Game {
 	private PlayerEffectSource playerEffectSource;
 
 	public RoboticonQuest() {
-		instance = this;
 		reset(false);
-	}
-
-	public static RoboticonQuest getInstance() {
-		return instance;
 	}
 
 	/**
@@ -175,6 +169,7 @@ public class RoboticonQuest extends Game {
 		this.phase = phase;
 		implementPhase();
 	}
+
 	/**
 	 * Resets the statistics of all the game's entities
 	 * @param AI A boolean describing whether an AI player is playing or not
@@ -347,6 +342,7 @@ public class RoboticonQuest extends Game {
 		if (gameScreen != null)
 			gameScreen.getActors().textUpdate();
 	}
+
 	/**
 	 * Advances the current phase
 	 */
