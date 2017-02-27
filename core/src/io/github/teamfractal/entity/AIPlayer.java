@@ -1,15 +1,8 @@
-/**
- * @author DRTN
- * Team Website with download:
- * https://misterseph.github.io/DuckRelatedFractalProject/
- *
- * This Class contains either modifications or is entirely new in Assessment 3
- *
- * If you are in any doubt a complete changelog can be found here:
- * https://github.com/NotKieran/DRTN-Fractal/compare/Fractal_Initial...development
- *
- * And a more concise report can be found in our Change3 document.
- **/
+/*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
+ *  JBT Changes to this file:
+ *  Improved Phase 3, by calling next phase rather than calling the next phase button.
+ */
+
 
 package io.github.teamfractal.entity;
 
@@ -175,7 +168,11 @@ public class AIPlayer extends Player {
                 }
             }
         }
-        game.gameScreen.getActors().nextButtonFunction();
+        /**
+         * JBT Changed this.
+         * Previously called next button in actors rather than game.nextphase()
+         */
+        game.nextPhase();
     }
 
     /**
