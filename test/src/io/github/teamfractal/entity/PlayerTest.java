@@ -412,6 +412,8 @@ public class PlayerTest extends TesterFile {
         assertEquals(0 ,player2.getResource(ResourceType.ENERGY));
         assertEquals(0 ,player2.getResource(ResourceType.FOOD));
 
+        //Ensure player 2 has no plots of land
+        assertEquals(0, player2.getOwnedPlots().size());
         //Set the players money so they can afford 2 tiles
         player2.setMoney(20);
 
