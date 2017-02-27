@@ -399,4 +399,50 @@ public class PlayerTest extends TesterFile {
         player.purchaseLandPlot(plot);
         player.purchaseLandPlot(plot);
     }
+
+    @Test
+    public void produceCorrectAmounts()
+    {
+        Player player2 = new Player(game);
+
+        //Ensure player 2 has no resources
+        assertEquals(0 ,player2.getResource(ResourceType.ORE));
+        assertEquals(0 ,player2.getResource(ResourceType.ENERGY));
+        assertEquals(0 ,player2.getResource(ResourceType.FOOD));
+
+        //Set the players money so they can afford 2 tiles
+        player2.setMoney(20);
+
+        //Create two plots of land
+        LandPlot plot1 = new LandPlot(1,5,3);
+        LandPlot plot2 = new LandPlot(2,1,6);
+
+        //Purchase the plots of land
+        player2.purchaseLandPlot(plot1);
+        player2.purchaseLandPlot(plot2);
+
+        //Create roboticons
+        Roboticon roboticon1 = new Roboticon(0);
+        Roboticon roboticon2 = new Roboticon(1);
+
+        //Set their customisations
+        roboticon1.setCustomisation(ResourceType.ENERGY);
+        roboticon2.setCustomisation(ResourceType.FOOD);
+
+        //Install the roboticons
+        plot1.installRoboticon(roboticon1);
+        plot2.installRoboticon(roboticon2);
+
+        //Attempt to generate resources
+        try {
+            player2.generateResources();
+        } catch (NullPointerException e) {
+            //Catch the error that generateResources causes as game is not properly initalised
+        }
+
+        //Ensure player 2's resources have been updated accordingly
+        assertEquals(0 ,player2.getResource(ResourceType.ORE));
+        assertEquals(5 ,player2.getResource(ResourceType.ENERGY));
+        assertEquals(6 ,player2.getResource(ResourceType.FOOD));
+    }
 }
