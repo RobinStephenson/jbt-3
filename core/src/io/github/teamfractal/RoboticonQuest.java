@@ -37,7 +37,7 @@ import java.util.Random;
  * It will set up all the necessary classes.
  */
 public class RoboticonQuest extends Game {
-    private static RoboticonQuest _instance;
+    private static RoboticonQuest instance;
 	public Skin skin;
     public PlotManager plotManager;
 
@@ -75,12 +75,12 @@ public class RoboticonQuest extends Game {
 	private PlayerEffectSource playerEffectSource;
 
 	public RoboticonQuest() {
-		_instance = this;
+		instance = this;
 		reset(false);
 	}
 
 	public static RoboticonQuest getInstance() {
-		return _instance;
+		return instance;
 	}
 
 	/**
