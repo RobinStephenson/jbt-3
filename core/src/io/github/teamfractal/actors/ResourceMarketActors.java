@@ -1,15 +1,5 @@
-/**
- * @author DRTN
- * Team Website with download:
- * https://misterseph.github.io/DuckRelatedFractalProject/
- *
- * This Class contains either modifications or is entirely new in Assessment 3
- *
- * If you are in any doubt a complete changelog can be found here:
- * https://github.com/NotKieran/DRTN-Fractal/compare/Fractal_Initial...development
- *
- * And a more concise report can be found in our Change3 document.
- **/
+/*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
+ */
 
 package io.github.teamfractal.actors;
 
@@ -23,12 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import io.github.teamfractal.RoboticonQuest;
-import io.github.teamfractal.entity.enums.PurchaseStatus;
 import io.github.teamfractal.entity.enums.ResourceType;
+import io.github.teamfractal.exception.TransactionException;
 
-/**
- * Created by Joseph on 17/02/2017.
- */
 public class ResourceMarketActors extends Table {
 
     /**
@@ -246,7 +233,14 @@ public class ResourceMarketActors extends Table {
             public void changed(ChangeEvent event, Actor actor) {
                 if (buy) {
                     // Buy from market
-                    if (game.getPlayer().purchaseResourceFromMarket(adjustableActor.getValue(), game.market, resource) == PurchaseStatus.Success) {
+                    boolean transactionSuccessful;
+                    try {
+                        game.getPlayer().purchaseResourceFromMarket(adjustableActor.getValue(), game.market, resource);
+                        transactionSuccessful = true;
+                    } catch (TransactionException ex) {
+                        transactionSuccessful = false;
+                    }
+                    if (transactionSuccessful) {
                         game.gameScreen.getActors().textUpdate();
                         widgetUpdate();
                     }
@@ -260,8 +254,6 @@ public class ResourceMarketActors extends Table {
                 }
                 //Set the widget's button up to perform the necessary buying/selling transaction based on the
                 //parameters given to the function
-
-
             }
         });
         return adjustableActor;

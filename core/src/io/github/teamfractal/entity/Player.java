@@ -1,24 +1,19 @@
-/**
- * @author DRTN
- * Team Website with download:
- * https://misterseph.github.io/DuckRelatedFractalProject/
- *
- * This Class contains either modifications or is entirely new in Assessment 3
- *
- * If you are in any doubt a complete changelog can be found here:
- * https://github.com/NotKieran/DRTN-Fractal/compare/Fractal_Initial...development
- *
- * And a more concise report can be found in our Change3 document.
- **/
+/*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
+ *  JBT Changes to this file:
+ *      Updated documentation
+ *      Renamed some methods
+ *          Some had the return Type in the method name
+ *      Throw exceptions instead of returning a enum
+ *      Added throws to documentation
+ *      Deleted unused and untested methods
+ */
 
 package io.github.teamfractal.entity;
 
 import com.badlogic.gdx.utils.Array;
 import io.github.teamfractal.RoboticonQuest;
-import io.github.teamfractal.entity.enums.PurchaseStatus;
 import io.github.teamfractal.entity.enums.ResourceType;
-import io.github.teamfractal.exception.NotCommonResourceException;
-import io.github.teamfractal.exception.NotEnoughResourceException;
+import io.github.teamfractal.exception.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -28,12 +23,10 @@ public class Player {
     public RoboticonQuest game;
     Array<Roboticon> roboticonList;
     ArrayList<LandPlot> landList = new ArrayList<LandPlot>();
-    //<editor-fold desc="Resource getter and setter">
     private int money = 100;
     private int ore = 0;
     private int energy = 0;
     private int food = 0;
-
 
     public Player(RoboticonQuest game){
         this.game = game;
@@ -47,18 +40,15 @@ public class Player {
 
     /**
      * Set the amount of money player has
-     * @param money The amount of new money
+     * @param money The amount of new money. Cannot be negative
+     * @throws IllegalArgumentException if money is negative
      */
     public synchronized void setMoney(int money){
         if (money < 0) {
-            this.money = 0;
+            throw new IllegalArgumentException("money cannot be negative");
         } else {
             this.money = money;
         }
-    }
-
-    public void setGamblingMoney(int money){
-        setMoney(money);
     }
 
     public int getOre() {
@@ -67,14 +57,12 @@ public class Player {
 
     /**
      * Set the amount of ore player has
-     * <p>
-     *     if amount less than 0 then the amount is set to 0.
-     * </p>
-     * @param amount The new amount for ore.
+     * @param amount The new amount for ore. Cannot be negative
+     * @throws IllegalArgumentException if amount is negative
      */
     synchronized void setOre(int amount) {
         if (amount < 0) {
-            this.ore = 0;
+            throw new IllegalArgumentException("amount cannot be negative");
         } else {
             this.ore = amount;
         }
@@ -86,15 +74,12 @@ public class Player {
 
     /**
      * Set the amount of energy player has
-     * <p>
-     *     if amount less than 0 then the amount is set to 0.
-     * </p>
-     * @param amount The new amount for energy.
+     * @param amount The new amount for energy. Cannot be negative
+     * @throws IllegalArgumentException if amount is negative
      */
-
     synchronized void setEnergy(int amount) {
         if (amount < 0) {
-            this.energy = 0;
+            throw new IllegalArgumentException("amount cannot be negative");
         } else {
             this.energy = amount;
         }
@@ -106,14 +91,12 @@ public class Player {
 
     /**
      * Set the amount of food player has
-     * <p>
-     *     if amount less than 0 then the amount is set to 0.
-     * </p>
-     * @param amount The new amount for food.
+     * @param amount The new amount for food. Cannot be negative,
+     * @throws IllegalArgumentException if amount is negative
      */
     synchronized void setFood(int amount) {
         if (amount < 0) {
-            this.food = 0;
+            throw new IllegalArgumentException("amount cannot be negative");
         } else {
             this.food = amount;
         }
@@ -123,6 +106,7 @@ public class Player {
      * Set the resource amount current player have.
      * @param resource  The {@link ResourceType}
      * @param amount    The new amount.
+     * @throws NotCommonResourceException if resource type is incorrect
      */
     public void setResource(ResourceType resource, int amount) {
         switch (resource) {
@@ -147,19 +131,16 @@ public class Player {
      * Get the resource amount current player have.
      * @param type   The {@link ResourceType}
      * @return       The amount of specified resource.
+     * @throws NotCommonResourceException if resource type is invalid
      */
     public int getResource(ResourceType type) {
         switch (type) {
             case ENERGY:
                 return getEnergy();
-
             case ORE:
                 return getOre();
-
             case FOOD:
                 return getFood();
-
-
             default:
                 throw new NotCommonResourceException(type);
         }
@@ -169,56 +150,61 @@ public class Player {
      * Purchase roboticon from the market.
      * @param amount number of roboticons requested
      * @param market the market being purchased from
-     * @return returns purchase status
+     * @throws IllegalArgumentException if amount <= 0
+     * @throws NotEnoughResourceException if market does not have enough roboticons
+     * @throws NotEnoughMoneyException if the player does not have enough money for the transaction
      */
-    public PurchaseStatus purchaseRoboticonsFromMarket(int amount, Market market) {
-        Random random = new Random();
-
-
-        if (!market.hasEnoughResources(ResourceType.ROBOTICON, amount)) {
-            return PurchaseStatus.FailMarketNotEnoughResource;
+    public void purchaseRoboticonsFromMarket(int amount, Market market) {
+        if (market == null) {
+            throw new NullPointerException("market cannot be null");
         }
-
+        if (!market.hasEnoughResources(ResourceType.ROBOTICON, amount)) {
+            throw new NotEnoughResourceException();
+        }
+        if (amount <= 0) {
+            throw new IllegalArgumentException("amount cannot be <= 0");
+        }
         int cost = amount * market.getSellPrice(ResourceType.ROBOTICON);
         int money = getMoney();
         if (cost > money) {
-            return PurchaseStatus.FailPlayerNotEnoughMoney;
+            throw new NotEnoughMoneyException();
         }
 
+        Random random = new Random();
         market.sellResource(ResourceType.ROBOTICON, amount);
         setMoney(money - cost);
         for (int roboticon = 0; roboticon < amount; roboticon++) {
-            roboticonList.add(new Roboticon(random.nextInt(10000)));
+            roboticonList.add(new Roboticon(random.nextInt()));
         }
-
-        return PurchaseStatus.Success;
     }
 
     /**
      * Purchase roboticon customisation from the market.
-     * @param resource    The resource type.
+     * @param resource    The resource type of the customisation
      * @param roboticon   The roboticon to be customised.
-     * @param market      The market.
-     * @return            Purchase status.
+     * @param market      The market
+     * @throws InvalidResourceTypeException if the chosen customisation is invalid
+     * @throws NotEnoughMoneyException if the player does not have enough moeny for the transaction
      */
-    public PurchaseStatus purchaseCustomisationFromMarket(ResourceType resource,
-                                                          Roboticon roboticon, Market market) {
-
-        if (!market.hasEnoughResources(ResourceType.CUSTOMISATION, 1)) {
-            return PurchaseStatus.FailMarketNotEnoughResource;
+    public void purchaseCustomisationFromMarket(ResourceType resource, Roboticon roboticon, Market market) {
+        if (market == null) {
+            throw new NullPointerException("market cannot be null");
         }
-
+        if (roboticon == null) {
+            throw new NullPointerException("roboticon cannot be null");
+        }
+        if (resource != ResourceType.FOOD && resource != ResourceType.ENERGY && resource != ResourceType.ORE) {
+            throw new InvalidResourceTypeException();
+        }
         int cost = market.getSellPrice(ResourceType.CUSTOMISATION);
         int money = getMoney();
         if (cost > money) {
-            return PurchaseStatus.FailPlayerNotEnoughMoney;
+            throw new NotEnoughMoneyException();
         }
 
         market.sellResource(ResourceType.CUSTOMISATION, 1);
         setMoney(money - cost);
         customiseRoboticon(roboticon, resource);
-
-        return PurchaseStatus.Success;
     }
 
     /**
@@ -227,28 +213,31 @@ public class Player {
      * @param amount     Amount of resources to purchase.
      * @param market     The market instance.
      * @param resource   The resource type.
-     * @return           If the purchase was success or not.
+     * @throws IllegalArgumentException if amount is < 1
+     * @throws NotEnoughResourceException if the market does not have enough of the resource
+     * @throws NotEnoughMoneyException if the player does not have enough money for the transaction
      */
-    public PurchaseStatus purchaseResourceFromMarket(int amount, Market market, ResourceType resource) {
+    public void purchaseResourceFromMarket(int amount, Market market, ResourceType resource) {
+        if (amount < 1) {
+            throw new IllegalArgumentException("amount cannot be < 1");
+        }
         if (!market.hasEnoughResources(resource, amount)) {
-            return PurchaseStatus.FailMarketNotEnoughResource;
+            throw new NotEnoughResourceException();
         }
 
         int cost = amount * market.getSellPrice(resource);
         int money = getMoney();
         if (cost > money) {
-            return PurchaseStatus.FailPlayerNotEnoughMoney;
+            throw new NotEnoughMoneyException();
         }
 
         market.sellResource(resource, amount);
         setMoney(money - cost);
         setResource(resource, getResource(resource) + amount);
-        return PurchaseStatus.Success;
     }
 
     /**
-     * Action for player to sell resources to the market.
-     *
+     * Sell resources to the market.
      * @param amount    Amount of resources to sell.
      * @param market    The market instance.
      * @param resource  The resource type.
@@ -267,16 +256,18 @@ public class Player {
      * Player add a landplot to their inventory for gold
      * @param plot           The landplot to purchase
      */
-    public synchronized boolean purchaseLandPlot(LandPlot plot){
-        if (plot.hasOwner() || money < 10) {
-            return false;
+    public synchronized void purchaseLandPlot(LandPlot plot){
+        if (money < 10) {
+            throw new NotEnoughMoneyException();
+        }
+        if (plot.hasOwner()) {
+            throw new PlotAleadyOwnedException();
         }
 
         landList.add(plot);
         this.setMoney(this.getMoney() - 10);
         plot.setOwner(this);
         game.landPurchasedThisTurn();
-        return true;
     }
 
     /**
@@ -286,7 +277,6 @@ public class Player {
         for (LandPlot plot : landList) {
             energy += plot.produceResource(ResourceType.ENERGY);
             ore += plot.produceResource(ResourceType.ORE);
-
             food += plot.produceResource(ResourceType.FOOD);
         }
     }
@@ -315,24 +305,12 @@ public class Player {
     }
 
     /**
-     * Remove the LandPlot from the user.
-     *
-     * @param landPlot  LandPlot to be removed from the user.
-     *                  <code>this_user</code> must be the current owner first.
-     */
-    void removeLandPlot(LandPlot landPlot) {
-        if (landPlot != null && landList.contains(landPlot) && landPlot.getOwner() == this) {
-            landList.add(landPlot);
-        }
-    }
-
-    /**
      * Get a string list of roboticons available for the player.
      * Mainly for the dropdown selection.
      *
      * @return  The string list of roboticons.
      */
-    public Array<String> getRoboticonAmountList() {
+    public Array<String> getRoboticonQuantities() {
         int ore = 0;
         int energy = 0;
         int food = 0;
@@ -364,6 +342,7 @@ public class Player {
         roboticonAmountList.add("Uncustomised x "    + uncustomised);
         return roboticonAmountList;
     }
+
     public Array<Roboticon> getRoboticons(){
         return this.roboticonList;
     }
@@ -393,7 +372,7 @@ public class Player {
      * Returns the array of plots owned by this player
      * @return ArrayList of LandPlot The array of plots owned by this player
      */
-    public ArrayList<LandPlot> getLandList() {
+    public ArrayList<LandPlot> getOwnedPlots() {
         return landList;
     }
 

@@ -1,38 +1,41 @@
-/**
- * @author DRTN
- * Team Website with download:
- * https://misterseph.github.io/DuckRelatedFractalProject/
- *
- * This Class contains either modifications or is entirely new in Assessment 3
- *
- * If you are in any doubt a complete changelog can be found here:
- * https://github.com/NotKieran/DRTN-Fractal/compare/Fractal_Initial...development
- *
- * And a more concise report can be found in our Change3 document.
- **/
+/*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
+ *  JBT Changes to this file:
+ *      Minor style changes (ie. adding brackets to one line if)
+ *      Removed hasRoboticon which could be calculated when needed rather than having to be updated in many places.
+ *      Split InstallRoboticon into smaller methods
+ *      Deleted removeOwner as it was unused and untested
+ *      Made x, y private as they were never accessed outside the class, and shouldnt be
+ */
 
 package io.github.teamfractal.entity;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import io.github.teamfractal.entity.enums.ResourceType;
+import io.github.teamfractal.exception.AlreadyInstalledElsewhereException;
 import io.github.teamfractal.exception.InvalidResourceTypeException;
 import io.github.teamfractal.exception.NotCommonResourceException;
 import io.github.teamfractal.util.PlotManager;
 
 public class LandPlot {
-    private final int IndexOre = 0;
-    private final int IndexEnergy = 1;
-    private final int IndexFood = 2;
-    int x, y;
+    private static final int IndexOre = 0;
+    private static final int IndexEnergy = 1;
+    private static final int IndexFood = 2;
+    private int x, y;
 
     /**
      * Saved modifiers for LandPlot.
      * [ Ore, Energy, Food ]
      */
     float[] productionModifiers = {0, 0, 0};
+
+    // the different map layers for this tile
     private TiledMapTileLayer.Cell mapTile;
     private TiledMapTileLayer.Cell playerTile;
     private TiledMapTileLayer.Cell roboticonTile;
+
+    /**
+     * the owner of the tile
+     */
     private Player owner;
 
     /**
@@ -40,9 +43,11 @@ public class LandPlot {
      * [ Ore, Energy, Food ]
      */
     private int[] productionAmounts;
-    private boolean owned;
+
+    /**
+     * the roboticon installed on this tile
+     */
     private Roboticon installedRoboticon;
-    private boolean hasRoboticon;
 
     /**
      * Initialise LandPlot with specific base amount of resources.
@@ -53,7 +58,6 @@ public class LandPlot {
      */
     public LandPlot(int ore, int energy, int food) {
         this.productionAmounts = new int[]{ore, energy, food};
-        this.owned = false;
     }
 
     public TiledMapTileLayer.Cell getMapTile() {
@@ -103,19 +107,10 @@ public class LandPlot {
         return getOwner() != null;
     }
 
-    /**
-     * Removes the owner of the tile
-     */
-    public void removeOwner() {
-        if (!hasOwner())
-            return ;
-
-        owner.removeLandPlot(this);
-    }
 
     /**
      * Retrieves the overlays for the specific tile
-     * @param plotManager The plotmanager storing the images of the current mao
+     * @param plotManager The plotmanager storing the images of the current map
      * @param x The x coordinate of the tile
      * @param y The y coordinate if the tile
      */
@@ -131,54 +126,78 @@ public class LandPlot {
      * Get the type index from the {@link ResourceType}
      * @param resource   The {@link ResourceType}
      * @return           The index.
-     * @throws InvalidResourceTypeException Exception is thrown if the resource index is invalid.
+     * @throws NotCommonResourceException Exception is thrown if the resource is invalid.
      */
-    private int resourceTypeToIndex(ResourceType resource) {
+    private static int resourceTypeToIndex(ResourceType resource) {
         switch (resource) {
             case ORE:    return IndexOre;
             case FOOD:   return IndexFood;
             case ENERGY: return IndexEnergy;
         }
-
         throw new NotCommonResourceException(resource);
     }
 
+    // JBT Modified this method, seperated out into different functions
     /**
-     * Install a roboticon to this LandPlot.
-     *
+     * Install a roboticon on this LandPlot.
      * @param roboticon    The roboticon to be installed.
      */
     public synchronized boolean installRoboticon(Roboticon roboticon) {
-        // Check if supplied roboticon is already installed.
-        if (roboticon.isInstalled()) {
+        if (hasRoboticon()) {
             return false;
         }
-
-        if (roboticon.getCustomisation() != ResourceType.Unknown){
-            int index = resourceTypeToIndex(roboticon.getCustomisation());
-            if (roboticon.setInstalledLandplot(this)) {
-                productionModifiers[index] += 1;
-                this.installedRoboticon = roboticon;
-                return true;
-            }
+        boolean installedSuccessfully = tryInstallRoboticon(roboticon);
+        if (installedSuccessfully) {
+            installedRoboticon = roboticon;
+            updateProductionModifiers(roboticon);
         }
-        else{
-            if (roboticon.setInstalledLandplot(this)) {
-                this.installedRoboticon = roboticon;
-                return true;
-            }
-        }
+        return installedSuccessfully;
+    }
 
-        return false;
+    // JBT created this method
+    /**
+     * get the roboticon installed on this tile
+     * @return the roboticon installed on this tile, null if none is installed
+     */
+    public Roboticon getInstalledRoboticon() {
+        return installedRoboticon;
+    }
+
+    // JBT Created this method
+    /**
+     * update the production modifiers based on a new roboticon
+     * @param roboticon the roboticon which has just been installed
+     */
+    private synchronized void updateProductionModifiers(Roboticon roboticon) {
+        ResourceType customisation = installedRoboticon.getCustomisation();
+        if (customisation != ResourceType.Unknown) {
+            int resourceIndex = resourceTypeToIndex(customisation);
+            productionModifiers[resourceIndex] += 1;
+        }
+    }
+
+    // JBT Created this method
+    /**
+     * attempt to install the roboticon on this tile
+     * @param roboticon the roboticon to install
+     * @return true on success, false on failure
+     */
+    private synchronized boolean tryInstallRoboticon(Roboticon roboticon) {
+        try {
+            roboticon.setInstalledLandPlot(this);
+        } catch (AlreadyInstalledElsewhereException ex) {
+            return false;
+        }
+        return true;
     }
 
     /**
      * Calculate the amount of resources to be produced.
      *
-     * @return The amount of resources to be produced in an 2D array.
+     * @return The amount of resources to be produced in an array.
      */
     public int[] produceResources() {
-        int[] produced = new int[3];
+        int[] produced = new int[productionModifiers.length];
         for (int i = 0; i < 2; i++) {
             produced[i] = (int) ((float) productionAmounts[i] * productionModifiers[i]);
         }
@@ -191,36 +210,37 @@ public class LandPlot {
      * @return          Calculated amount of resource to be generated.
      */
     public int produceResource(ResourceType resource) {
-        if (this.hasRoboticon){
+        if (hasRoboticon()){
             int resIndex = resourceTypeToIndex(resource);
             return (int) ((float) productionAmounts[resIndex] * productionModifiers[resIndex]);
+        } else {
+            return 0;
         }
-        else return 0;
     }
 
+    // JBT Changed this method so that exceptins are thrown for invalid resources
     /**
-     * Gets the index of the specific resource
+     * Gets the production of the specific resource
      * @param resource The resource selected
      * @return The index of the resource
      */
-    public int getResource(ResourceType resource) {
+    public int getResource(ResourceType resource) throws InvalidResourceTypeException {
+        if (resource == ResourceType.CUSTOMISATION ||
+                resource == ResourceType.ROBOTICON ||
+                resource == ResourceType.Unknown) {
+            throw new InvalidResourceTypeException();
+        }
         int resIndex = resourceTypeToIndex(resource);
         return productionAmounts[resIndex];
     }
 
+    // JBT created this method so that installed roboticon could be calculated rather than having to be updated
     /**
      * Checks if the tile contains a roboticon
      * @return True if the tile contains a roboticon, false otherwise
      */
     public boolean hasRoboticon(){
-        return this.hasRoboticon;
+        return installedRoboticon != null;
     }
 
-    /**
-     * Setter for hasRoboticon
-     * @param roboticonInstalled The boolean that hasRoboticon is to be changed to
-     */
-    public void setHasRoboticon(boolean roboticonInstalled){
-        this.hasRoboticon = roboticonInstalled;
-    }
 }

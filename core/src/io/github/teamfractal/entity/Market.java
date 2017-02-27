@@ -150,7 +150,7 @@ public class Market {
                 return getFood();
 
             case CUSTOMISATION:
-                return 1000;
+                return Integer.MAX_VALUE;
 
             default:
                 throw new NotCommonResourceException(type);

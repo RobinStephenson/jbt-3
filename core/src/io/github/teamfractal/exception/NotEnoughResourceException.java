@@ -2,7 +2,7 @@ package io.github.teamfractal.exception;
 
 import io.github.teamfractal.entity.enums.ResourceType;
 
-public class NotEnoughResourceException extends RuntimeException {
+public class NotEnoughResourceException extends TransactionException {
 	/**
 	 * Constructs an <code>NotEnoughResourceException</code> with no
 	 * detail message.

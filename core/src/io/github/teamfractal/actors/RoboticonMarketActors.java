@@ -1,15 +1,5 @@
-/**
- * @author DRTN
- * Team Website with download:
- * https://misterseph.github.io/DuckRelatedFractalProject/
- *
- * This Class contains either modifications or is entirely new in Assessment 3
- *
- * If you are in any doubt a complete changelog can be found here:
- * https://github.com/NotKieran/DRTN-Fractal/compare/Fractal_Initial...development
- *
- * And a more concise report can be found in our Change3 document.
- **/
+ /*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
+ */
 
 package io.github.teamfractal.actors;
 
@@ -25,14 +15,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import io.github.teamfractal.RoboticonQuest;
 import io.github.teamfractal.entity.Roboticon;
-import io.github.teamfractal.entity.enums.PurchaseStatus;
 import io.github.teamfractal.entity.enums.ResourceType;
+import io.github.teamfractal.exception.TransactionException;
 
 import java.util.ArrayList;
 
-/**
- * Created by Joseph on 08/02/2017.
- */
 public class RoboticonMarketActors extends Table {
     /**
      * Texture to be drawn in the market when the current player selects an uncustomised roboticon
@@ -380,7 +367,14 @@ public class RoboticonMarketActors extends Table {
      * @param index The position of the currently selected, non-customised roboticon
      */
     public void purchaseCustomisationFunction(ResourceType resource, int index) {
-        if (game.getPlayer().purchaseCustomisationFromMarket(resource, roboticons.get(index), game.market) == PurchaseStatus.Success) {
+        boolean purchaseSuccessful;
+        try {
+            game.getPlayer().purchaseCustomisationFromMarket(resource, roboticons.get(index), game.market);
+            purchaseSuccessful = true;
+        } catch (TransactionException ex) {
+            purchaseSuccessful = false;
+        }
+        if (purchaseSuccessful) {
             widgetUpdate();
             //Refresh the customisation area to reflect the new customisation purchase
             game.gameScreen.getActors().textUpdate();
@@ -396,7 +390,14 @@ public class RoboticonMarketActors extends Table {
      * Buys the selected amount of roboticons and places them in the player's inventory
      */
     public void purchaseRoboticonFunction() {
-        if (game.getPlayer().purchaseRoboticonsFromMarket(roboticonPurchaseAmount, game.market) == PurchaseStatus.Success) {
+        boolean purchaseSuccessful;
+        try {
+            game.getPlayer().purchaseRoboticonsFromMarket(roboticonPurchaseAmount, game.market);
+            purchaseSuccessful = true;
+        } catch (TransactionException ex) {
+            purchaseSuccessful = false;
+        }
+        if (purchaseSuccessful) {
             if (game.market.getResource(ResourceType.ROBOTICON) == 0) {
                 roboticonPurchaseAmount = 0;
             } else {

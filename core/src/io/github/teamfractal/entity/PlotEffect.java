@@ -192,7 +192,7 @@ public class PlotEffect extends Array<Float[]> {
     }
 
     /**
-     * Reverts the changes made by the effect to the last plot that it was assigned to
+     * Reverts the changes made by the effect to the last plot in the plot register
      */
     private void revert() {
         if (plotRegister.size > 0) {
