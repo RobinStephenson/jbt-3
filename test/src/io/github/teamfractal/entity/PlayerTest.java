@@ -6,6 +6,7 @@
 
 package io.github.teamfractal.entity;
 
+import com.badlogic.gdx.utils.Array;
 import io.github.teamfractal.RoboticonQuest;
 import io.github.teamfractal.TesterFile;
 import io.github.teamfractal.entity.enums.ResourceType;
@@ -451,10 +452,55 @@ public class PlayerTest extends TesterFile {
     @Test
     public void getScore()
     {
+        //Create a player
         Player player2 = new Player(game);
-        player2.setFood(2);
-        player2.setEnergy(1);
-        player2.setOre(3);
+
+        //Set the players resources to equal 6 in total
+        player2.setResource(ResourceType.ORE, 2);
+        player2.setResource(ResourceType.ENERGY, 1);
+        player2.setResource(ResourceType.FOOD, 3);
+
+        //Check that the players score is 6
         assertEquals(6, player2.calculateScore());
+    }
+
+    @Test
+    public void getRoboticonQuantities()
+    {
+        //Create a new player
+        Player player2 = new Player(game);
+
+        //Set 1 roboticon to be ORE customised
+        Roboticon r1 = new Roboticon(0);
+        r1.setCustomisation(ResourceType.ORE);
+
+        //Set 2 roboticons to be ENERGY customised
+        Roboticon r2 = new Roboticon(1);
+        Roboticon r3 = new Roboticon(2);
+        r2.setCustomisation(ResourceType.ENERGY);
+        r3.setCustomisation(ResourceType.ENERGY);
+
+        //Set 1 roboticon to be FOOD customised
+        Roboticon r4 = new Roboticon(3);
+        r4.setCustomisation(ResourceType.FOOD);
+
+        //Set 2 roboticons to be uncustomised
+        Roboticon r5 = new Roboticon(4);
+        Roboticon r6 = new Roboticon(5);
+
+        //Add the roboticons to the players inventory
+        player2.roboticonList.add(r1);
+        player2.roboticonList.add(r2);
+        player2.roboticonList.add(r3);
+        player2.roboticonList.add(r4);
+        player2.roboticonList.add(r5);
+        player2.roboticonList.add(r6);
+
+        //Now test that the getRoboticonQuantities function returns correct results
+        Array<String> roboticonQuantities = player2.getRoboticonQuantities();
+        assertEquals("Ore Specific x 1", roboticonQuantities.get(0));
+        assertEquals("Energy Specific x 2", roboticonQuantities.get(1));
+        assertEquals("Food Specific x 1", roboticonQuantities.get(2));
+        assertEquals("Uncustomised x 2", roboticonQuantities.get(3));
     }
 }
