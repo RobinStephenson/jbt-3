@@ -1,15 +1,8 @@
-/**
- * @author DRTN
- * Team Website with download:
- * https://misterseph.github.io/DuckRelatedFractalProject/
- *
- * This Class contains either modifications or is entirely new in Assessment 3
- *
- * If you are in any doubt a complete changelog can be found here:
- * https://github.com/NotKieran/DRTN-Fractal/compare/Fractal_Initial...development
- *
- * And a more concise report can be found in our Change3 document.
- **/
+/*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
+ *  JBT Changes to this file:
+ *      Added marketCanCheckResourceLessThanAmountYouWantToBuy
+ *      Added marketCanCheckNoResources
+ */
 
 package io.github.teamfractal.entity;
 
@@ -24,6 +17,7 @@ import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class MarketTest extends TesterFile {
 	@Rule
@@ -92,7 +86,7 @@ public class MarketTest extends TesterFile {
 	 * player class can use this method to find out that the amount of resource
 	 * player want to buy is available in the market, if the amount of resource
 	 * in the market is less than the amount of resources player want to buy then
-	 * throw exception
+	 * return false
 	 */
 
 	@Test
@@ -101,6 +95,48 @@ public class MarketTest extends TesterFile {
 		assertFalse(market.hasEnoughResources(ResourceType.ENERGY, 1000000));
 		assertFalse(market.hasEnoughResources(ResourceType.ROBOTICON, 1000000));
 		assertFalse(market.hasEnoughResources(ResourceType.FOOD, 1000000));
+	}
+
+	/**
+	 * Made by JBT
+	 * test: hasEnoughResources
+	 * player class can use this method to find out that the amount of resource
+	 * player want to buy is available in the market, if the amount of resource
+	 * in the market is more than the amount of resources player want to buy then
+	 * return true
+	 */
+	@Test
+	public void marketCanCheckResourceLessThanAmountYouWantToBuy(){
+		market.setEnergy(10);
+		market.setFood(10);
+		market.setOre(10);
+		market.setRoboticon(10);
+
+		assertTrue(market.hasEnoughResources(ResourceType.ORE, 9));
+		assertTrue(market.hasEnoughResources(ResourceType.ENERGY, 7));
+		assertTrue(market.hasEnoughResources(ResourceType.ROBOTICON, 3));
+		assertTrue(market.hasEnoughResources(ResourceType.FOOD, 0));
+	}
+
+	/**
+	 * Made by JBT
+	 * test: hasEnoughResources
+	 * player class can use this method to find out that the amount of resource
+	 * player want to buy is available in the market, if the amount of resource
+	 * in the market is 0 then return false
+	 */
+
+	@Test
+	public void marketCanCheckNoResources(){
+		market.setOre(0);
+		market.setFood(0);
+		market.setEnergy(0);
+		market.setRoboticon(0);
+
+		assertFalse(market.hasEnoughResources(ResourceType.ORE, 0));
+		assertFalse(market.hasEnoughResources(ResourceType.ENERGY, 10));
+		assertFalse(market.hasEnoughResources(ResourceType.ROBOTICON, 100));
+		assertFalse(market.hasEnoughResources(ResourceType.FOOD, 1000));
 	}
 
 

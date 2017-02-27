@@ -198,6 +198,9 @@ public class Market {
     boolean hasEnoughResources(ResourceType type, int amount)
             throws InvalidResourceTypeException {
         int resource = getResource(type);
+        /**
+         * Added by JBT to fix crash when resource and amount = 0
+         */
         if (amount <= resource && resource != 0){
             return  true;
         }
