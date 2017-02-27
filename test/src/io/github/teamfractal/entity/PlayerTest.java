@@ -401,6 +401,10 @@ public class PlayerTest extends TesterFile {
         player.purchaseLandPlot(plot);
     }
 
+    //Test created by JBT
+    /**
+     * Tests that the correct amount of resources are produced when generateResources is called
+     */
     @Test
     public void produceCorrectAmounts()
     {
@@ -450,7 +454,10 @@ public class PlayerTest extends TesterFile {
         assertEquals(6 ,player2.getResource(ResourceType.FOOD));
     }
 
-    //Added by JBT
+    //Test created by JBT
+    /**
+     * Tests that the correct score is calculated for a player when calculateScore is called
+     */
     @Test
     public void getScore()
     {
@@ -466,6 +473,10 @@ public class PlayerTest extends TesterFile {
         assertEquals(6, player2.calculateScore());
     }
 
+    //Test created by JBT
+    /**
+     * Tests that the getRoboticonQuantities function returns the correct data for owned roboticons
+     */
     @Test
     public void getRoboticonQuantities()
     {
