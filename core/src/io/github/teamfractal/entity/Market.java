@@ -1,15 +1,8 @@
-/**
- * @author DRTN
- * Team Website with download:
- * https://misterseph.github.io/DuckRelatedFractalProject/
- *
- * This Class contains either modifications or is entirely new in Assessment 3
- *
- * If you are in any doubt a complete changelog can be found here:
- * https://github.com/NotKieran/DRTN-Fractal/compare/Fractal_Initial...development
- *
- * And a more concise report can be found in our Change3 document.
- **/
+/*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
+ *  JBT Changes to this file:
+ *      Changed hasEnoughResources function to fix bug
+ */
+
 
 package io.github.teamfractal.entity;
 
@@ -205,7 +198,12 @@ public class Market {
     boolean hasEnoughResources(ResourceType type, int amount)
             throws InvalidResourceTypeException {
         int resource = getResource(type);
-        return amount <= resource;
+        if (amount <= resource && resource != 0){
+            return  true;
+        }
+        else {
+            return  false ;
+        }
     }
 
     /**
