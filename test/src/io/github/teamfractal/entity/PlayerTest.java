@@ -470,6 +470,9 @@ public class PlayerTest extends TesterFile {
         //Create a new player
         Player player2 = new Player(game);
 
+        //Ensure the players roboticon list is empty
+        assertEquals(0, player2.getRoboticons().size);
+
         //Set 1 roboticon to be ORE customised
         Roboticon r1 = new Roboticon(0);
         r1.setCustomisation(ResourceType.ORE);
