@@ -275,17 +275,6 @@ public class Player {
     }
 
     /**
-     * Get a landplot to produce resources
-     */
-    public void produceResources(){
-        for (LandPlot plot : landList) {
-            energy += plot.produceResource(ResourceType.ENERGY);
-            ore += plot.produceResource(ResourceType.ORE);
-            food += plot.produceResource(ResourceType.FOOD);
-        }
-    }
-
-    /**
      * Apply roboticon customisation
      * @param roboticon  The roboticon to be customised
      * @param type       The roboticon customisation type.
