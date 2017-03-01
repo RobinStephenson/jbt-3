@@ -32,7 +32,6 @@ import io.github.teamfractal.entity.AIPlayer;
 import io.github.teamfractal.entity.LandPlot;
 import io.github.teamfractal.entity.Player;
 import io.github.teamfractal.entity.enums.ResourceType;
-import io.github.teamfractal.util.TileConverter;
 
 import java.util.ArrayList;
 
@@ -250,7 +249,6 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 		if (renderer != null) renderer.dispose();
 		this.tmx = new TmxMapLoader().load("tiles/city.tmx");
 		tiles = tmx.getTileSets();
-		TileConverter.setup(tiles, game);
 		renderer = new IsometricStaggeredTiledMapRenderer(tmx);
 		game.reset(AI);
 
