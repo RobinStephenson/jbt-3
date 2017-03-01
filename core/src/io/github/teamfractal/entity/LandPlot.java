@@ -193,7 +193,7 @@ public class LandPlot {
 
     /**
      * Calculate the amount of resources to be produced.
-     *
+     * Uses ProduceResource
      * @return The amount of resources to be produced in an array.
      */
     public int[] produceResources() {
