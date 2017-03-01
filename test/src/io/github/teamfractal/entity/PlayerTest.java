@@ -407,26 +407,23 @@ public class PlayerTest extends TesterFile {
     @Test
     public void produceCorrectAmounts()
     {
-        //Create a player
-        Player player2 = new Player(game);
-
         //Ensure player 2 has no resources
-        assertEquals(0 ,player2.getResource(ResourceType.ORE));
-        assertEquals(0 ,player2.getResource(ResourceType.ENERGY));
-        assertEquals(0 ,player2.getResource(ResourceType.FOOD));
+        assertEquals(0 ,player.getResource(ResourceType.ORE));
+        assertEquals(0 ,player.getResource(ResourceType.ENERGY));
+        assertEquals(0 ,player.getResource(ResourceType.FOOD));
 
         //Ensure player 2 has no plots of land
-        assertEquals(0, player2.getOwnedPlots().size());
+        assertEquals(0, player.getOwnedPlots().size());
         //Set the players money so they can afford 2 tiles
-        player2.setMoney(20);
+        player.setMoney(20);
 
         //Create two plots of land
         LandPlot plot1 = new LandPlot(1,5,3);
         LandPlot plot2 = new LandPlot(2,1,6);
 
         //Purchase the plots of land
-        player2.purchaseLandPlot(plot1);
-        player2.purchaseLandPlot(plot2);
+        player.purchaseLandPlot(plot1);
+        player.purchaseLandPlot(plot2);
 
         //Create roboticons
         Roboticon roboticon1 = new Roboticon(0);
@@ -442,15 +439,15 @@ public class PlayerTest extends TesterFile {
 
         //Attempt to generate resources
         try {
-            player2.generateResources();
+            player.generateResources();
         } catch (NullPointerException e) {
             //Catch the error that generateResources causes as game is not properly initalised
         }
 
         //Ensure player 2's resources have been updated accordingly
-        assertEquals(0 ,player2.getResource(ResourceType.ORE));
-        assertEquals(5 ,player2.getResource(ResourceType.ENERGY));
-        assertEquals(6 ,player2.getResource(ResourceType.FOOD));
+        assertEquals(0 ,player.getResource(ResourceType.ORE));
+        assertEquals(5 ,player.getResource(ResourceType.ENERGY));
+        assertEquals(6 ,player.getResource(ResourceType.FOOD));
     }
 
     //Test created by JBT
@@ -460,16 +457,13 @@ public class PlayerTest extends TesterFile {
     @Test
     public void getScore()
     {
-        //Create a player
-        Player player2 = new Player(game);
-
         //Set the players resources to equal 6 in total
-        player2.setResource(ResourceType.ORE, 2);
-        player2.setResource(ResourceType.ENERGY, 1);
-        player2.setResource(ResourceType.FOOD, 3);
+        player.setResource(ResourceType.ORE, 2);
+        player.setResource(ResourceType.ENERGY, 1);
+        player.setResource(ResourceType.FOOD, 3);
 
         //Check that the players score is 6
-        assertEquals(6, player2.calculateScore());
+        assertEquals(6, player.calculateScore());
     }
 
     //Test created by JBT
@@ -479,11 +473,8 @@ public class PlayerTest extends TesterFile {
     @Test
     public void getRoboticonQuantities()
     {
-        //Create a new player
-        Player player2 = new Player(game);
-
         //Ensure the players roboticon list is empty
-        assertEquals(0, player2.getRoboticons().size);
+        assertEquals(0, player.getRoboticons().size);
 
         //Set 1 roboticon to be ORE customised
         Roboticon r1 = new Roboticon(0);
@@ -504,15 +495,15 @@ public class PlayerTest extends TesterFile {
         Roboticon r6 = new Roboticon(5);
 
         //Add the roboticons to the players inventory
-        player2.roboticonList.add(r1);
-        player2.roboticonList.add(r2);
-        player2.roboticonList.add(r3);
-        player2.roboticonList.add(r4);
-        player2.roboticonList.add(r5);
-        player2.roboticonList.add(r6);
+        player.roboticonList.add(r1);
+        player.roboticonList.add(r2);
+        player.roboticonList.add(r3);
+        player.roboticonList.add(r4);
+        player.roboticonList.add(r5);
+        player.roboticonList.add(r6);
 
         //Now test that the getRoboticonQuantities function returns correct results
-        Array<String> roboticonQuantities = player2.getRoboticonQuantities();
+        Array<String> roboticonQuantities = player.getRoboticonQuantities();
         assertEquals("Ore Specific x 1", roboticonQuantities.get(0));
         assertEquals("Energy Specific x 2", roboticonQuantities.get(1));
         assertEquals("Food Specific x 1", roboticonQuantities.get(2));
