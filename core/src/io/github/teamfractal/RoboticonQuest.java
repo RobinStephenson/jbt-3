@@ -1,4 +1,7 @@
-
+/*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
+ *  JBT Changes to this file:
+ *
+ */
 
 package io.github.teamfractal;
 
@@ -19,18 +22,7 @@ import io.github.teamfractal.util.*;
 
 import java.util.ArrayList;
 import java.util.Random;
-/**
- * @author DRTN
- * Team Website with download:
- * https://misterseph.github.io/DuckRelatedFractalProject/
- * <p>
- * This Class contains either modifications or is entirely new in Assessment 3
- * <p>
- * If you are in any doubt a complete changelog can be found here:
- * https://github.com/NotKieran/DRTN-Fractal/compare/Fractal_Initial...development
- * <p>
- * And a more concise report can be found in our Change3 document.
- **/
+
 
 /**
  * This is the main game start up class.
