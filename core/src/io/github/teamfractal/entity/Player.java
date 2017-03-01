@@ -255,6 +255,7 @@ public class Player {
     /**
      * Player add a landplot to their inventory for gold
      * @param plot           The landplot to purchase
+     * @throws NotEnoughMoneyException if the player does not have enough money for the tile
      */
     public synchronized void purchaseLandPlot(LandPlot plot){
         if(plot == null) {
