@@ -6,17 +6,16 @@
 
 package io.github.teamfractal.entity;
 
+import com.badlogic.gdx.utils.Array;
 import io.github.teamfractal.RoboticonQuest;
 import io.github.teamfractal.TesterFile;
 import io.github.teamfractal.entity.enums.ResourceType;
-import io.github.teamfractal.exception.InvalidResourceTypeException;
-import io.github.teamfractal.exception.NotCommonResourceException;
-import io.github.teamfractal.exception.NotEnoughMoneyException;
-import io.github.teamfractal.exception.NotEnoughResourceException;
+import io.github.teamfractal.exception.*;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.lwjgl.Sys;
 
 import static org.junit.Assert.assertEquals;
 
@@ -25,10 +24,11 @@ public class PlayerTest extends TesterFile {
     public final ExpectedException exception = ExpectedException.none();
 
     private Player player;
+    private RoboticonQuest game;  //Added by JBT
 
     @Before
     public void setUp() {
-        RoboticonQuest game = new RoboticonQuest();
+        game = new RoboticonQuest();
         player = new Player(game);
     }
 
@@ -349,7 +349,6 @@ public class PlayerTest extends TesterFile {
         market.setOre(16);
         player.setMoney(1000);
 
-
         int playerMoney = player.getMoney();
         int orePrice = market.getSellPrice(ResourceType.ORE);
         //Purchase 5 ore
@@ -376,5 +375,147 @@ public class PlayerTest extends TesterFile {
     @Test(expected = NullPointerException.class)
     public void purchaseNullLandPlot() {
         player.purchaseLandPlot(null);
+    }
+
+    // Test created by JBT
+    /**
+     * purchaseLandPlot should throw an exception if the player cannot afford the tile
+     */
+    @Test(expected = NotEnoughMoneyException.class)
+    public void cantAffordLandPlot() {
+        player.setMoney(5);
+        LandPlot plot = new LandPlot(1,2,2);
+        player.purchaseLandPlot(plot);
+    }
+
+    // Test created by JBT
+    /**
+     * purchaseLandPlot should throw an exception if the tile is already owned
+     */
+    @Test(expected = PlotAleadyOwnedException.class)
+    public void landPlotAlreadyOwned() {
+        player.setMoney(20);
+        LandPlot plot = new LandPlot(1,2,2);
+        player.purchaseLandPlot(plot);
+        player.purchaseLandPlot(plot);
+    }
+
+    //Test created by JBT
+    /**
+     * Tests that the correct amount of resources are produced when generateResources is called
+     */
+    @Test
+    public void produceCorrectAmounts()
+    {
+        //Create a player
+        Player player2 = new Player(game);
+
+        //Ensure player 2 has no resources
+        assertEquals(0 ,player2.getResource(ResourceType.ORE));
+        assertEquals(0 ,player2.getResource(ResourceType.ENERGY));
+        assertEquals(0 ,player2.getResource(ResourceType.FOOD));
+
+        //Ensure player 2 has no plots of land
+        assertEquals(0, player2.getOwnedPlots().size());
+        //Set the players money so they can afford 2 tiles
+        player2.setMoney(20);
+
+        //Create two plots of land
+        LandPlot plot1 = new LandPlot(1,5,3);
+        LandPlot plot2 = new LandPlot(2,1,6);
+
+        //Purchase the plots of land
+        player2.purchaseLandPlot(plot1);
+        player2.purchaseLandPlot(plot2);
+
+        //Create roboticons
+        Roboticon roboticon1 = new Roboticon(0);
+        Roboticon roboticon2 = new Roboticon(1);
+
+        //Set their customisations
+        roboticon1.setCustomisation(ResourceType.ENERGY);
+        roboticon2.setCustomisation(ResourceType.FOOD);
+
+        //Install the roboticons
+        plot1.installRoboticon(roboticon1);
+        plot2.installRoboticon(roboticon2);
+
+        //Attempt to generate resources
+        try {
+            player2.generateResources();
+        } catch (NullPointerException e) {
+            //Catch the error that generateResources causes as game is not properly initalised
+        }
+
+        //Ensure player 2's resources have been updated accordingly
+        assertEquals(0 ,player2.getResource(ResourceType.ORE));
+        assertEquals(5 ,player2.getResource(ResourceType.ENERGY));
+        assertEquals(6 ,player2.getResource(ResourceType.FOOD));
+    }
+
+    //Test created by JBT
+    /**
+     * Tests that the correct score is calculated for a player when calculateScore is called
+     */
+    @Test
+    public void getScore()
+    {
+        //Create a player
+        Player player2 = new Player(game);
+
+        //Set the players resources to equal 6 in total
+        player2.setResource(ResourceType.ORE, 2);
+        player2.setResource(ResourceType.ENERGY, 1);
+        player2.setResource(ResourceType.FOOD, 3);
+
+        //Check that the players score is 6
+        assertEquals(6, player2.calculateScore());
+    }
+
+    //Test created by JBT
+    /**
+     * Tests that the getRoboticonQuantities function returns the correct data for owned roboticons
+     */
+    @Test
+    public void getRoboticonQuantities()
+    {
+        //Create a new player
+        Player player2 = new Player(game);
+
+        //Ensure the players roboticon list is empty
+        assertEquals(0, player2.getRoboticons().size);
+
+        //Set 1 roboticon to be ORE customised
+        Roboticon r1 = new Roboticon(0);
+        r1.setCustomisation(ResourceType.ORE);
+
+        //Set 2 roboticons to be ENERGY customised
+        Roboticon r2 = new Roboticon(1);
+        Roboticon r3 = new Roboticon(2);
+        r2.setCustomisation(ResourceType.ENERGY);
+        r3.setCustomisation(ResourceType.ENERGY);
+
+        //Set 1 roboticon to be FOOD customised
+        Roboticon r4 = new Roboticon(3);
+        r4.setCustomisation(ResourceType.FOOD);
+
+        //Set 2 roboticons to be uncustomised
+        Roboticon r5 = new Roboticon(4);
+        Roboticon r6 = new Roboticon(5);
+
+        //Add the roboticons to the players inventory
+        player2.roboticonList.add(r1);
+        player2.roboticonList.add(r2);
+        player2.roboticonList.add(r3);
+        player2.roboticonList.add(r4);
+        player2.roboticonList.add(r5);
+        player2.roboticonList.add(r6);
+
+        //Now test that the getRoboticonQuantities function returns correct results
+        Array<String> roboticonQuantities = player2.getRoboticonQuantities();
+        assertEquals("Ore Specific x 1", roboticonQuantities.get(0));
+        assertEquals("Energy Specific x 2", roboticonQuantities.get(1));
+        assertEquals("Food Specific x 1", roboticonQuantities.get(2));
+        assertEquals("Uncustomised x 2", roboticonQuantities.get(3));
     }
 }
