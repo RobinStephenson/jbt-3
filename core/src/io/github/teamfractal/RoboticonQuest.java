@@ -144,7 +144,7 @@ public class RoboticonQuest extends Game {
 	/**
 	 * Setup the default skin for GUI components.
 	 */
-	private void setupSkin() {
+	protected void setupSkin() {
 		skin = new Skin();
 		skin.add("default", smallFontLight.font());
 		skin.addRegions(new TextureAtlas(Gdx.files.internal("skin/skin.atlas")));
@@ -202,7 +202,7 @@ public class RoboticonQuest extends Game {
 	/**
 	 * Implements the functionality of the current phase
 	 */
-    private void implementPhase() {
+    protected void implementPhase() {
         System.out.println("RoboticonQuest::nextPhase -> newPhaseState: " + phase);
 
 		switch (phase) {
