@@ -407,12 +407,12 @@ public class PlayerTest extends TesterFile {
     @Test
     public void produceCorrectAmounts()
     {
-        //Ensure player 2 has no resources
+        //Ensure player has no resources
         assertEquals(0 ,player.getResource(ResourceType.ORE));
         assertEquals(0 ,player.getResource(ResourceType.ENERGY));
         assertEquals(0 ,player.getResource(ResourceType.FOOD));
 
-        //Ensure player 2 has no plots of land
+        //Ensure player has no plots of land
         assertEquals(0, player.getOwnedPlots().size());
         //Set the players money so they can afford 2 tiles
         player.setMoney(20);
@@ -444,7 +444,7 @@ public class PlayerTest extends TesterFile {
             //Catch the error that generateResources causes as game is not properly initalised
         }
 
-        //Ensure player 2's resources have been updated accordingly
+        //Ensure players resources have been updated accordingly
         assertEquals(0 ,player.getResource(ResourceType.ORE));
         assertEquals(5 ,player.getResource(ResourceType.ENERGY));
         assertEquals(6 ,player.getResource(ResourceType.FOOD));
