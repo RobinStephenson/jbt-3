@@ -168,7 +168,7 @@ public class AIPlayer extends Player {
                 }
             }
         }
-        /**
+        /*
          * JBT Changed this.
          * Previously called next button in actors rather than game.nextphase()
          */
