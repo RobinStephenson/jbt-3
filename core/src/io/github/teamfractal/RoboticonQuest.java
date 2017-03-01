@@ -119,6 +119,7 @@ public class RoboticonQuest extends Game {
 
 		setScreen(mainMenuScreen);
 	}
+
 	/**
 	 * Getter for the batch
 	 * @return The batch of the game
@@ -153,6 +154,7 @@ public class RoboticonQuest extends Game {
 	public int getPhase(){
 		return this.phase;
 	}
+
 	/**
 	 * Setter for the current phase
 	 * @param phase The phase that the current phase is to be set to
@@ -186,6 +188,7 @@ public class RoboticonQuest extends Game {
         this.market = new Market();
 
     }
+
 	/**
 	 * Implements the functionality of the current phase
 	 */
@@ -352,6 +355,7 @@ public class RoboticonQuest extends Game {
 	public void landPurchasedThisTurn() {
 		landBoughtThisTurn ++;
 	}
+
 	/**
 	 * Getter for landBoughtThisTurn
 	 -	 * @return Returns true if land hasn't been purchased this turn, false otherwise
@@ -359,6 +363,7 @@ public class RoboticonQuest extends Game {
 	public boolean canPurchaseLandThisTurn () {
 		return (landBoughtThisTurn < 1 && getPlayer().getMoney() >= 10);
 	}
+
 	/**
 	 * Returns a string describing the current phase
 	 * @return A string with the description of the current phase
@@ -387,6 +392,7 @@ public class RoboticonQuest extends Game {
 		}
 
 	}
+
 	/**
 	 * Getter for the current player
 	 * @return The current player
@@ -394,7 +400,8 @@ public class RoboticonQuest extends Game {
 	public Player getPlayer(){
         return this.playerList.get(this.currentPlayerIndex);
     }
-	/**
+
+    /**
 	 * Getter for the index of the current player
 	 * @return The index of the current player
 	 */
@@ -429,6 +436,7 @@ public class RoboticonQuest extends Game {
 			PLE.constructOverlay(gameScreen);
 		}
 	}
+
 	/**
 	 * Randomly applies the effects
 	 */
@@ -457,6 +465,7 @@ public class RoboticonQuest extends Game {
 
 		gameScreen.getActors().textUpdate();
 	}
+
 	/**
 	 * Clears all imposed PlotEffects
 	 */
@@ -506,7 +515,6 @@ public class RoboticonQuest extends Game {
 	 * Returns the winner of the game, based on which player has the highest score
      * @return String returning the winning player
      */
-
 	public String getWinner(){
         String winner;
         if(playerList.get(0).calculateScore() > playerList.get(1).calculateScore()) {
