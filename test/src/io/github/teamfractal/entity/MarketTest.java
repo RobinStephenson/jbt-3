@@ -88,7 +88,6 @@ public class MarketTest extends TesterFile {
 	 * in the market is less than the amount of resources player want to buy then
 	 * return false
 	 */
-
 	@Test
 	public void marketCanCheckResourceMoreThanAmountYouWantToBuy() {
 		assertFalse(market.hasEnoughResources(ResourceType.ORE, 1000000));
@@ -97,8 +96,8 @@ public class MarketTest extends TesterFile {
 		assertFalse(market.hasEnoughResources(ResourceType.FOOD, 1000000));
 	}
 
+	//Made by JBT
 	/**
-	 * Made by JBT
 	 * test: hasEnoughResources
 	 * player class can use this method to find out that the amount of resource
 	 * player want to buy is available in the market, if the amount of resource
@@ -118,14 +117,13 @@ public class MarketTest extends TesterFile {
 		assertTrue(market.hasEnoughResources(ResourceType.FOOD, 0));
 	}
 
+	//Made by JBT
 	/**
-	 * Made by JBT
 	 * test: hasEnoughResources
 	 * player class can use this method to find out that the amount of resource
 	 * player want to buy is available in the market, if the amount of resource
 	 * in the market is 0 then return false
 	 */
-
 	@Test
 	public void marketCanCheckNoResources(){
 		market.setOre(0);
@@ -143,7 +141,6 @@ public class MarketTest extends TesterFile {
 	/**
 	 * test: getSellPrice()
 	 */
-
 	@Test
 	public void marketShouldReturnCorrectSellPrice(){
 		int valueToTest1 = 20;
