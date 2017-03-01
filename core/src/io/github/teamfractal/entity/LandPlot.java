@@ -198,9 +198,9 @@ public class LandPlot {
      */
     public int[] produceResources() {
         int[] produced = new int[productionModifiers.length];
-        for (int i = 0; i < 2; i++) {
-            produced[i] = (int) ((float) productionAmounts[i] * productionModifiers[i]);
-        }
+        produced[0] = produceResource(ResourceType.ORE);
+        produced[1] = produceResource(ResourceType.ENERGY);
+        produced[2] = produceResource(ResourceType.FOOD);
         return produced;
     }
 
