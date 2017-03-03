@@ -17,6 +17,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricStaggeredTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
@@ -207,7 +208,6 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 
 	public void setSelectedPlot(LandPlot plot) {
 		selectedPlot = plot;
-
 	}
 
 	/**
@@ -295,6 +295,10 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 				}
 				break;
 			case (2):
+                Texture chance = new Texture("roboticon_images/chancellor.png");
+                game.getBatch().begin();
+                game.getBatch().draw(chance, 50, 50);
+                game.getBatch().end();
 				game.roboticonMarket.act(delta);
 				game.roboticonMarket.draw();
 				break;

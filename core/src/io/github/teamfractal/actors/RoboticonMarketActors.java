@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import io.github.teamfractal.RoboticonQuest;
 import io.github.teamfractal.entity.Roboticon;
 import io.github.teamfractal.entity.enums.ResourceType;
@@ -395,6 +396,8 @@ public class RoboticonMarketActors extends Table {
             game.getPlayer().purchaseRoboticonsFromMarket(roboticonPurchaseAmount, game.market);
             purchaseSuccessful = true;
         } catch (TransactionException ex) {
+            purchaseSuccessful = false;
+        } catch (IllegalArgumentException ex) {
             purchaseSuccessful = false;
         }
         if (purchaseSuccessful) {
