@@ -196,6 +196,7 @@ public class LandPlot {
      *
      * @return The amount of resources to be produced in an array.
      */
+    //Changed by JBT to use ProduceResource to increase maintainability
     public int[] produceResources() {
         int[] produced = new int[productionModifiers.length];
         produced[0] = produceResource(ResourceType.ORE);
