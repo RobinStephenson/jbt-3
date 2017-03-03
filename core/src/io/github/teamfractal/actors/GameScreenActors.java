@@ -33,6 +33,7 @@ import io.github.teamfractal.entity.enums.ResourceType;
 import io.github.teamfractal.exception.TransactionException;
 import io.github.teamfractal.screens.AbstractAnimationScreen;
 import io.github.teamfractal.screens.GameScreen;
+import sun.font.TrueTypeFont;
 
 public class GameScreenActors {
     private final Stage stage;
@@ -371,7 +372,6 @@ public class GameScreenActors {
         TiledMapTileLayer.Cell playerTile = selectedPlot.getPlayerTile();
         playerTile.setTile(screen.getPlayerTile(player));
         textUpdate();
-
         nextButton.setVisible(true);
     }
 

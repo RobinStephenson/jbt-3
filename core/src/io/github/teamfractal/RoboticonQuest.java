@@ -351,9 +351,6 @@ public class RoboticonQuest extends Game {
 	 * Advances the current phase
 	 */
 	public void nextPhase() {
-        if ((phase == 1) && (landBoughtThisTurn == 0) && (this.getPlayer().getMoney() >= 10)) {
-            return;
-        }
         phase += 1;
         implementPhase();
 	}

@@ -91,7 +91,7 @@ public class AIPlayer extends Player {
                 game.gameScreen.getActors().buyLandPlotFunction();
             }
 
-            game.gameScreen.getActors().nextButtonFunction();
+            game.nextPhase();
         }
     }
 
@@ -147,7 +147,6 @@ public class AIPlayer extends Player {
                     }
                 }
             }
-            game.nextPhase();
         } finally {
             game.nextPhase();
         }
@@ -172,7 +171,7 @@ public class AIPlayer extends Player {
          * JBT Changed this.
          * Previously called next button in actors rather than game.nextphase()
          */
-        game.nextPhase();
+        game.setPhase(5);
     }
 
     /**
