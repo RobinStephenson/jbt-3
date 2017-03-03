@@ -18,6 +18,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricStaggeredTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
@@ -53,8 +54,10 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 
 	private LandPlot selectedPlot;
 	private TiledMapTileSets tiles;
-
 	private ArrayList<Overlay> overlayStack;
+
+	private Texture chancellorTex;
+	private Sprite chancellorSprite;
 
 	/**
 	 * Initialise the class
@@ -64,6 +67,10 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.update();
+
+		//Set chancellor texture and sprite
+		chancellorTex = new Texture("roboticon_images/chancellor.png");
+		chancellorSprite = new Sprite(chancellorTex, 500,-200);
 
 		/**
 		 * Defines the amount of pixels from each edge over which the map can be dragged off-screen
@@ -295,13 +302,17 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 				}
 				break;
 			case (2):
-                Texture chance = new Texture("roboticon_images/chancellor.png");
-                game.getBatch().begin();
-                game.getBatch().draw(chance, 50, 50);
-                game.getBatch().end();
 				game.roboticonMarket.act(delta);
 				game.roboticonMarket.draw();
 				break;
+            case(3):
+                chancellorSprite.translate(0f,7f);
+                if(chancellorSprite.getY() > 50)
+                    chancellorSprite.setY(-200);
+                game.getBatch().begin();
+                game.getBatch().draw(chancellorSprite.getTexture(), chancellorSprite.getX(), chancellorSprite.getY());
+                game.getBatch().end();
+                break;
 			case (4):
 				game.genOverlay.act(delta);
 				game.genOverlay.draw();
