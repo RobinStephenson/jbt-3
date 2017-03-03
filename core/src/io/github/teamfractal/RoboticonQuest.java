@@ -65,6 +65,9 @@ public class RoboticonQuest extends Game {
 	private PlotEffectSource plotEffectSource;
 	private PlayerEffectSource playerEffectSource;
 
+	private Random random = new Random();
+
+
 	public RoboticonQuest() {
 		reset(false);
 	}
@@ -516,22 +519,44 @@ public class RoboticonQuest extends Game {
 	}
 
 	/**
-	 * Returns the winner of the game, based on which player has the highest score
-     * @return String returning the winning player
-     */
-	public String getWinner(){
-        String winner;
-        if(playerList.get(0).calculateScore() > playerList.get(1).calculateScore()) {
-			winner = "Player 1 wins! You are now the Vice-Chancellor of the Colony!";
-		}
-		else {
-			if (playerList.get(1).calculateScore() > playerList.get(0).calculateScore()) {
-				winner = "Player 2 wins! You are now the Vice-Chancellor of the Colony!";
-			} else {
-				winner = "It's a draw. I'm afraid neither of you will become Vice-Chancellor of the Colony.";
+	 * Get the player who has the highest score.
+	 * If two or more players have the same highest score, one is chosen at random.
+	 * @return one of the players with the highest score
+	 */
+	public Player getPlayerWithHighestScore() {
+		Player currentHighestScorer = playerList.get(0);
+		int currentHighScore = currentHighestScorer.calculateScore();
+		for (int i=1; i < playerList.size(); i++) {
+			Player player = playerList.get(i);
+			int newPlayerScore = player.calculateScore();
+			if (newPlayerScore > currentHighScore) {
+				// replace the highest scorer so far
+				currentHighestScorer = player;
+				currentHighScore = newPlayerScore;
+			} else if (newPlayerScore == currentHighScore && random.nextBoolean()) {
+				// if two players have the same score choose randomly whether to replace the current high scorer or not
+				currentHighestScorer = player;
 			}
 		}
-		return winner;
+		return currentHighestScorer;
+	}
+
+	/**
+	 * get the name of a player for a given player
+	 * @param player the player whos name is being requested
+	 * @return the name of the player. eg "Player 1" for the first player
+	 */
+	public String playerToName(Player player) {
+		int playerIndex = playerList.indexOf(player);
+		if (playerIndex == -1) {
+			throw new IllegalArgumentException("player is not in the player list");
+		}
+		return "Player " + Integer.toString(playerIndex + 1);
+	}
+
+	public String getWinnerText() {
+		Player winner = getPlayerWithHighestScore();
+		return String.format("Congratulations %s. You are now the Vice-Chancellor", playerToName(winner));
 	}
 
 	/**
