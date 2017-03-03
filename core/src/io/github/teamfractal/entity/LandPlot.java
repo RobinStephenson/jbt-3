@@ -137,7 +137,7 @@ public class LandPlot {
         throw new NotCommonResourceException(resource);
     }
 
-    // JBT Modified this method, seperated out into different functions
+    // JBT Modified this method, separated out into different functions
     /**
      * Install a roboticon on this LandPlot.
      * @param roboticon    The roboticon to be installed.

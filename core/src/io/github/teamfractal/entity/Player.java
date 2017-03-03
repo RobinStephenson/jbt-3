@@ -255,30 +255,24 @@ public class Player {
     /**
      * Player add a landplot to their inventory for gold
      * @param plot           The landplot to purchase
+     * @throws NotEnoughMoneyException if the player does not have enough money for the tile
      */
     public synchronized void purchaseLandPlot(LandPlot plot){
-        if (money < 10) {
-            throw new NotEnoughMoneyException();
+        if(plot == null) {
+            throw new NullPointerException("Tile is null");
         }
         if (plot.hasOwner()) {
             throw new PlotAleadyOwnedException();
+        }
+        if (money < 10) {
+            throw new NotEnoughMoneyException();
         }
 
         landList.add(plot);
         this.setMoney(this.getMoney() - 10);
         plot.setOwner(this);
-        game.landPurchasedThisTurn();
-    }
 
-    /**
-     * Get a landplot to produce resources
-     */
-    public void produceResources(){
-        for (LandPlot plot : landList) {
-            energy += plot.produceResource(ResourceType.ENERGY);
-            ore += plot.produceResource(ResourceType.ORE);
-            food += plot.produceResource(ResourceType.FOOD);
-        }
+        game.landPurchasedThisTurn();
     }
 
     /**
