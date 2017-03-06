@@ -58,8 +58,8 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 	private TiledMapTileSets tiles;
 	private ArrayList<Overlay> overlayStack;
 
-	private Texture chancellorTex;
-	private Sprite chancellorSprite;
+	private Chancellor chancellor;      //JBT
+	private SpriteBatch chanceBatch;    //JBT
 
 	/**
 	 * Initialise the class
@@ -69,11 +69,6 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.update();
-
-		//Set chancellor texture and sprite
-		chancellorTex = new Texture("roboticon_images/chancellor.png");
-		chancellorSprite = new Sprite(chancellorTex);
-		chancellorSprite.setScale(0.25f);
 
 		/**
 		 * Defines the amount of pixels from each edge over which the map can be dragged off-screen
@@ -208,6 +203,9 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 		});
 		//</editor-fold>
 
+        //JBT - Create a new chancellor instance for the catch the chancellor minigame
+        chancellor = new Chancellor();
+
 		// Finally, start a new game and initialise variables.
 		// newGame();
 	}
@@ -307,11 +305,8 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 				SpriteBatch chanceBatch = new SpriteBatch();
                 chanceBatch.begin();
                 chanceBatch.setProjectionMatrix(camera.combined);
-                UpdateChancellor();
-
-                chancellorSprite.setPosition(500,150);
-                chancellorSprite.draw(chanceBatch);
-
+                chancellor.UpdatePosition();
+                chancellor.sprite.draw(chanceBatch);
                 chanceBatch.end();
 				break;
 			case (2):
@@ -330,13 +325,6 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 				game.resourceMarket.draw();
 		}
 	}
-
-	private void UpdateChancellor()
-    {
-        Vector2[] nodes = new Vector2[] {new Vector2(100,100), new Vector2(800, 100), new Vector2(800, 500), new Vector2(100,500)};
-        Vector2 position = new Vector2(chancellorSprite.getX(), chancellorSprite.getY());
-        //position.lerp(nodes)
-    }
 
 	/**
 	 * Resize the viewport as the render window's size change.
