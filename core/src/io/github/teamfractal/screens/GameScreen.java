@@ -19,9 +19,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricStaggeredTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -70,7 +72,8 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 
 		//Set chancellor texture and sprite
 		chancellorTex = new Texture("roboticon_images/chancellor.png");
-		chancellorSprite = new Sprite(chancellorTex, 500,-200);
+		chancellorSprite = new Sprite(chancellorTex);
+		chancellorSprite.setScale(0.25f);
 
 		/**
 		 * Defines the amount of pixels from each edge over which the map can be dragged off-screen
@@ -300,18 +303,23 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 					overlayStack.get(overlayStack.size() - 1).act(delta);
 					overlayStack.get(overlayStack.size() - 1).draw();
 				}
+
+				SpriteBatch chanceBatch = new SpriteBatch();
+                chanceBatch.begin();
+                chanceBatch.setProjectionMatrix(camera.combined);
+                UpdateChancellor();
+
+                chancellorSprite.setPosition(500,150);
+                chancellorSprite.draw(chanceBatch);
+
+                chanceBatch.end();
 				break;
 			case (2):
 				game.roboticonMarket.act(delta);
 				game.roboticonMarket.draw();
 				break;
             case(3):
-                chancellorSprite.translate(0f,7f);
-                if(chancellorSprite.getY() > 50)
-                    chancellorSprite.setY(-200);
-                game.getBatch().begin();
-                game.getBatch().draw(chancellorSprite.getTexture(), chancellorSprite.getX(), chancellorSprite.getY());
-                game.getBatch().end();
+
                 break;
 			case (4):
 				game.genOverlay.act(delta);
@@ -322,6 +330,13 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 				game.resourceMarket.draw();
 		}
 	}
+
+	private void UpdateChancellor()
+    {
+        Vector2[] nodes = new Vector2[] {new Vector2(100,100), new Vector2(800, 100), new Vector2(800, 500), new Vector2(100,500)};
+        Vector2 position = new Vector2(chancellorSprite.getX(), chancellorSprite.getY());
+        //position.lerp(nodes)
+    }
 
 	/**
 	 * Resize the viewport as the render window's size change.
