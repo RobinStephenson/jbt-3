@@ -14,6 +14,7 @@
 package io.github.teamfractal.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -307,6 +308,17 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
                     chancellor.updatePosition();
                     chancellor.sprite.draw(chanceBatch);
                     chanceBatch.end();
+
+                    if(Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+                        float mouseX = Gdx.input.getX() - (camera.position.x / 2);
+                        float mouseY = Gdx.input.getY() - (camera.position.y / 2);
+
+                        System.out.println("Bounds X: " + chancellor.sprite.getBoundingRectangle().getX() + " Bounds Y: " + chancellor.sprite.getBoundingRectangle().getY());
+                        System.out.println("Mouse X: " + mouseX + "    Mouse Y: " + mouseY);
+                        if (chancellor.sprite.getBoundingRectangle().contains(mouseX, mouseY)) {
+                            System.out.println("INSIDE BOUNDS");
+                        }
+                    }
                 }
 
                 //Draw any overlays in the stack
