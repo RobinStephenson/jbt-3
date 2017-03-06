@@ -60,6 +60,7 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 
 	private Chancellor chancellor;      //JBT
 	private SpriteBatch chanceBatch;    //JBT
+    private boolean chancellorEvent;    //JBT
 
 	/**
 	 * Initialise the class
@@ -292,8 +293,23 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 
 		renderAnimation(delta);
 
+		//Disable the chancellor event if not in the first phase
+		if(game.getPhase() != 1) {
+            chancellorEvent = false;
+        }
+
 		switch (game.getPhase()) {
 			case (1):
+			    //If the chancellor event is happening, draw the chancellor and enable catching
+                if(chancellorEvent) {
+                    chanceBatch.begin();
+                    chanceBatch.setProjectionMatrix(camera.combined);
+                    chancellor.updatePosition();
+                    chancellor.sprite.draw(chanceBatch);
+                    chanceBatch.end();
+                }
+
+                //Draw any overlays in the stack
 				if (overlayStack.isEmpty() || overlayStack == null) {
 					Gdx.input.setInputProcessor(stage);
 				} else {
@@ -302,21 +318,11 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 					overlayStack.get(overlayStack.size() - 1).act(delta);
 					overlayStack.get(overlayStack.size() - 1).draw();
 				}
-
-				SpriteBatch chanceBatch = new SpriteBatch();
-                chanceBatch.begin();
-                chanceBatch.setProjectionMatrix(camera.combined);
-                chancellor.updatePosition();
-                chancellor.sprite.draw(chanceBatch);
-                chanceBatch.end();
 				break;
 			case (2):
 				game.roboticonMarket.act(delta);
 				game.roboticonMarket.draw();
 				break;
-            case(3):
-
-                break;
 			case (4):
 				game.genOverlay.act(delta);
 				game.genOverlay.draw();
@@ -403,6 +409,15 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 		s.Height = Gdx.graphics.getHeight();
 		return s;
 	}
+
+    /**
+     * Added by JBT
+     * Called by the chancellor random event when started
+     */
+	public void startChancellorEvent()
+    {
+        chancellorEvent = true;
+    }
 
 	public TiledMap getTmx(){
 		return this.tmx;
