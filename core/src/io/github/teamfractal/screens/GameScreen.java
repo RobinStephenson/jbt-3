@@ -306,7 +306,7 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 				SpriteBatch chanceBatch = new SpriteBatch();
                 chanceBatch.begin();
                 chanceBatch.setProjectionMatrix(camera.combined);
-                chancellor.UpdatePosition();
+                chancellor.updatePosition();
                 chancellor.sprite.draw(chanceBatch);
                 chanceBatch.end();
 				break;
