@@ -104,7 +104,7 @@ public class PlayerEffectSource extends Array<PlayerEffect> {
         });
 
         //Added by JBT
-        chancellor = new PlayerEffect("Escaped Chancellor", "It appears one of the vice chancellors clones has escaped central hall!\n" +
+        chancellor = new PlayerEffect("Escaped Chancellor", "It appears one of the vice chancellors clones has escaped Central Hall!\n" +
                 "Catch him quickly, and you might be rewarded!",0,0,0,0,false, new Runnable() {
             @Override
             public void run() {
