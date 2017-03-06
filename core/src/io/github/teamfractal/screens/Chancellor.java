@@ -1,6 +1,5 @@
 package io.github.teamfractal.screens;
 
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
@@ -8,8 +7,11 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.util.Random;
 
+/**
+ * Added by JBT
+ * Used for the catch the chancellor mini-game to hold information about a chancellor object
+ */
 public class Chancellor {
-
     private final Rectangle positionBounds = new Rectangle(-150,-100,650,250);
     private Vector2 currentPosition;
     private Vector2 targetPosition;
@@ -25,17 +27,17 @@ public class Chancellor {
         sprite = new Sprite(new Texture("roboticon_images/chancellor.png"));
         sprite.setScale(0.25f);
 
-        Initialise();
+        initialise();
     }
 
     /**
      * Called to setup starting position and initial target position
      */
-    public void Initialise()
+    public void initialise()
     {
         //Select a random start and target position
-        currentPosition = RandomBoundsPosition();
-        targetPosition = RandomBoundsPosition();
+        currentPosition = randomBoundsPosition();
+        targetPosition = randomBoundsPosition();
 
         //Set the current position to be the actual position of the sprite
         sprite.setPosition(currentPosition.x, currentPosition.y);
@@ -45,7 +47,7 @@ public class Chancellor {
      * Moves the chancellors position closer to the target position
      * Selects a new target position if near the current target
      */
-    public void UpdatePosition()
+    public void updatePosition()
     {
         currentPosition.lerp(targetPosition, 0.1f);
         sprite.setPosition(currentPosition.x, currentPosition.y);
@@ -53,7 +55,7 @@ public class Chancellor {
         //If close to the target position, select another target
         if(Vector2.len(currentPosition.x - targetPosition.x, currentPosition.y - targetPosition.y) < 5)
         {
-            targetPosition = RandomBoundsPosition();
+            targetPosition = randomBoundsPosition();
         }
     }
 
@@ -61,7 +63,7 @@ public class Chancellor {
      * Gets a position where the chancellor can walk to
      * @return A random position inside the chancellors walkable bounds
      */
-    private final Vector2 RandomBoundsPosition()
+    private final Vector2 randomBoundsPosition()
     {
         Random r = new Random();
         return new Vector2(
@@ -72,7 +74,7 @@ public class Chancellor {
     /**
      * Releases all disposable memory used by this instance
      */
-    public void Dispose()
+    public void dispose()
     {
         sprite.getTexture().dispose();
     }

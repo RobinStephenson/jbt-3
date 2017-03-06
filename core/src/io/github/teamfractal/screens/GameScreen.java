@@ -203,8 +203,9 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 		});
 		//</editor-fold>
 
-        //JBT - Create a new chancellor instance for the catch the chancellor minigame
+        //JBT - Create a new chancellor instance for the catch the chancellor mini-game
         chancellor = new Chancellor();
+        chanceBatch = new SpriteBatch();
 
 		// Finally, start a new game and initialise variables.
 		// newGame();
@@ -376,6 +377,14 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 		if(stage != null) {
 			stage.dispose();
 		}
+
+		//JBT
+        if(chancellor != null) {
+            chancellor.dispose();
+        }
+        if(chanceBatch != null) {
+		    chanceBatch.dispose();
+        }
 	}
 
 	@Override
