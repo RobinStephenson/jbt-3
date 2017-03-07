@@ -1,6 +1,7 @@
 /*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
  *  JBT Changes to this file:
  *      Changed hasEnoughResources function to fix bug
+ *      Removed un-needed synchronization
  */
 
 

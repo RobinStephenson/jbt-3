@@ -6,6 +6,7 @@
  *      Throw exceptions instead of returning a enum
  *      Added throws to documentation
  *      Deleted unused and untested methods
+ *      Removed un-needed synchronization
  */
 
 package io.github.teamfractal.entity;

@@ -5,6 +5,7 @@
  *      Split InstallRoboticon into smaller methods
  *      Deleted removeOwner as it was unused and untested
  *      Made x, y private as they were never accessed outside the class, and shouldnt be
+ *      Removed un-needed synchronization
  */
 
 package io.github.teamfractal.entity;

@@ -3,6 +3,7 @@
  *      Improved existing accessors with null pointer checks and more other invalid operations checks
  *      Throw exceptions rather than returning false when things go wrong
  *      Created some new accessors
+ *      Removed un-needed synchronization
  */
 
 package io.github.teamfractal.entity;

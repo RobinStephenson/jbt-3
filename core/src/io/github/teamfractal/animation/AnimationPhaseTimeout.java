@@ -1,15 +1,7 @@
-/**
- * @author DRTN
- * Team Website with download:
- * https://misterseph.github.io/DuckRelatedFractalProject/
- *
- * This Class contains either modifications or is entirely new in Assessment 3
- *
- * If you are in any doubt a complete changelog can be found here:
- * https://github.com/NotKieran/DRTN-Fractal/compare/Fractal_Initial...development
- *
- * And a more concise report can be found in our Change3 document.
- **/
+/*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
+ *  JBT Changes to this file:
+ *  	Removed un-needed synchronization
+ */
 
 package io.github.teamfractal.animation;
 
@@ -90,21 +82,17 @@ public class AnimationPhaseTimeout implements IAnimation {
 		int timeLeft = (int)(timeout - time) + 1;
 		String countdown = String.valueOf(timeLeft);
 
+		rect.setProjectionMatrix(batch.getProjectionMatrix());
+		rect.begin(ShapeRenderer.ShapeType.Filled);
+		barColour();
+		rect.rect(0, 0, (1 - time / timeout) * size.Width, 3);
+		rect.end();
 
-			rect.setProjectionMatrix(batch.getProjectionMatrix());
-			rect.begin(ShapeRenderer.ShapeType.Filled);
-			barColour();
-			rect.rect(0, 0, (1 - time / timeout) * size.Width, 3);
-			rect.end();
-
-
-
-			batch.begin();
-			glyphLayout.setText(game.smallFontLight.font(), countdown);
-			game.smallFontLight.font().setColor(1, 1, 1, 1);
-			game.smallFontLight.font().draw(batch, glyphLayout, 10, 25);
-			batch.end();
-
+		batch.begin();
+		glyphLayout.setText(game.smallFontLight.font(), countdown);
+		game.smallFontLight.font().setColor(1, 1, 1, 1);
+		game.smallFontLight.font().draw(batch, glyphLayout, 10, 25);
+		batch.end();
 
 		return false;
 	}
