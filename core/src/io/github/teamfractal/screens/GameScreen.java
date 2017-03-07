@@ -301,6 +301,13 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 
 		switch (game.getPhase()) {
 			case (1):
+			    //Get the actual mouse coords relative to the camera
+			    Vector3 mouseCoords = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(),0));
+
+			    //Extract the X and Y mouse coords from the relative coords
+                float mouseX = mouseCoords.x;
+                float mouseY = mouseCoords.y;
+
 			    //Draw any overlays in the stack
 				if (overlayStack.isEmpty() || overlayStack == null) {
 					Gdx.input.setInputProcessor(stage);
@@ -308,19 +315,12 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
                     if(chancellorEvent) {
                         chanceBatch.begin();
                         chanceBatch.setProjectionMatrix(camera.combined);
-                        chancellor.updatePosition();
+                        //chancellor.updatePosition();
                         chancellor.sprite.draw(chanceBatch);
                         chanceBatch.end();
 
-                        if(Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-                            float mouseX = Gdx.input.getX() - (camera.position.x / 2);
-                            float mouseY = Gdx.input.getY() - (camera.position.y / 2);
-
-                            System.out.println("Bounds X: " + chancellor.sprite.getBoundingRectangle().getX() + " Bounds Y: " + chancellor.sprite.getBoundingRectangle().getY());
-                            System.out.println("Mouse X: " + mouseX + "    Mouse Y: " + mouseY);
-                            if (chancellor.sprite.getBoundingRectangle().contains(mouseX, mouseY)) {
-                                System.out.println("INSIDE BOUNDS");
-                            }
+                        if (Gdx.input.isButtonPressed(0) && chancellor.sprite.getBoundingRectangle().contains(mouseX, mouseY)) {
+                            chancellorEvent = false;
                         }
                     }
 				} else {
