@@ -518,6 +518,7 @@ public class RoboticonQuest extends Game {
         return ended;
 	}
 
+	// Created by JBT
 	/**
 	 * Get the player who has the highest score.
 	 * If two or more players have the same highest score, one is chosen at random.
@@ -541,6 +542,7 @@ public class RoboticonQuest extends Game {
 		return currentHighestScorer;
 	}
 
+	// Created by JBT
 	/**
 	 * get the name of a player for a given player
 	 * @param player the player whos name is being requested
@@ -554,6 +556,11 @@ public class RoboticonQuest extends Game {
 		return "Player " + Integer.toString(playerIndex + 1);
 	}
 
+	// Created by JBT
+	/**
+	 * get a String to display to the winner of the game
+	 * @return the String to display
+	 */
 	public String getWinnerText() {
 		Player winner = getPlayerWithHighestScore();
 		return String.format("Congratulations %s. You are now the Vice-Chancellor", playerToName(winner));
