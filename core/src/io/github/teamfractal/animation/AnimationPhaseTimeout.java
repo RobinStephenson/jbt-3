@@ -90,21 +90,21 @@ public class AnimationPhaseTimeout implements IAnimation {
 		int timeLeft = (int)(timeout - time) + 1;
 		String countdown = String.valueOf(timeLeft);
 
-		synchronized (rect) {
+
 			rect.setProjectionMatrix(batch.getProjectionMatrix());
 			rect.begin(ShapeRenderer.ShapeType.Filled);
 			barColour();
 			rect.rect(0, 0, (1 - time / timeout) * size.Width, 3);
 			rect.end();
-		}
 
-		synchronized (game.smallFontLight.font()) {
+
+
 			batch.begin();
 			glyphLayout.setText(game.smallFontLight.font(), countdown);
 			game.smallFontLight.font().setColor(1, 1, 1, 1);
 			game.smallFontLight.font().draw(batch, glyphLayout, 10, 25);
 			batch.end();
-		}
+
 
 		return false;
 	}
