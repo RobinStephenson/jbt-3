@@ -16,6 +16,7 @@ package io.github.teamfractal.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -28,6 +29,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -248,7 +250,7 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 			return tiles.getTile(71 + game.getPlayerIndex(player) + 12);
 		}
 	}
-			
+
 	/**
 	 * Reset to new game status.
 	 *
@@ -321,6 +323,8 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 
                         if (Gdx.input.isButtonPressed(0) && chancellor.sprite.getBoundingRectangle().contains(mouseX, mouseY)) {
                             chancellorEvent = false;
+                            game.getPlayer().caughtChancellor();
+                            actors.showChancellorLabel(true);
                         }
                     }
 				} else {
@@ -433,7 +437,7 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 	public TiledMap getTmx(){
 		return this.tmx;
 	}
-	
+
 	public GameScreenActors getActors(){
 		return this.actors;
 	}

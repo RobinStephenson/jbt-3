@@ -51,6 +51,11 @@ public class GameScreenActors {
     private Label playerFoodLabel;
     private Label playerMoneyLabel;
 
+    /**
+     * Added by JBT for the catch the chancellor minigame
+     */
+    private Label chancellorCaughtLabel;
+
     private Table plotStatsTable;
     private Label plotOreLabel;
     private Label plotEnergyLabel;
@@ -119,6 +124,12 @@ public class GameScreenActors {
         phaseInfo.row();
         phaseInfo.add(phaseDescriptionLabel).width(300);
 
+        // Create chancellor caught label - JBT
+        chancellorCaughtLabel = new Label("test", new Label.LabelStyle(game.smallFontRegular.font(), Color.WHITE));
+        chancellorCaughtLabel.setAlignment(Align.center);
+        chancellorCaughtLabel.setPosition(500,410);
+        chancellorCaughtLabel.setVisible(false);
+
         // Create plot stats table
         plotStatsTable = new Table();
         plotStatsTable.align(Align.left);
@@ -146,6 +157,7 @@ public class GameScreenActors {
         bindEvents();
 
         // Add to the stage for rendering.
+        stage.addActor(chancellorCaughtLabel);
         stage.addActor(nextButton);
         stage.addActor(buyLandPlotBtn);
         stage.addActor(installRoboticonTable);
@@ -323,6 +335,31 @@ public class GameScreenActors {
 
         plotStatsTable.setPosition(x, y);
         plotStatsTable.setVisible(true);
+    }
+
+    /**
+     * Added by JBT
+     * Sets the label that informs the user if the chancellor has been caught or not
+     * @param caught True if the chancellor has been caught, false otherwise
+     */
+    public void showChancellorLabel(boolean caught)
+    {
+        chancellorCaughtLabel.setVisible(true);
+        if(caught) {
+            chancellorCaughtLabel.setText("YOU CAUGHT THE CHANCELLOR\nYou have now caught " + game.getPlayer().chancellorsCaught() + " Chancellor" + (game.getPlayer().chancellorsCaught() == 1 ? "" : "s"));
+        }
+        else {
+            chancellorCaughtLabel.setText("The Chancellor got away\nBetter luck next time!");
+        }
+    }
+
+    /**
+     * Added by JBT
+     * Hides the label that informs the user if the chancellor has been caught or not
+     */
+    public void hideChancellorLabel()
+    {
+        chancellorCaughtLabel.setVisible(false);
     }
 
     /**
