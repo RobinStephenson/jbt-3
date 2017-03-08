@@ -1,6 +1,8 @@
 /*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
  *  JBT Changes to this file:
- *
+ *		Renamed methods with poor names like implementPhase to runCurrentPhase etc.
+ *		Updated/Created methods used to get the winning player.
+ *		Updated the constructor and implementPhase (renamed to runCurrentPhase) for 4 player support
  */
 
 package io.github.teamfractal;
@@ -68,8 +70,11 @@ public class RoboticonQuest extends Game {
 	private Random random = new Random();
 
 
+	// Updated by JBT for 4 player support
 	public RoboticonQuest() {
-		reset(false);
+		int humanPlayers = 2;
+		int aiPlayers = 0;
+		reset(humanPlayers, aiPlayers);
 	}
 
 	/**
@@ -164,38 +169,40 @@ public class RoboticonQuest extends Game {
 	 */
 	public void setPhase(int phase) {
 		this.phase = phase;
-		implementPhase();
+		runCurrentPhase();
 	}
 
-	/**
-	 * Resets the statistics of all the game's entities
-	 * @param AI A boolean describing whether an AI player is playing or not
-	 */
-	public void reset(boolean AI) {
-        this.phase = 0;
-        plotManager = new PlotManager();
-        Player player1;
-        Player player2;
-        if (AI) {
-            player1 = new AIPlayer(this);
-            player2 = new Player(this);
-        } else{
-            player1 = new Player(this);
-            player2 = new Player(this);
-        }
 
-        this.playerList = new ArrayList<Player>();
-        this.playerList.add(player1);
-		this.playerList.add(player2);
-        this.currentPlayerIndex = 0;
-        this.market = new Market();
+	public void reset(int humanPlayers, int aiPlayers) {
+		int totalPlayers = humanPlayers + aiPlayers;
+		if (totalPlayers > 4) {
+			throw new IllegalArgumentException("Too many players");
+		}
+		if (totalPlayers < 2 ) {
+			throw new IllegalArgumentException("Not enough players");
+		}
+		if (humanPlayers < 1) {
+			throw new IllegalArgumentException("Must be at least one human player");
+		}
 
+		phase = 0;
+		currentPlayerIndex = 0;
+		plotManager = new PlotManager();
+		market = new Market();
+		playerList = new ArrayList<Player>(totalPlayers);
+		for (int i=0; i < totalPlayers; i++) {
+			if (i < humanPlayers) {
+				playerList.add(new HumanPlayer(this));
+			} else {
+				playerList.add(new AIPlayer(this));
+			}
+		}
     }
 
 	/**
-	 * Implements the functionality of the current phase
+	 * run the current phase
 	 */
-    private void implementPhase() {
+    private void runCurrentPhase() {
         System.out.println("RoboticonQuest::nextPhase -> newPhaseState: " + phase);
 
 		switch (phase) {
@@ -349,7 +356,7 @@ public class RoboticonQuest extends Game {
             return;
         }
         phase += 1;
-        implementPhase();
+        runCurrentPhase();
 	}
 
 	/**
