@@ -321,12 +321,15 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
                             chancellorEvent = false;
                             actors.showChancellorLabel(false);
                         }
+
+                        //Update the position of the chancellor sprite and draw it
                         chanceBatch.begin();
                         chanceBatch.setProjectionMatrix(camera.combined);
                         chancellor.updatePosition();
                         chancellor.sprite.draw(chanceBatch);
                         chanceBatch.end();
 
+                        //If the mouse is within the bounds of the chancellor sprite and the left button is clicked, then catch it
                         if (Gdx.input.isButtonPressed(0) && chancellor.sprite.getBoundingRectangle().contains(mouseX, mouseY)) {
                             chancellorEvent = false;
                             game.getPlayer().caughtChancellor();
