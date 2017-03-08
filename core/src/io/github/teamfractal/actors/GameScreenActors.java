@@ -127,7 +127,7 @@ public class GameScreenActors {
         // Create chancellor caught label - JBT
         chancellorCaughtLabel = new Label("test", new Label.LabelStyle(game.smallFontRegular.font(), Color.WHITE));
         chancellorCaughtLabel.setAlignment(Align.center);
-        chancellorCaughtLabel.setPosition(500,410);
+        chancellorCaughtLabel.setPosition(500,430);
         chancellorCaughtLabel.setVisible(false);
 
         // Create plot stats table

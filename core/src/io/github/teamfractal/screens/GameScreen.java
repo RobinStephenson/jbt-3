@@ -61,9 +61,10 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 	private TiledMapTileSets tiles;
 	private ArrayList<Overlay> overlayStack;
 
-	private Chancellor chancellor;      //JBT
-	private SpriteBatch chanceBatch;    //JBT
-    private boolean chancellorEvent;    //JBT
+	private Chancellor chancellor;              //JBT
+	private SpriteBatch chanceBatch;            //JBT
+    private boolean chancellorEvent;            //JBT
+    private float chancellorEventElapsed;       //JBT
 
 	/**
 	 * Initialise the class
@@ -299,6 +300,7 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 		//Disable the chancellor event if not in the first phase
 		if(game.getPhase() != 1) {
             chancellorEvent = false;
+            actors.hideChancellorLabel();
         }
 
 		switch (game.getPhase()) {
@@ -315,9 +317,18 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 					Gdx.input.setInputProcessor(stage);
                     //If the chancellor event is happening, draw the chancellor and enable catching
                     if(chancellorEvent) {
+                        //Add the time since the last frame to the elapsed time of he chancellor event
+                        chancellorEventElapsed += delta;
+
+                        //If 15 seconds have passed since the start of the event, then stop the chancellor event
+                        if(chancellorEventElapsed > 15)
+                        {
+                            chancellorEvent = false;
+                            actors.showChancellorLabel(false);
+                        }
                         chanceBatch.begin();
                         chanceBatch.setProjectionMatrix(camera.combined);
-                        //chancellor.updatePosition();
+                        chancellor.updatePosition();
                         chancellor.sprite.draw(chanceBatch);
                         chanceBatch.end();
 
@@ -432,6 +443,7 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 	public void startChancellorEvent()
     {
         chancellorEvent = true;
+        chancellorEventElapsed = 0;
     }
 
 	public TiledMap getTmx(){
