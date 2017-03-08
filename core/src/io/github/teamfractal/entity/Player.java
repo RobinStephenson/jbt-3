@@ -6,6 +6,7 @@
  *      Throw exceptions instead of returning a enum
  *      Added throws to documentation
  *      Deleted unused and untested methods
+ *      Removed un-needed synchronization
  */
 
 package io.github.teamfractal.entity;
@@ -43,7 +44,7 @@ public class Player {
      * @param money The amount of new money. Cannot be negative
      * @throws IllegalArgumentException if money is negative
      */
-    public synchronized void setMoney(int money){
+    public void setMoney(int money){
         if (money < 0) {
             throw new IllegalArgumentException("money cannot be negative");
         } else {
@@ -60,7 +61,7 @@ public class Player {
      * @param amount The new amount for ore. Cannot be negative
      * @throws IllegalArgumentException if amount is negative
      */
-    synchronized void setOre(int amount) {
+    void setOre(int amount) {
         if (amount < 0) {
             throw new IllegalArgumentException("amount cannot be negative");
         } else {
@@ -77,7 +78,7 @@ public class Player {
      * @param amount The new amount for energy. Cannot be negative
      * @throws IllegalArgumentException if amount is negative
      */
-    synchronized void setEnergy(int amount) {
+    void setEnergy(int amount) {
         if (amount < 0) {
             throw new IllegalArgumentException("amount cannot be negative");
         } else {
@@ -94,7 +95,7 @@ public class Player {
      * @param amount The new amount for food. Cannot be negative,
      * @throws IllegalArgumentException if amount is negative
      */
-    synchronized void setFood(int amount) {
+    void setFood(int amount) {
         if (amount < 0) {
             throw new IllegalArgumentException("amount cannot be negative");
         } else {
@@ -257,7 +258,7 @@ public class Player {
      * @param plot           The landplot to purchase
      * @throws NotEnoughMoneyException if the player does not have enough money for the tile
      */
-    public synchronized void purchaseLandPlot(LandPlot plot){
+    public void purchaseLandPlot(LandPlot plot){
         if(plot == null) {
             throw new NullPointerException("Tile is null");
         }

@@ -1,6 +1,7 @@
 /*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
  *  JBT Changes to this file:
  *      Changed hasEnoughResources function to fix bug
+ *      Removed un-needed synchronization
  */
 
 
@@ -42,7 +43,7 @@ public class Market {
      * @param amount The amount of new food amount.
      * @throws IllegalArgumentException If the new amount if negative, this exception will be thrown.
      */
-    synchronized void setFood(int amount) throws IllegalArgumentException {
+    void setFood(int amount) throws IllegalArgumentException {
         if (amount < 0) {
             throw new IllegalArgumentException("Error: Food can't be negative.");
         }
@@ -64,7 +65,7 @@ public class Market {
      * @param amount The amount of new energy count.
      * @throws IllegalArgumentException If the new amount if negative, this exception will be thrown.
      */
-    synchronized void setEnergy(int amount) throws IllegalArgumentException {
+    void setEnergy(int amount) throws IllegalArgumentException {
         if (amount < 0) {
             throw new IllegalArgumentException("Error: Energy can't be negative.");
         }
@@ -85,7 +86,7 @@ public class Market {
      * @param amount                     The amount of new ore count.
      * @throws IllegalArgumentException  If the new amount if negative, this exception will be thrown.
      */
-    synchronized void setOre(int amount) throws IllegalArgumentException {
+    void setOre(int amount) throws IllegalArgumentException {
         if (amount < 0) {
             throw new IllegalArgumentException("Error: Ore can't be negative.");
         }
@@ -119,7 +120,7 @@ public class Market {
      *
      * @return The total amount.
      */
-    private synchronized int getTotalResourceCount() {
+    private int getTotalResourceCount() {
         return food + energy + ore + roboticon;
     }
 
@@ -286,7 +287,7 @@ public class Market {
      * @param resource    The {@link ResourceType}
      * @param amount      The amount of resource to buy in.
      */
-    public synchronized void buyResource(ResourceType resource, int amount){
+    public void buyResource(ResourceType resource, int amount){
         setResource(resource, getResource(resource) + amount);
     }
 
@@ -299,7 +300,7 @@ public class Market {
      * @param resource    The {@link ResourceType}
      * @param amount      The amount of resource to sell out.
      */
-    public synchronized void sellResource(ResourceType resource, int amount) {
+    public void sellResource(ResourceType resource, int amount) {
         setResource(resource, getResource(resource) - amount);
     }
 
