@@ -1,15 +1,8 @@
-/**
- * @author DRTN
- * Team Website with download:
- * https://misterseph.github.io/DuckRelatedFractalProject/
- *
- * This Class contains either modifications or is entirely new in Assessment 3
- *
- * If you are in any doubt a complete changelog can be found here:
- * https://github.com/NotKieran/DRTN-Fractal/compare/Fractal_Initial...development
- *
- * And a more concise report can be found in our Change3 document.
- **/
+/*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
+ *  JBT Changes to this file:
+ *		Added 4 player support in newGame
+ *		Removed some commented out code
+ */
 
 package io.github.teamfractal.screens;
 
@@ -197,8 +190,6 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 		});
 		//</editor-fold>
 
-		// Finally, start a new game and initialise variables.
-		// newGame();
 	}
 
     public LandPlot getSelectedPlot() {
@@ -237,20 +228,21 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 			return tiles.getTile(71 + game.getPlayerIndex(player) + 12);
 		}
 	}
-			
+
+	// Updated by JBT
 	/**
-	 * Reset to new game status.
-	 *
-	 * @param AI boolean value where True requests an AI game, and False two human players
+	 * Set the state of the game to a new game with the given configuration of players
+	 * @param humanPlayers how many human players there should be
+	 * @param aiPlayers how many AI players there should be
 	 */
-	public void newGame(boolean AI) {
+	public void newGame(int humanPlayers, int aiPlayers) {
 		// Setup the game board.
 		if (tmx != null) tmx.dispose();
 		if (renderer != null) renderer.dispose();
 		this.tmx = new TmxMapLoader().load("tiles/city.tmx");
 		tiles = tmx.getTileSets();
 		renderer = new IsometricStaggeredTiledMapRenderer(tmx);
-		game.reset(AI);
+		game.reset(humanPlayers, aiPlayers);
 
 		mapLayer = (TiledMapTileLayer)tmx.getLayers().get("MapData");
 		playerOverlay = (TiledMapTileLayer)tmx.getLayers().get("PlayerOverlay");
@@ -258,10 +250,6 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
         game.plotManager.setup(tiles, tmx.getLayers());
         game.nextPhase();
 	}
-
-    public void plotmanagerSetup() {
-        game.plotManager.setup(tiles, tmx.getLayers());
-    }
 
 	@Override
 	public void show() {
