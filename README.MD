@@ -1,5 +1,5 @@
 # Jamaican Bobsleigh Team [![Build Status](https://travis-ci.org/RobinStephenson/jbt-3.svg?branch=master)](https://travis-ci.org/RobinStephenson/jbt-3)
-This repository is for assessment 3
+This repository is for assessment 4
 
 ## Using our project
 - Our project utilises Gradle, we highly recommend using IntelliJ IDEA as your IDE as we've already set up all the Run Configrations you'll need for it

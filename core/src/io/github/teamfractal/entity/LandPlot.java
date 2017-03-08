@@ -5,6 +5,7 @@
  *      Split InstallRoboticon into smaller methods
  *      Deleted removeOwner as it was unused and untested
  *      Made x, y private as they were never accessed outside the class, and shouldnt be
+ *      Removed un-needed synchronization
  */
 
 package io.github.teamfractal.entity;
@@ -142,7 +143,7 @@ public class LandPlot {
      * Install a roboticon on this LandPlot.
      * @param roboticon    The roboticon to be installed.
      */
-    public synchronized boolean installRoboticon(Roboticon roboticon) {
+    public boolean installRoboticon(Roboticon roboticon) {
         if (hasRoboticon()) {
             return false;
         }
@@ -168,7 +169,7 @@ public class LandPlot {
      * update the production modifiers based on a new roboticon
      * @param roboticon the roboticon which has just been installed
      */
-    private synchronized void updateProductionModifiers(Roboticon roboticon) {
+    private void updateProductionModifiers(Roboticon roboticon) {
         ResourceType customisation = installedRoboticon.getCustomisation();
         if (customisation != ResourceType.Unknown) {
             int resourceIndex = resourceTypeToIndex(customisation);
@@ -182,7 +183,7 @@ public class LandPlot {
      * @param roboticon the roboticon to install
      * @return true on success, false on failure
      */
-    private synchronized boolean tryInstallRoboticon(Roboticon roboticon) {
+    private boolean tryInstallRoboticon(Roboticon roboticon) {
         try {
             roboticon.setInstalledLandPlot(this);
         } catch (AlreadyInstalledElsewhereException ex) {
