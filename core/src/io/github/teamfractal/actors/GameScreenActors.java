@@ -1,15 +1,7 @@
-/**
- * @author DRTN
- * Team Website with download:
- * https://misterseph.github.io/DuckRelatedFractalProject/
- *
- * This Class contains either modifications or is entirely new in Assessment 3
- *
- * If you are in any doubt a complete changelog can be found here:
- * https://github.com/NotKieran/DRTN-Fractal/compare/Fractal_Initial...development
- *
- * And a more concise report can be found in our Change3 document.
- **/
+/*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
+ *  JBT Changes to this file:
+ *		Added a label that is shown whenever a player catches the chancellor during the chancellor event
+ */
 
 package io.github.teamfractal.actors;
 
@@ -26,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import io.github.teamfractal.RoboticonQuest;
+import io.github.teamfractal.entity.AIPlayer;
 import io.github.teamfractal.entity.LandPlot;
 import io.github.teamfractal.entity.Player;
 import io.github.teamfractal.entity.Roboticon;
@@ -49,6 +42,12 @@ public class GameScreenActors {
     private Label playerEnergyLabel;
     private Label playerFoodLabel;
     private Label playerMoneyLabel;
+
+    //JBT
+    /**
+     * Needed for the catch the chancellor minigame
+     */
+    private Label chancellorCaughtLabel;
 
     private Table plotStatsTable;
     private Label plotOreLabel;
@@ -118,6 +117,12 @@ public class GameScreenActors {
         phaseInfo.row();
         phaseInfo.add(phaseDescriptionLabel).width(300);
 
+        // Create chancellor caught label - JBT
+        chancellorCaughtLabel = new Label("test", new Label.LabelStyle(game.smallFontRegular.font(), Color.WHITE));
+        chancellorCaughtLabel.setAlignment(Align.center);
+        chancellorCaughtLabel.setPosition(500,430);
+        chancellorCaughtLabel.setVisible(false);
+
         // Create plot stats table
         plotStatsTable = new Table();
         plotStatsTable.align(Align.left);
@@ -145,6 +150,7 @@ public class GameScreenActors {
         bindEvents();
 
         // Add to the stage for rendering.
+        stage.addActor(chancellorCaughtLabel);
         stage.addActor(nextButton);
         stage.addActor(buyLandPlotBtn);
         stage.addActor(installRoboticonTable);
@@ -322,6 +328,31 @@ public class GameScreenActors {
 
         plotStatsTable.setPosition(x, y);
         plotStatsTable.setVisible(true);
+    }
+
+    //Added by JBT
+    /**
+     * Sets the label that informs the user if the chancellor has been caught or not
+     * @param caught True if the chancellor has been caught, false otherwise
+     */
+    public void showChancellorLabel(boolean caught)
+    {
+        chancellorCaughtLabel.setVisible(true);
+        if(caught) {
+            chancellorCaughtLabel.setText("YOU CAUGHT THE CHANCELLOR\nYou have now caught " + game.getPlayer().chancellorsCaught() + " Chancellor" + (game.getPlayer().chancellorsCaught() == 1 ? "" : "s"));
+        }
+        else {
+            chancellorCaughtLabel.setText("The Chancellor got away\nBetter luck next time!");
+        }
+    }
+
+    //Added by JBT
+    /**
+     * Hides the label that informs the user if the chancellor has been caught or not
+     */
+    public void hideChancellorLabel()
+    {
+        chancellorCaughtLabel.setVisible(false);
     }
 
     /**

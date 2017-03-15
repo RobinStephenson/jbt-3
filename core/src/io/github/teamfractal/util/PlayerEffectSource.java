@@ -40,6 +40,8 @@ public class PlayerEffectSource extends Array<PlayerEffect> {
 
     public PlayerEffect brexit;
 
+    public PlayerEffect chancellor;     //JBT
+
     /**
      * Constructor that prepares a variety of PlayerEffects and adds them all to the internal array structure for
      * later access and use by the game's engine
@@ -100,6 +102,15 @@ public class PlayerEffectSource extends Array<PlayerEffect> {
                 brexit.impose(game.getPlayer());
             }
         });
+
+        //Added by JBT
+        chancellor = new PlayerEffect("Escaped Chancellor", "It appears one of the vice chancellors clones has escaped Central Hall!\n" +
+                "Catch him quickly, and you might be rewarded!",0,0,0,0,false, new Runnable() {
+            @Override
+            public void run() {
+                game.gameScreen.startChancellorEvent();
+            }
+        });
     }
 
     /**
@@ -111,5 +122,6 @@ public class PlayerEffectSource extends Array<PlayerEffect> {
         add(vikingRaid);
         add(freshersFair);
         add(brexit);
+        add(chancellor);
     }
 }

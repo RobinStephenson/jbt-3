@@ -437,7 +437,7 @@ public class RoboticonQuest extends Game {
 	 */
 	private void setupEffects() {
 		//Initialise the fractional chance of any given effect being applied at the start of a round
-		effectChance = (float) 0.02;
+		effectChance = (float) 0.95;
 
 		plotEffectSource = new PlotEffectSource(this);
 		playerEffectSource = new PlayerEffectSource(this);

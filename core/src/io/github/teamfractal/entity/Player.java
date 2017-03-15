@@ -7,6 +7,7 @@
  *      Added throws to documentation
  *      Deleted unused and untested methods
  *      Removed un-needed synchronization
+ *      Added a variable for the amount of chancellors caught
  */
 
 package io.github.teamfractal.entity;
@@ -28,11 +29,11 @@ public class Player {
     private int ore = 0;
     private int energy = 0;
     private int food = 0;
+    private int chancellorsCaught = 0;
 
     public Player(RoboticonQuest game){
         this.game = game;
         this.roboticonList = new Array<Roboticon>();
-
     }
 
     public int getMoney() {
@@ -387,4 +388,15 @@ public class Player {
         System.out.println("Human turn");
     }
 
+    //Added by JBT
+    /**
+     * Increments the players chancellors caught field
+     */
+    public void caughtChancellor()
+    {
+        chancellorsCaught++;
+    }
+
+    //Added by JBT
+    public int chancellorsCaught() {return chancellorsCaught;}
 }
