@@ -1,15 +1,7 @@
-/**
- * @author DRTN
- * Team Website with download:
- * https://misterseph.github.io/DuckRelatedFractalProject/
- *
- * This Class contains either modifications or is entirely new in Assessment 3
- *
- * If you are in any doubt a complete changelog can be found here:
- * https://github.com/NotKieran/DRTN-Fractal/compare/Fractal_Initial...development
- *
- * And a more concise report can be found in our Change3 document.
- **/
+/*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
+ *  JBT Changes to this file:
+ *		Added a 'Catch the Chancellor' random event
+ */
 
 package io.github.teamfractal.entity;
 
@@ -147,46 +139,15 @@ public class PlayerEffect {
      */
     public void impose(Player player) {
         if (multiply) {
-
-            if((int) ((float) player.getOre() * modifiers[0]) < 0)
-                player.setOre(0);
-            else
-                player.setResource(ResourceType.ORE, (int) ((float) player.getOre() * modifiers[0]));
-
-            if((int) ((float) player.getEnergy() * modifiers[1]) < 0)
-                player.setEnergy(0);
-            else
-                player.setResource(ResourceType.ENERGY, (int) ((float) player.getEnergy() * modifiers[1]));
-
-            if((int) ((float) player.getFood() * modifiers[2]) < 0)
-                player.setFood(0);
-            else
-                player.setResource(ResourceType.FOOD, (int) ((float) player.getFood() * modifiers[2]));
-
-            if((int) ((float) player.getMoney() * modifiers[3]) < 0)
-                player.setMoney(0);
-            else
-                player.setMoney((int) ((float) player.getMoney() * modifiers[3]));
+            player.setResource(ResourceType.ORE, Math.max(0, (int) ((float) player.getOre() * modifiers[0])));
+            player.setResource(ResourceType.ENERGY, Math.max(0, (int) ((float) player.getEnergy() * modifiers[1])));
+            player.setResource(ResourceType.FOOD, Math.max(0, (int) ((float) player.getFood() * modifiers[2])));
+            player.setMoney(Math.max(0, (int) ((float) player.getMoney() * modifiers[3])));
         } else {
-            if(player.getOre() + (int)modifiers[0] < 0)
-                player.setOre(0);
-            else
-                player.setResource(ResourceType.ORE, player.getOre() + (int) modifiers[0]);
-
-            if(player.getEnergy() + (int)modifiers[1] < 0)
-                player.setEnergy(0);
-            else
-                player.setResource(ResourceType.ENERGY, player.getEnergy() + (int) modifiers[1]);
-
-            if(player.getFood() + (int)modifiers[2] < 0)
-                player.setFood(0);
-            else
-                player.setResource(ResourceType.FOOD, player.getFood() + (int) modifiers[2]);
-
-            if(player.getMoney() + (int)modifiers[3] < 0)
-                player.setMoney(0);
-            else
-                player.setMoney(player.getMoney() + (int) modifiers[3]);
+            player.setResource(ResourceType.ORE, Math.max(0, player.getOre() + (int) modifiers[0]));
+            player.setResource(ResourceType.ENERGY, Math.max(0, player.getEnergy() + (int) modifiers[1]));
+            player.setResource(ResourceType.FOOD, Math.max(0, player.getFood() + (int) modifiers[2]));
+            player.setMoney(Math.max(0, player.getMoney() + (int) modifiers[3]));
         }
     }
 

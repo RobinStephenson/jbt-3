@@ -1,15 +1,7 @@
-/**
- * @author DRTN
- * Team Website with download:
- * https://misterseph.github.io/DuckRelatedFractalProject/
- *
- * This Class contains either modifications or is entirely new in Assessment 3
- *
- * If you are in any doubt a complete changelog can be found here:
- * https://github.com/NotKieran/DRTN-Fractal/compare/Fractal_Initial...development
- *
- * And a more concise report can be found in our Change3 document.
- **/
+/*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
+ *  JBT Changes to this file:
+ *		Added a label that is shown whenever a player catches the chancellor during the chancellor event
+ */
 
 package io.github.teamfractal.actors;
 
@@ -51,8 +43,9 @@ public class GameScreenActors {
     private Label playerFoodLabel;
     private Label playerMoneyLabel;
 
+    //JBT
     /**
-     * Added by JBT for the catch the chancellor minigame
+     * Needed for the catch the chancellor minigame
      */
     private Label chancellorCaughtLabel;
 
@@ -337,8 +330,8 @@ public class GameScreenActors {
         plotStatsTable.setVisible(true);
     }
 
+    //Added by JBT
     /**
-     * Added by JBT
      * Sets the label that informs the user if the chancellor has been caught or not
      * @param caught True if the chancellor has been caught, false otherwise
      */
@@ -353,8 +346,8 @@ public class GameScreenActors {
         }
     }
 
+    //Added by JBT
     /**
-     * Added by JBT
      * Hides the label that informs the user if the chancellor has been caught or not
      */
     public void hideChancellorLabel()

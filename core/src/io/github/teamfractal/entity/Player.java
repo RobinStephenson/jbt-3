@@ -7,6 +7,7 @@
  *      Added throws to documentation
  *      Deleted unused and untested methods
  *      Removed un-needed synchronization
+ *      Added a variable for the amount of chancellors caught
  */
 
 package io.github.teamfractal.entity;
@@ -387,8 +388,8 @@ public class Player {
         System.out.println("Human turn");
     }
 
+    //Added by JBT
     /**
-     * Added by JBT
      * Increments the players chancellors caught field
      */
     public void caughtChancellor()
@@ -396,6 +397,6 @@ public class Player {
         chancellorsCaught++;
     }
 
-    //JBT
+    //Added by JBT
     public int chancellorsCaught() {return chancellorsCaught;}
 }
