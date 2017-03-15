@@ -468,6 +468,23 @@ public class PlayerTest extends TesterFile {
 
     //Test created by JBT
     /**
+     * Tests that the correct score is calculated for a player when calculateScore is called
+     */
+    @Test
+    public void getScoreWithChancellor()
+    {
+        //Set the players resources to equal 6 in total
+        player.setResource(ResourceType.ORE, 2);
+        player.setResource(ResourceType.ENERGY, 1);
+        player.setResource(ResourceType.FOOD, 3);
+        player.setChancellorsCaught(2);
+
+        //Check that the players score is 6
+        assertEquals(6 + (player.CHANELLOR_SCORE_WEIGHT * player.getChancellorsCaught()), player.calculateScore());
+    }
+
+    //Test created by JBT
+    /**
      * Tests that the getRoboticonQuantities function returns the correct data for owned roboticons
      */
     @Test

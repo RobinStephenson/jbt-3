@@ -339,7 +339,7 @@ public class GameScreenActors {
     {
         chancellorCaughtLabel.setVisible(true);
         if(caught) {
-            chancellorCaughtLabel.setText("YOU CAUGHT THE CHANCELLOR\nYou have now caught " + game.getPlayer().chancellorsCaught() + " Chancellor" + (game.getPlayer().chancellorsCaught() == 1 ? "" : "s"));
+            chancellorCaughtLabel.setText("YOU CAUGHT THE CHANCELLOR\nYou have now caught " + game.getPlayer().getChancellorsCaught() + " Chancellor" + (game.getPlayer().getChancellorsCaught() == 1 ? "" : "s"));
         }
         else {
             chancellorCaughtLabel.setText("The Chancellor got away\nBetter luck next time!");

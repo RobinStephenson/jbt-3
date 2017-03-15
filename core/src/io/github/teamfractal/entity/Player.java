@@ -8,6 +8,7 @@
  *      Deleted unused and untested methods
  *      Removed un-needed synchronization
  *      Added a variable for the amount of chancellors caught
+ *      Added weighting for the amount of caught chancellors
  */
 
 package io.github.teamfractal.entity;
@@ -20,7 +21,6 @@ import io.github.teamfractal.exception.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-
 public class Player {
     public RoboticonQuest game;
     Array<Roboticon> roboticonList;
@@ -30,6 +30,8 @@ public class Player {
     private int energy = 0;
     private int food = 0;
     private int chancellorsCaught = 0;
+
+    public static final int CHANELLOR_SCORE_WEIGHT = 20;
 
     public Player(RoboticonQuest game){
         this.game = game;
@@ -377,7 +379,7 @@ public class Player {
      * @return The score of the player.
      */
     public int calculateScore(){
-        return ore + energy + food;
+        return ore + energy + food + (CHANELLOR_SCORE_WEIGHT * chancellorsCaught);
     }
 
     /**
@@ -398,5 +400,8 @@ public class Player {
     }
 
     //Added by JBT
-    public int chancellorsCaught() {return chancellorsCaught;}
+    public int getChancellorsCaught() {return chancellorsCaught;}
+
+    //Added by JBT for testing purposes
+    public void setChancellorsCaught(int value) { chancellorsCaught = value;}
 }
