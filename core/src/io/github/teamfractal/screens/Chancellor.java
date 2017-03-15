@@ -1,3 +1,7 @@
+/*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
+ *  JBT Created this file for use with the 'Catch the Chancellor' minigame random event
+ */
+
 package io.github.teamfractal.screens;
 
 import com.badlogic.gdx.graphics.Texture;

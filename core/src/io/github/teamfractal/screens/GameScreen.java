@@ -408,7 +408,7 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 			stage.dispose();
 		}
 
-		//JBT
+		//Added by JBT
         if(chancellor != null) {
             chancellor.dispose();
         }
@@ -434,8 +434,8 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 		return s;
 	}
 
+	//Added by JBT
     /**
-     * Added by JBT
      * Called by the chancellor random event when started
      */
 	public void startChancellorEvent()

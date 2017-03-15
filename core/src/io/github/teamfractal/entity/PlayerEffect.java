@@ -1,6 +1,8 @@
 /*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
  *  JBT Changes to this file:
  *		Added a 'Catch the Chancellor' random event
+ *	    Cleaned up the impose function
+ *      Fixed a bug with the impose function that would crash the game if a random event was setting a players resources to be less than zero
  */
 
 package io.github.teamfractal.entity;
