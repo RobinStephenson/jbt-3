@@ -20,7 +20,6 @@ import io.github.teamfractal.exception.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-
 public class Player {
     public RoboticonQuest game;
     Array<Roboticon> roboticonList;
@@ -30,6 +29,8 @@ public class Player {
     private int energy = 0;
     private int food = 0;
     private int chancellorsCaught = 0;
+
+    private static final int CHANELLOR_SCORE_WEIGHT = 20;
 
     public Player(RoboticonQuest game){
         this.game = game;
@@ -377,7 +378,7 @@ public class Player {
      * @return The score of the player.
      */
     public int calculateScore(){
-        return ore + energy + food;
+        return ore + energy + food + (CHANELLOR_SCORE_WEIGHT * chancellorsCaught);
     }
 
     /**
@@ -398,5 +399,5 @@ public class Player {
     }
 
     //Added by JBT
-    public int chancellorsCaught() {return chancellorsCaught;}
+    public int getChancellorsCaught() {return chancellorsCaught;}
 }
