@@ -480,7 +480,7 @@ public class PlayerTest extends TesterFile {
         player.setChancellorsCaught(2);
 
         //Check that the players score is 6
-        assertEquals(46, player.calculateScore());
+        assertEquals(6 + (player.CHANELLOR_SCORE_WEIGHT * player.getChancellorsCaught()), player.calculateScore());
     }
 
     //Test created by JBT
