@@ -8,6 +8,7 @@
  *      Deleted unused and untested methods
  *      Removed un-needed synchronization
  *      Added a variable for the amount of chancellors caught
+ *      Added weighting for the amount of caught chancellors
  */
 
 package io.github.teamfractal.entity;
@@ -30,7 +31,7 @@ public class Player {
     private int food = 0;
     private int chancellorsCaught = 0;
 
-    private static final int CHANELLOR_SCORE_WEIGHT = 20;
+    public static final int CHANELLOR_SCORE_WEIGHT = 20;
 
     public Player(RoboticonQuest game){
         this.game = game;
@@ -400,4 +401,7 @@ public class Player {
 
     //Added by JBT
     public int getChancellorsCaught() {return chancellorsCaught;}
+
+    //Added by JBT for testing purposes
+    public void setChancellorsCaught(int value) { chancellorsCaught = value;}
 }
