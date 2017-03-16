@@ -1,5 +1,6 @@
 /*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
  *  JBT Changes to this file:
+ *    Removed Excess code which previously patched a bug where the AI would run a non-existent phase 4. It was removed as the bug was fixed. 
  *		Renamed methods with poor names like implementPhase to runCurrentPhase etc.
  *		Updated/Created methods used to get the winning player.
  *		Updated the constructor and implementPhase (renamed to runCurrentPhase) for 4 player support
@@ -21,10 +22,8 @@ import io.github.teamfractal.animation.IAnimationFinish;
 import io.github.teamfractal.entity.*;
 import io.github.teamfractal.screens.*;
 import io.github.teamfractal.util.*;
-
 import java.util.ArrayList;
 import java.util.Random;
-
 
 /**
  * This is the main game start up class.
@@ -352,9 +351,6 @@ public class RoboticonQuest extends Game {
 	 * Advances the current phase
 	 */
 	public void nextPhase() {
-        if ((phase == 1) && (landBoughtThisTurn == 0) && (this.getPlayer().getMoney() >= 10)) {
-            return;
-        }
         phase += 1;
         runCurrentPhase();
 	}

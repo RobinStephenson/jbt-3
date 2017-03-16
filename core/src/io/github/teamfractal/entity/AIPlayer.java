@@ -1,6 +1,7 @@
 /*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
  *  JBT Changes to this file:
  *  Improved Phase 3, by calling next phase rather than calling the next phase button.
+ *  Fixed issue with running non-existent phase 4, creating an invisible timeout, which would skip a phase.
  */
 
 
@@ -91,7 +92,7 @@ public class AIPlayer extends Player {
                 game.gameScreen.getActors().buyLandPlotFunction();
             }
 
-            game.gameScreen.getActors().nextButtonFunction();
+            game.nextPhase();
         }
     }
 
@@ -147,7 +148,6 @@ public class AIPlayer extends Player {
                     }
                 }
             }
-            game.nextPhase();
         } finally {
             game.nextPhase();
         }
@@ -172,7 +172,7 @@ public class AIPlayer extends Player {
          * JBT Changed this.
          * Previously called next button in actors rather than game.nextphase()
          */
-        game.nextPhase();
+        game.setPhase(5);
     }
 
     /**
