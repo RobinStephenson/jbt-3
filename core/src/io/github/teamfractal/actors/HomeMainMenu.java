@@ -183,6 +183,10 @@ public class HomeMainMenu extends Table {
 		btnNewGame.addListener(new ClickListener() {
 			@Override
 			public void clicked (InputEvent event, float x, float y) {
+				if (btnNewGame.isDisabled()) {
+					// do nothing if the button is disabled
+					return;
+				}
 				game.setScreen(game.gameScreen);
 				game.gameScreen.newGame(numberOfHumanPlayers, numberOfAIPlayers);
 			}
