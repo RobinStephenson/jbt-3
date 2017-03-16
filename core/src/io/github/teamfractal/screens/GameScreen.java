@@ -1,28 +1,28 @@
-/**
- * @author DRTN
- * Team Website with download:
- * https://misterseph.github.io/DuckRelatedFractalProject/
- *
- * This Class contains either modifications or is entirely new in Assessment 3
- *
- * If you are in any doubt a complete changelog can be found here:
- * https://github.com/NotKieran/DRTN-Fractal/compare/Fractal_Initial...development
- *
- * And a more concise report can be found in our Change3 document.
- **/
+/*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
+ *  JBT Changes to this file:
+ *		Added 4 player support in newGame
+ *		Removed some commented out code
+ */
 
 package io.github.teamfractal.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricStaggeredTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -54,6 +54,11 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 	private TiledMapTileSets tiles;
 
 	private ArrayList<Overlay> overlayStack;
+
+	private Chancellor chancellor;              //JBT
+	private SpriteBatch chanceBatch;            //JBT
+    private boolean chancellorEvent;            //JBT
+    private float chancellorEventElapsed;       //JBT
 
 	/**
 	 * Initialise the class
@@ -197,6 +202,10 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 		});
 		//</editor-fold>
 
+        //JBT - Create a new chancellor instance for the catch the chancellor mini-game
+        chancellor = new Chancellor();
+        chanceBatch = new SpriteBatch();
+
 		// Finally, start a new game and initialise variables.
 		// newGame();
 	}
@@ -207,7 +216,6 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 
 	public void setSelectedPlot(LandPlot plot) {
 		selectedPlot = plot;
-
 	}
 
 	/**
@@ -237,20 +245,21 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 			return tiles.getTile(71 + game.getPlayerIndex(player) + 12);
 		}
 	}
-			
+
+	// Updated by JBT
 	/**
-	 * Reset to new game status.
-	 *
-	 * @param AI boolean value where True requests an AI game, and False two human players
+	 * Set the state of the game to a new game with the given configuration of players
+	 * @param humanPlayers how many human players there should be
+	 * @param aiPlayers how many AI players there should be
 	 */
-	public void newGame(boolean AI) {
+	public void newGame(int humanPlayers, int aiPlayers) {
 		// Setup the game board.
 		if (tmx != null) tmx.dispose();
 		if (renderer != null) renderer.dispose();
 		this.tmx = new TmxMapLoader().load("tiles/city.tmx");
 		tiles = tmx.getTileSets();
 		renderer = new IsometricStaggeredTiledMapRenderer(tmx);
-		game.reset(AI);
+		game.reset(humanPlayers, aiPlayers);
 
 		mapLayer = (TiledMapTileLayer)tmx.getLayers().get("MapData");
 		playerOverlay = (TiledMapTileLayer)tmx.getLayers().get("PlayerOverlay");
@@ -283,10 +292,50 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 
 		renderAnimation(delta);
 
+		//Disable the chancellor event if not in the first phase
+		if(game.getPhase() != 1) {
+            chancellorEvent = false;
+            actors.hideChancellorLabel();
+        }
+
 		switch (game.getPhase()) {
 			case (1):
+			    //Get the actual mouse coords relative to the camera
+			    Vector3 mouseCoords = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(),0));
+
+			    //Extract the X and Y mouse coords from the relative coords
+                float mouseX = mouseCoords.x;
+                float mouseY = mouseCoords.y;
+
+			    //Draw any overlays in the stack
 				if (overlayStack.isEmpty() || overlayStack == null) {
 					Gdx.input.setInputProcessor(stage);
+                    //If the chancellor event is happening, draw the chancellor and enable catching
+                    if(chancellorEvent) {
+                        //Add the time since the last frame to the elapsed time of he chancellor event
+                        chancellorEventElapsed += delta;
+
+                        //If 15 seconds have passed since the start of the event, then stop the chancellor event
+                        if(chancellorEventElapsed > 15)
+                        {
+                            chancellorEvent = false;
+                            actors.showChancellorLabel(false);
+                        }
+
+                        //Update the position of the chancellor sprite and draw it
+                        chanceBatch.begin();
+                        chanceBatch.setProjectionMatrix(camera.combined);
+                        chancellor.updatePosition();
+                        chancellor.sprite.draw(chanceBatch);
+                        chanceBatch.end();
+
+                        //If the mouse is within the bounds of the chancellor sprite and the left button is clicked, then catch it
+                        if (Gdx.input.isButtonPressed(0) && chancellor.sprite.getBoundingRectangle().contains(mouseX, mouseY)) {
+                            chancellorEvent = false;
+                            game.getPlayer().caughtChancellor();
+                            actors.showChancellorLabel(true);
+                        }
+                    }
 				} else {
 					Gdx.input.setInputProcessor(overlayStack.get(overlayStack.size() - 1));
 
@@ -358,6 +407,14 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 		if(stage != null) {
 			stage.dispose();
 		}
+
+		//Added by JBT
+        if(chancellor != null) {
+            chancellor.dispose();
+        }
+        if(chanceBatch != null) {
+		    chanceBatch.dispose();
+        }
 	}
 
 	@Override
@@ -376,6 +433,16 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 		s.Height = Gdx.graphics.getHeight();
 		return s;
 	}
+
+	//Added by JBT
+    /**
+     * Called by the chancellor random event when started
+     */
+	public void startChancellorEvent()
+    {
+        chancellorEvent = true;
+        chancellorEventElapsed = 0;
+    }
 
 	public TiledMap getTmx(){
 		return this.tmx;

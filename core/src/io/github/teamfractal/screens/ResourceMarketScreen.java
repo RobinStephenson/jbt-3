@@ -19,9 +19,6 @@ import io.github.teamfractal.actors.ResourceMarketActors;
 
 import java.util.Random;
 
-/**
- * Created by Joseph on 17/02/2017.
- */
 public class ResourceMarketScreen extends Overlay {
 
     /**

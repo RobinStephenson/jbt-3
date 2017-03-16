@@ -1,6 +1,9 @@
 /*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
  *  JBT Changes to this file:
- *  Removed Excess code which previously patched a bug where the AI would run a non-existent phase 4. It was removed as the bug was fixed. 
+ *    Removed Excess code which previously patched a bug where the AI would run a non-existent phase 4. It was removed as the bug was fixed. 
+ *		Renamed methods with poor names like implementPhase to runCurrentPhase etc.
+ *		Updated/Created methods used to get the winning player.
+ *		Updated the constructor and implementPhase (renamed to runCurrentPhase) for 4 player support
  */
 
 package io.github.teamfractal;
@@ -27,7 +30,6 @@ import java.util.Random;
  * It will set up all the necessary classes.
  */
 public class RoboticonQuest extends Game {
-    private static RoboticonQuest instance;
 	public Skin skin;
     public PlotManager plotManager;
 
@@ -64,13 +66,14 @@ public class RoboticonQuest extends Game {
 	private PlotEffectSource plotEffectSource;
 	private PlayerEffectSource playerEffectSource;
 
-	public RoboticonQuest() {
-		instance = this;
-		reset(false);
-	}
+	private Random random = new Random();
 
-	public static RoboticonQuest getInstance() {
-		return instance;
+
+	// Updated by JBT for 4 player support
+	public RoboticonQuest() {
+		int humanPlayers = 2;
+		int aiPlayers = 0;
+		reset(humanPlayers, aiPlayers);
 	}
 
 	/**
@@ -123,6 +126,7 @@ public class RoboticonQuest extends Game {
 
 		setScreen(mainMenuScreen);
 	}
+
 	/**
 	 * Getter for the batch
 	 * @return The batch of the game
@@ -157,42 +161,47 @@ public class RoboticonQuest extends Game {
 	public int getPhase(){
 		return this.phase;
 	}
+
 	/**
 	 * Setter for the current phase
 	 * @param phase The phase that the current phase is to be set to
 	 */
 	public void setPhase(int phase) {
 		this.phase = phase;
-		implementPhase();
+		runCurrentPhase();
 	}
-	/**
-	 * Resets the statistics of all the game's entities
-	 * @param AI A boolean describing whether an AI player is playing or not
-	 */
-	public void reset(boolean AI) {
-        this.phase = 0;
-        plotManager = new PlotManager();
-        Player player1;
-        Player player2;
-        if (AI) {
-            player1 = new AIPlayer(this);
-            player2 = new Player(this);
-        } else{
-            player1 = new Player(this);
-            player2 = new Player(this);
-        }
 
-        this.playerList = new ArrayList<Player>();
-        this.playerList.add(player1);
-		this.playerList.add(player2);
-        this.currentPlayerIndex = 0;
-        this.market = new Market();
 
+	public void reset(int humanPlayers, int aiPlayers) {
+		int totalPlayers = humanPlayers + aiPlayers;
+		if (totalPlayers > 4) {
+			throw new IllegalArgumentException("Too many players");
+		}
+		if (totalPlayers < 2 ) {
+			throw new IllegalArgumentException("Not enough players");
+		}
+		if (humanPlayers < 1) {
+			throw new IllegalArgumentException("Must be at least one human player");
+		}
+
+		phase = 0;
+		currentPlayerIndex = 0;
+		plotManager = new PlotManager();
+		market = new Market();
+		playerList = new ArrayList<Player>(totalPlayers);
+		for (int i=0; i < totalPlayers; i++) {
+			if (i < humanPlayers) {
+				playerList.add(new HumanPlayer(this));
+			} else {
+				playerList.add(new AIPlayer(this));
+			}
+		}
     }
+
 	/**
-	 * Implements the functionality of the current phase
+	 * run the current phase
 	 */
-    private void implementPhase() {
+    private void runCurrentPhase() {
         System.out.println("RoboticonQuest::nextPhase -> newPhaseState: " + phase);
 
 		switch (phase) {
@@ -337,12 +346,13 @@ public class RoboticonQuest extends Game {
 		if (gameScreen != null)
 			gameScreen.getActors().textUpdate();
 	}
+
 	/**
 	 * Advances the current phase
 	 */
 	public void nextPhase() {
         phase += 1;
-        implementPhase();
+        runCurrentPhase();
 	}
 
 	/**
@@ -351,6 +361,7 @@ public class RoboticonQuest extends Game {
 	public void landPurchasedThisTurn() {
 		landBoughtThisTurn ++;
 	}
+
 	/**
 	 * Getter for landBoughtThisTurn
 	 -	 * @return Returns true if land hasn't been purchased this turn, false otherwise
@@ -358,6 +369,7 @@ public class RoboticonQuest extends Game {
 	public boolean canPurchaseLandThisTurn () {
 		return (landBoughtThisTurn < 1 && getPlayer().getMoney() >= 10);
 	}
+
 	/**
 	 * Returns a string describing the current phase
 	 * @return A string with the description of the current phase
@@ -386,6 +398,7 @@ public class RoboticonQuest extends Game {
 		}
 
 	}
+
 	/**
 	 * Getter for the current player
 	 * @return The current player
@@ -393,7 +406,8 @@ public class RoboticonQuest extends Game {
 	public Player getPlayer(){
         return this.playerList.get(this.currentPlayerIndex);
     }
-	/**
+
+    /**
 	 * Getter for the index of the current player
 	 * @return The index of the current player
 	 */
@@ -405,7 +419,11 @@ public class RoboticonQuest extends Game {
 	 * Changes the current player
 	 */
 	private void nextPlayer() {
-		this.currentPlayerIndex = 1 - this.currentPlayerIndex;
+		if (currentPlayerIndex == playerList.size() - 1) {
+			currentPlayerIndex = 0;
+		} else {
+			currentPlayerIndex++;
+		}
 
 		playerHeader.setText("PLAYER " + (currentPlayerIndex + 1));
     }
@@ -415,7 +433,7 @@ public class RoboticonQuest extends Game {
 	 */
 	private void setupEffects() {
 		//Initialise the fractional chance of any given effect being applied at the start of a round
-		effectChance = (float) 0.02;
+		effectChance = (float) 0.95;
 
 		plotEffectSource = new PlotEffectSource(this);
 		playerEffectSource = new PlayerEffectSource(this);
@@ -428,6 +446,7 @@ public class RoboticonQuest extends Game {
 			PLE.constructOverlay(gameScreen);
 		}
 	}
+
 	/**
 	 * Randomly applies the effects
 	 */
@@ -456,6 +475,7 @@ public class RoboticonQuest extends Game {
 
 		gameScreen.getActors().textUpdate();
 	}
+
 	/**
 	 * Clears all imposed PlotEffects
 	 */
@@ -501,24 +521,52 @@ public class RoboticonQuest extends Game {
         return ended;
 	}
 
+	// Created by JBT
 	/**
-	 * Returns the winner of the game, based on which player has the highest score
-     * @return String returning the winning player
-     */
-
-	public String getWinner(){
-        String winner;
-        if(playerList.get(0).calculateScore() > playerList.get(1).calculateScore()) {
-			winner = "Player 1 wins! You are now the Vice-Chancellor of the Colony!";
-		}
-		else {
-			if (playerList.get(1).calculateScore() > playerList.get(0).calculateScore()) {
-				winner = "Player 2 wins! You are now the Vice-Chancellor of the Colony!";
-			} else {
-				winner = "It's a draw. I'm afraid neither of you will become Vice-Chancellor of the Colony.";
+	 * Get the player who has the highest score.
+	 * If two or more players have the same highest score, one is chosen at random.
+	 * @return one of the players with the highest score
+	 */
+	public Player getPlayerWithHighestScore() {
+		Player currentHighestScorer = playerList.get(0);
+		int currentHighScore = currentHighestScorer.calculateScore();
+		for (int i=1; i < playerList.size(); i++) {
+			Player player = playerList.get(i);
+			int newPlayerScore = player.calculateScore();
+			if (newPlayerScore > currentHighScore) {
+				// replace the highest scorer so far
+				currentHighestScorer = player;
+				currentHighScore = newPlayerScore;
+			} else if (newPlayerScore == currentHighScore && random.nextBoolean()) {
+				// if two players have the same score choose randomly whether to replace the current high scorer or not
+				currentHighestScorer = player;
 			}
 		}
-		return winner;
+		return currentHighestScorer;
+	}
+
+	// Created by JBT
+	/**
+	 * get the name of a player for a given player
+	 * @param player the player whos name is being requested
+	 * @return the name of the player. eg "Player 1" for the first player
+	 */
+	public String playerToName(Player player) {
+		int playerIndex = playerList.indexOf(player);
+		if (playerIndex == -1) {
+			throw new IllegalArgumentException("player is not in the player list");
+		}
+		return "Player " + Integer.toString(playerIndex + 1);
+	}
+
+	// Created by JBT
+	/**
+	 * get a String to display to the winner of the game
+	 * @return the String to display
+	 */
+	public String getWinnerText() {
+		Player winner = getPlayerWithHighestScore();
+		return String.format("Congratulations %s. You are now the Vice-Chancellor", playerToName(winner));
 	}
 
 	/**

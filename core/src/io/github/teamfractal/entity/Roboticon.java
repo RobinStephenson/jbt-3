@@ -3,6 +3,7 @@
  *      Improved existing accessors with null pointer checks and more other invalid operations checks
  *      Throw exceptions rather than returning false when things go wrong
  *      Created some new accessors
+ *      Removed un-needed synchronization
  */
 
 package io.github.teamfractal.entity;
@@ -50,7 +51,7 @@ public class Roboticon {
      * Getter for installedLandPlot
      * @return The state of installedLandplot, true if installed and false if otherwise
      */
-    public synchronized boolean isInstalled() {
+    public boolean isInstalled() {
         return installedLandPlot != null;
     }
 
@@ -61,7 +62,7 @@ public class Roboticon {
      * @param landplot which roboticon is installed to
      * @return true if roboticon is installed, false if not
      */
-    public synchronized void setInstalledLandPlot(LandPlot landplot) throws AlreadyInstalledElsewhereException {
+    public void setInstalledLandPlot(LandPlot landplot) throws AlreadyInstalledElsewhereException {
         if (isInstalled()) {
             throw new AlreadyInstalledElsewhereException();
         }
@@ -86,7 +87,7 @@ public class Roboticon {
      * does NOT update the LandPlot to reflect this
      * @throws NotInstalledException if the roboticon is not installed on a plot
      */
-    public synchronized void removeFromLandPlot() throws NotInstalledException{
+    public void removeFromLandPlot() throws NotInstalledException{
         if (!isInstalled()) {
             throw new NotInstalledException("This roboticon is not currently installed");
         }

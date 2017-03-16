@@ -396,6 +396,8 @@ public class RoboticonMarketActors extends Table {
             purchaseSuccessful = true;
         } catch (TransactionException ex) {
             purchaseSuccessful = false;
+        } catch (IllegalArgumentException ex) {
+            purchaseSuccessful = false;
         }
         if (purchaseSuccessful) {
             if (game.market.getResource(ResourceType.ROBOTICON) == 0) {
