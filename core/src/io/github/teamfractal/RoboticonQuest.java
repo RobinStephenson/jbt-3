@@ -520,10 +520,6 @@ public class RoboticonQuest extends Game {
                 if (aPlot == null) {
 					ended = false;
                 }
-                if(getPlayer().getOwnedPlots().size() == 1)
-                {
-                    return true;
-                }
             }
         }
         return ended;
