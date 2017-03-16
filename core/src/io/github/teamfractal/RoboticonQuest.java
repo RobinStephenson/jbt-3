@@ -1,6 +1,6 @@
 /*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
  *  JBT Changes to this file:
- *  Removed partial patch for a bug, which was fixed elsewhere
+ *  Removed Excess code which previously patched a bug where the AI would run a non-existent phase 4. It was removed as the bug was fixed. 
  */
 
 package io.github.teamfractal;
