@@ -53,42 +53,28 @@ public class EndGameScreen implements Screen {
 	
 		stage.act(delta);
 		stage.draw();
-
-
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		stage.getViewport().update(width, height, true);
 		game.getBatch().setProjectionMatrix(stage.getCamera().combined);
-
 	}
 
 	@Override
 	public void pause() {
-		
-	}
+    }
 
 	@Override
 	public void resume() {
-		
-		
 	}
 
 	@Override
 	public void hide() {
-		
-		
 	}
 
 	@Override
 	public void dispose() {
 		stage.dispose();
-		
 	}
-
-
-
-
-
 }
