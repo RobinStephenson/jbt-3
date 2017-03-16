@@ -14,10 +14,6 @@ import io.github.teamfractal.screens.EndGameScreen;
 
 import java.util.ArrayList;
 
-/**
- * Created by Jack on 04/02/2017.
- */
-
 public class EndGameActors extends Table {
     private RoboticonQuest game;
     private EndGameScreen screen;
