@@ -19,6 +19,8 @@ import com.badlogic.gdx.utils.Align;
 import io.github.teamfractal.RoboticonQuest;
 import io.github.teamfractal.screens.EndGameScreen;
 
+import java.util.ArrayList;
+
 /**
  * Created by Jack on 04/02/2017.
  */
@@ -26,8 +28,7 @@ import io.github.teamfractal.screens.EndGameScreen;
 public class EndGameActors extends Table {
     private RoboticonQuest game;
     private EndGameScreen screen;
-    private Label player1Score;
-    private Label player2Score;
+    private ArrayList<Label> playerScores = new ArrayList<Label>();
     private Label winner;
     private Label title;
     private Label space;
@@ -40,22 +41,27 @@ public class EndGameActors extends Table {
     public EndGameActors(final RoboticonQuest game, EndGameScreen screen){
         this.game = game;
         this.screen = screen;
-        this.player1Score = new Label("Player 1 Score = " + String.valueOf(game.getPlayerList().get(0).calculateScore()),game.skin);
-        this.player2Score = new Label("Player 2 Score = " + String.valueOf(game.getPlayerList().get(1).calculateScore()),game.skin);
+
+        //Populate the player score list with scores from all of the players in the game
+        for(int i = 0 ; i < game.getPlayerList().size(); i++)
+        {
+            playerScores.add(new Label("Player " + (i + 1) + " Score = " + game.getPlayerList().get(i).calculateScore(), game.skin));
+        }
+
         this.winner = new Label(game.getWinnerText(), game.skin);
         winner.setAlignment(Align.center);
         this.title = new Label("End of Game", game.skin);
         this.space = new Label("      ", game.skin);
-        add(title).padRight(-175).padTop(-300);
+        add(title).padTop(-100);
         row();
-        row();
-        add(player1Score).padLeft(-50);
-        add(space);
-        add(player2Score);
-        row();
-        row();
-        add(winner).padRight(-170).padBottom(-300);
 
-
+        //Display all player scores
+        for(Label score : playerScores)
+        {
+            row();
+            add(score).padTop(10);
+        }
+        row();
+        add(winner).padTop(50);
     }
 }
