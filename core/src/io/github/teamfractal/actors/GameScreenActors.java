@@ -371,6 +371,7 @@ public class GameScreenActors {
         TiledMapTileLayer.Cell playerTile = selectedPlot.getPlayerTile();
         playerTile.setTile(screen.getPlayerTile(player));
         textUpdate();
+        
         nextButton.setVisible(true);
     }
 
