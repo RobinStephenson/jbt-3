@@ -1,15 +1,5 @@
-/**
- * @author DRTN
- * Team Website with download:
- * https://misterseph.github.io/DuckRelatedFractalProject/
- *
- * This Class contains either modifications or is entirely new in Assessment 3
- *
- * If you are in any doubt a complete changelog can be found here:
- * https://github.com/NotKieran/DRTN-Fractal/compare/Fractal_Initial...development
- *
- * And a more concise report can be found in our Change3 document.
- **/
+/*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
+ */
 
 package io.github.teamfractal.screens;
 
@@ -53,42 +43,28 @@ public class EndGameScreen implements Screen {
 	
 		stage.act(delta);
 		stage.draw();
-
-
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		stage.getViewport().update(width, height, true);
 		game.getBatch().setProjectionMatrix(stage.getCamera().combined);
-
 	}
 
 	@Override
 	public void pause() {
-		
-	}
+    }
 
 	@Override
 	public void resume() {
-		
-		
 	}
 
 	@Override
 	public void hide() {
-		
-		
 	}
 
 	@Override
 	public void dispose() {
 		stage.dispose();
-		
 	}
-
-
-
-
-
 }
