@@ -1,15 +1,5 @@
-/**
- * @author DRTN
- * Team Website with download:
- * https://misterseph.github.io/DuckRelatedFractalProject/
- *
- * This Class contains either modifications or is entirely new in Assessment 3
- *
- * If you are in any doubt a complete changelog can be found here:
- * https://github.com/NotKieran/DRTN-Fractal/compare/Fractal_Initial...development
- *
- * And a more concise report can be found in our Change3 document.
- **/
+/*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
+ */
 
 package io.github.teamfractal.screens;
 
@@ -20,9 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import io.github.teamfractal.RoboticonQuest;
 import io.github.teamfractal.util.Fonts;
 
-/**
- * Created by Joseph on 15/02/2017.
- */
 public class GenerationOverlay extends Overlay {
 
     private Fonts fonts;

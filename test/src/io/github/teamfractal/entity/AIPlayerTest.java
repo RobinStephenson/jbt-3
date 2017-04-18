@@ -1,6 +1,8 @@
+/*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
+ */
+
 package io.github.teamfractal.entity;
 
-import com.badlogic.gdx.utils.Array;
 import io.github.teamfractal.RoboticonQuest;
 import io.github.teamfractal.TesterFile;
 import io.github.teamfractal.entity.enums.ResourceType;

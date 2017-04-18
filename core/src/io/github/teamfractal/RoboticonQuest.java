@@ -69,7 +69,6 @@ public class RoboticonQuest extends Game {
 
 	private Random random = new Random();
 
-
 	// Updated by JBT for 4 player support
 	public RoboticonQuest() {
 		int humanPlayers = 2;

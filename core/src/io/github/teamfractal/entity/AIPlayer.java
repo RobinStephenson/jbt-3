@@ -3,7 +3,6 @@
  *  Improved Phase 3, by calling next phase rather than calling the next phase button.
  */
 
-
 package io.github.teamfractal.entity;
 
 import io.github.teamfractal.RoboticonQuest;
