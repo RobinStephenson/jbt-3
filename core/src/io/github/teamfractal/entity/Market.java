@@ -4,7 +4,6 @@
  *      Removed un-needed synchronization
  */
 
-
 package io.github.teamfractal.entity;
 
 import io.github.teamfractal.entity.enums.ResourceType;

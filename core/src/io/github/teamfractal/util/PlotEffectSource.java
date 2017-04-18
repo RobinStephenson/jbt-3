@@ -1,15 +1,5 @@
-/**
- * @author DRTN
- * Team Website with download:
- * https://misterseph.github.io/DuckRelatedFractalProject/
- *
- * This Class contains either modifications or is entirely new in Assessment 3
- *
- * If you are in any doubt a complete changelog can be found here:
- * https://github.com/NotKieran/DRTN-Fractal/compare/Fractal_Initial...development
- *
- * And a more concise report can be found in our Change3 document.
- **/
+/*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
+ */
 
 package io.github.teamfractal.util;
 
@@ -19,9 +9,6 @@ import io.github.teamfractal.entity.LandPlot;
 import io.github.teamfractal.entity.PlotEffect;
 import io.github.teamfractal.entity.enums.ResourceType;
 
-/**
- * Created by Joseph on 13/02/2017.
- */
 public class PlotEffectSource extends Array<PlotEffect> {
 
     /**

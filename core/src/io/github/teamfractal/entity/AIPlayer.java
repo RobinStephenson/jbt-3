@@ -4,7 +4,6 @@
  *  Fixed issue with running non-existent phase 4, creating an invisible timeout, which would skip a phase.
  */
 
-
 package io.github.teamfractal.entity;
 
 import io.github.teamfractal.RoboticonQuest;
