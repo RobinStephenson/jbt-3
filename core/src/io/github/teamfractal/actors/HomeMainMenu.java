@@ -8,6 +8,7 @@ package io.github.teamfractal.actors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -56,23 +57,34 @@ public class HomeMainMenu extends Table {
 
 		btnExit = new TextButton("Exit", game.skin);
 
+		//Create the buttons
 		btnIncreaseNumberHumanPlayers = new TextButton("+", game.skin);
 		btnDecreaseNumberHumanPlayers = new TextButton("-", game.skin);
 		btnIncreaseNumberAIPlayers = new TextButton("+", game.skin);
 		btnDecreaseNumberAIPlayers = new TextButton("-", game.skin);
+
+		//Create the label style for the label elements in the main menu, which will have a light gray background
 		Label.LabelStyle style = new Label.LabelStyle(game.smallFontRegular.font(), Color.BLACK);
+        Pixmap labelBackground = new Pixmap(100,70,Pixmap.Format.RGB888);
+        labelBackground.setColor(Color.LIGHT_GRAY);
+        labelBackground.fill();
+		style.background = new Image(new Texture(labelBackground)).getDrawable();
+
+		//Create the buttons
 		numberOfHumansLabel = new Label("Human Players: " + Integer.toString(numberOfHumanPlayers), style);
 		numberOfAiLabel = new Label("AI Players: " + Integer.toString(numberOfAIPlayers), style);
-		numberOfHumansLabel.setAlignment(Align.center);
-        numberOfAiLabel.setAlignment(Align.center);
 
+        //Format the buttons
 		btnIncreaseNumberHumanPlayers.pad(10);
 		btnDecreaseNumberHumanPlayers.pad(10);
 		btnIncreaseNumberAIPlayers.pad(10);
 		btnDecreaseNumberAIPlayers.pad(10);
 
+        //Format the labels
+        numberOfHumansLabel.setAlignment(Align.center);
+        numberOfAiLabel.setAlignment(Align.center);
 
-		// Bind events to buttons
+        // Bind events to buttons
 		bindEvents();
 
 		updateWhichButtonsAreDisabled();
@@ -83,11 +95,11 @@ public class HomeMainMenu extends Table {
 
 		// Add the UI components for selecting how many players
         add(btnDecreaseNumberHumanPlayers).right().width(40);
-		add(numberOfHumansLabel).center().width(160);
+		add(numberOfHumansLabel).center().width(160).height(40);
         add(btnIncreaseNumberHumanPlayers).left().width(40);
 		row();
         add(btnDecreaseNumberAIPlayers).right().width(40);
-        add(numberOfAiLabel).center().width(160);
+        add(numberOfAiLabel).center().width(160).height(40);
 		add(btnIncreaseNumberAIPlayers).left().width(40);
 		row();
 
