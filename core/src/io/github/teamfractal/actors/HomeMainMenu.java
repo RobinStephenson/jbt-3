@@ -197,10 +197,6 @@ public class HomeMainMenu extends Table {
 		btnDecreaseNumberAIPlayers.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (btnDecreaseNumberAIPlayers.isDisabled()) {
-					// do nothing if the button is disabled
-					return;
-				}
 				decrementNumberOfAIPlayers();
 			}
 		});
@@ -208,10 +204,6 @@ public class HomeMainMenu extends Table {
 		btnIncreaseNumberAIPlayers.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (btnIncreaseNumberAIPlayers.isDisabled()) {
-					// do nothing if the button is disabled
-					return;
-				}
 				incrementNumberOfAIPlayers();
 			}
 		});
@@ -219,10 +211,6 @@ public class HomeMainMenu extends Table {
 		btnIncreaseNumberHumanPlayers.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (btnIncreaseNumberHumanPlayers.isDisabled()) {
-					// do nothing if the button is disabled
-					return;
-				}
 				incrementNumberOfHumanPlayers();;
 			}
 		});
@@ -230,10 +218,6 @@ public class HomeMainMenu extends Table {
 		btnDecreaseNumberHumanPlayers.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (btnDecreaseNumberHumanPlayers.isDisabled()) {
-					// do nothing if the button is disabled
-					return;
-				}
 				decrementNumberOfHumanPlayers();
 			}
 		});
