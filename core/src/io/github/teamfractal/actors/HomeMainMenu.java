@@ -8,6 +8,7 @@ package io.github.teamfractal.actors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import io.github.teamfractal.RoboticonQuest;
 
 import java.nio.InvalidMarkException;
@@ -35,7 +37,6 @@ public class HomeMainMenu extends Table {
 	private TextButton btnDecreaseNumberAIPlayers;
 	private Label numberOfHumansLabel;
 	private Label numberOfAiLabel;
-
 
 	private int numberOfHumanPlayers = 1;
 	private int numberOfAIPlayers = 0;
@@ -56,56 +57,65 @@ public class HomeMainMenu extends Table {
 
 		btnExit = new TextButton("Exit", game.skin);
 
-		btnIncreaseNumberHumanPlayers = new TextButton("Add Human Player", game.skin);
-		btnDecreaseNumberHumanPlayers = new TextButton("Remove Human Player", game.skin);
-		btnIncreaseNumberAIPlayers = new TextButton("Add AI Player", game.skin);
-		btnDecreaseNumberAIPlayers = new TextButton("Remove AI Player", game.skin);
-		Label.LabelStyle style = new Label.LabelStyle(game.smallFontRegular.font(), Color.BLACK);
-		numberOfHumansLabel = new Label(Integer.toString(numberOfHumanPlayers), style);
-		numberOfAiLabel = new Label(Integer.toString(numberOfAIPlayers), style);
+		//Create the buttons
+		btnIncreaseNumberHumanPlayers = new TextButton("+", game.skin);
+		btnDecreaseNumberHumanPlayers = new TextButton("-", game.skin);
+		btnIncreaseNumberAIPlayers = new TextButton("+", game.skin);
+		btnDecreaseNumberAIPlayers = new TextButton("-", game.skin);
 
+		//Create the label style for the label elements in the main menu, which will have a light gray background
+		Label.LabelStyle style = new Label.LabelStyle(game.smallFontRegular.font(), Color.BLACK);
+        Pixmap labelBackground = new Pixmap(100,70,Pixmap.Format.RGB888);
+        labelBackground.setColor(Color.LIGHT_GRAY);
+        labelBackground.fill();
+		style.background = new Image(new Texture(labelBackground)).getDrawable();
+
+		//Create the buttons
+		numberOfHumansLabel = new Label("Human Players: " + Integer.toString(numberOfHumanPlayers), style);
+		numberOfAiLabel = new Label("AI Players: " + Integer.toString(numberOfAIPlayers), style);
+
+        //Format the buttons
 		btnIncreaseNumberHumanPlayers.pad(10);
 		btnDecreaseNumberHumanPlayers.pad(10);
 		btnIncreaseNumberAIPlayers.pad(10);
 		btnDecreaseNumberAIPlayers.pad(10);
 
+        //Format the labels
+        numberOfHumansLabel.setAlignment(Align.center);
+        numberOfAiLabel.setAlignment(Align.center);
 
-		// Bind events to buttons
+        // Bind events to buttons
 		bindEvents();
 
 		updateWhichButtonsAreDisabled();
 
 		// Adjust properties.
 		btnNewGame.pad(10);
-
 		btnExit.pad(10);
 
-		// Add UI Components to table.
-		add(imgTitle).pad(5).colspan(3);
-		row();
-
 		// Add the UI components for selecting how many players
-		add(btnIncreaseNumberHumanPlayers);
-		add(numberOfHumansLabel);
-		add(btnDecreaseNumberHumanPlayers);
+        add(btnDecreaseNumberHumanPlayers).right().width(40);
+		add(numberOfHumansLabel).center().width(160).height(40);
+        add(btnIncreaseNumberHumanPlayers).left().width(40);
 		row();
-		add(btnIncreaseNumberAIPlayers);
-		add(numberOfAiLabel);
-		add(btnDecreaseNumberAIPlayers);
+        add(btnDecreaseNumberAIPlayers).right().width(40);
+        add(numberOfAiLabel).center().width(160).height(40);
+		add(btnIncreaseNumberAIPlayers).left().width(40);
 		row();
 
-		add(btnNewGame);
-		add(btnExit);
+		add(btnNewGame).colspan(3).center();
+		row();
+		add(btnExit).colspan(3).center();
 	}
 
 	// Created by JBT
 	/**
-	 * increase the number of other human players the player wants to play with and update GUI accordingly
+	 * Increase the number of other human players the player wants to play with and update GUI accordingly
 	 */
 	private void incrementNumberOfHumanPlayers() {
 		numberOfHumanPlayers++;
 		updateWhichButtonsAreDisabled();
-		numberOfHumansLabel.setText(Integer.toString(numberOfHumanPlayers));
+		numberOfHumansLabel.setText("Human Players: " + Integer.toString(numberOfHumanPlayers));
 
 	}
 
@@ -116,7 +126,7 @@ public class HomeMainMenu extends Table {
 	private void decrementNumberOfHumanPlayers() {
 		numberOfHumanPlayers--;
 		updateWhichButtonsAreDisabled();
-		numberOfHumansLabel.setText(Integer.toString(numberOfHumanPlayers));
+		numberOfHumansLabel.setText("Human Players: " + Integer.toString(numberOfHumanPlayers));
 
 	}
 
@@ -127,7 +137,7 @@ public class HomeMainMenu extends Table {
 	private void incrementNumberOfAIPlayers() {
 		numberOfAIPlayers++;
 		updateWhichButtonsAreDisabled();
-		numberOfAiLabel.setText(Integer.toString(numberOfAIPlayers));
+		numberOfAiLabel.setText("AI Players: " + Integer.toString(numberOfAIPlayers));
 
 	}
 
@@ -138,7 +148,7 @@ public class HomeMainMenu extends Table {
 	private void decrementNumberOfAIPlayers() {
 		numberOfAIPlayers--;
 		updateWhichButtonsAreDisabled();
-		numberOfAiLabel.setText(Integer.toString(numberOfAIPlayers));
+		numberOfAiLabel.setText("AI Players: " + Integer.toString(numberOfAIPlayers));
 	}
 
 	// Created by JBT
@@ -151,22 +161,30 @@ public class HomeMainMenu extends Table {
 		int totalPlayers = numberOfHumanPlayers + numberOfAIPlayers;
 		if (totalPlayers == 4) {
 			btnIncreaseNumberHumanPlayers.setDisabled(true);
+			btnIncreaseNumberHumanPlayers.setVisible(false);
 			btnIncreaseNumberAIPlayers.setDisabled(true);
+            btnIncreaseNumberAIPlayers.setVisible(false);
 		} else {
 			btnIncreaseNumberHumanPlayers.setDisabled(false);
+            btnIncreaseNumberHumanPlayers.setVisible(true);
 			btnIncreaseNumberAIPlayers.setDisabled(false);
+            btnIncreaseNumberAIPlayers.setVisible(true);
 		}
 
 		if (numberOfHumanPlayers == 1) {
 			btnDecreaseNumberHumanPlayers.setDisabled(true);
+            btnDecreaseNumberHumanPlayers.setVisible(false);
 		} else {
 			btnDecreaseNumberHumanPlayers.setDisabled(false);
+            btnDecreaseNumberHumanPlayers.setVisible(true);
 		}
 
 		if (numberOfAIPlayers == 0) {
 			btnDecreaseNumberAIPlayers.setDisabled(true);
+            btnDecreaseNumberAIPlayers.setVisible(false);
 		} else {
 			btnDecreaseNumberAIPlayers.setDisabled(false);
+            btnDecreaseNumberAIPlayers.setVisible(true);
 		}
 
 		if (totalPlayers < 2) {
@@ -195,10 +213,6 @@ public class HomeMainMenu extends Table {
 		btnDecreaseNumberAIPlayers.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (btnDecreaseNumberAIPlayers.isDisabled()) {
-					// do nothing if the button is disabled
-					return;
-				}
 				decrementNumberOfAIPlayers();
 			}
 		});
@@ -206,10 +220,6 @@ public class HomeMainMenu extends Table {
 		btnIncreaseNumberAIPlayers.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (btnIncreaseNumberAIPlayers.isDisabled()) {
-					// do nothing if the button is disabled
-					return;
-				}
 				incrementNumberOfAIPlayers();
 			}
 		});
@@ -217,10 +227,6 @@ public class HomeMainMenu extends Table {
 		btnIncreaseNumberHumanPlayers.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (btnIncreaseNumberHumanPlayers.isDisabled()) {
-					// do nothing if the button is disabled
-					return;
-				}
 				incrementNumberOfHumanPlayers();;
 			}
 		});
@@ -228,10 +234,6 @@ public class HomeMainMenu extends Table {
 		btnDecreaseNumberHumanPlayers.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (btnDecreaseNumberHumanPlayers.isDisabled()) {
-					// do nothing if the button is disabled
-					return;
-				}
 				decrementNumberOfHumanPlayers();
 			}
 		});
