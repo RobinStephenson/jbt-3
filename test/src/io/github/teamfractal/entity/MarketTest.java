@@ -73,7 +73,7 @@ public class MarketTest extends TesterFile {
 	 * This could change in later development.
 	 */
 	@Test
-	public void marketShouldHaveCorrectPricesForResources() throws Exception {
+	public void marketShouldHaveCorrectPricesForResources() {
 		assertEquals(30, market.getBuyPrice(ResourceType.ORE));
 		assertEquals(6, market.getBuyPrice(ResourceType.ENERGY));
 		assertEquals(6, market.getBuyPrice(ResourceType.FOOD));

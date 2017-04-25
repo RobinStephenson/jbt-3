@@ -363,8 +363,8 @@ public class RoboticonQuest extends Game {
 
 	/**
 	 * Getter for landBoughtThisTurn
-	 -	 * @return Returns true if land hasn't been purchased this turn, false otherwise
-	 -	 */
+	 * @return Returns true if land hasn't been purchased this turn, false otherwise
+	 */
 	public boolean canPurchaseLandThisTurn () {
 		return (landBoughtThisTurn < 1 && getPlayer().getMoney() >= 10);
 	}

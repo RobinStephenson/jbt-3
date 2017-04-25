@@ -320,7 +320,7 @@ public class PlayerTest extends TesterFile {
 
     // Test Created by JBT
     /**
-     * purchaseResourceFromMarket should throw an exception if the amount requested is < 0
+     * purchaseResourceFromMarket should throw an exception if the amount requested is less than 0
      */
     @Test(expected = IllegalArgumentException.class)
     public void purchaseResourceNegative() {

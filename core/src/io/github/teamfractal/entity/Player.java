@@ -154,7 +154,7 @@ public class Player {
      * Purchase roboticon from the market.
      * @param amount number of roboticons requested
      * @param market the market being purchased from
-     * @throws IllegalArgumentException if amount <= 0
+     * @throws IllegalArgumentException if amount less than or equal to 0
      * @throws NotEnoughResourceException if market does not have enough roboticons
      * @throws NotEnoughMoneyException if the player does not have enough money for the transaction
      */
@@ -217,7 +217,7 @@ public class Player {
      * @param amount     Amount of resources to purchase.
      * @param market     The market instance.
      * @param resource   The resource type.
-     * @throws IllegalArgumentException if amount is < 1
+     * @throws IllegalArgumentException if amount is less than 1
      * @throws NotEnoughResourceException if the market does not have enough of the resource
      * @throws NotEnoughMoneyException if the player does not have enough money for the transaction
      */
@@ -384,6 +384,7 @@ public class Player {
 
     /**
      * Method to be overloaded by AI inheritance
+     * @param phase the phase to be run
      */
     public void takeTurn(int phase) {
         //Overload in AIPlayer

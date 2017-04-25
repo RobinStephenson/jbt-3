@@ -60,7 +60,6 @@ public class Roboticon {
      * set the landplot this roboticon in installed on
      * does NOT update the landplot to reflect this
      * @param landplot which roboticon is installed to
-     * @return true if roboticon is installed, false if not
      */
     public void setInstalledLandPlot(LandPlot landplot) throws AlreadyInstalledElsewhereException {
         if (isInstalled()) {
