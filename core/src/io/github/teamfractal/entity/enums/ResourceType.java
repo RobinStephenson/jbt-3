@@ -34,5 +34,3 @@ public enum ResourceType {
 		return "<Unknown type: " + super.toString() + ">";
 	}
 }
-
-

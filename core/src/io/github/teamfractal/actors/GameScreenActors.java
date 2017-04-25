@@ -265,8 +265,6 @@ public class GameScreenActors {
                     hideInstallRoboticon();
                 }
         }
-
-
     }
 
     /**

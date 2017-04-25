@@ -169,7 +169,6 @@ public class RoboticonQuest extends Game {
 		runCurrentPhase();
 	}
 
-
 	public void reset(int humanPlayers, int aiPlayers) {
 		int totalPlayers = humanPlayers + aiPlayers;
 		if (totalPlayers > 4) {
@@ -579,5 +578,3 @@ public class RoboticonQuest extends Game {
         return (int) Math.ceil((double) turnNumber / 2);
     }
 }
-
-

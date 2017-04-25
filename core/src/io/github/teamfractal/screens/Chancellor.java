@@ -1,5 +1,5 @@
 /*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
- *  JBT Created this file for use with the 'Catch the Chancellor' minigame random event
+ *  JBT Created this file for use with the 'Catch the Chancellor' mini-game random event
  */
 
 package io.github.teamfractal.screens;

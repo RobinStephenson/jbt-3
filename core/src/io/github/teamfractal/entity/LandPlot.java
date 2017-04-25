@@ -108,7 +108,6 @@ public class LandPlot {
         return getOwner() != null;
     }
 
-
     /**
      * Retrieves the overlays for the specific tile
      * @param plotManager The plotmanager storing the images of the current map

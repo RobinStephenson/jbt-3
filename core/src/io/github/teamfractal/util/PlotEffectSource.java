@@ -83,8 +83,6 @@ public class PlotEffectSource extends Array<PlotEffect> {
                 for (LandPlot plot : game.getPlayer().getOwnedPlots()) {
                     spicy.impose(plot, 1);
                 }
-
-
             }
         });
         
@@ -101,8 +99,6 @@ public class PlotEffectSource extends Array<PlotEffect> {
                 for (LandPlot plot : game.getPlayer().getOwnedPlots()) {
                     earthquakeDisaster.impose(plot, 1);
                 }
-
-
             }
         });
 
@@ -119,8 +115,6 @@ public class PlotEffectSource extends Array<PlotEffect> {
                 for (LandPlot plot : game.getPlayer().getOwnedPlots()) {
                     tornado.impose(plot, 1);
                 }
-
-
             }
         });
 
@@ -137,8 +131,6 @@ public class PlotEffectSource extends Array<PlotEffect> {
                 for (LandPlot plot : game.getPlayer().getOwnedPlots()) {
                     strike.impose(plot, 1);
                 }
-
-
             }
         });
     }

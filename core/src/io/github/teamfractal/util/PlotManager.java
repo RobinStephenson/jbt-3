@@ -122,7 +122,6 @@ public class PlotManager {
             food = 2 + this.randomResourceVal();
         }
 
-
 		LandPlot p = new LandPlot(ore, energy, food);
 		p.setupTile(this, x, y);
 		this.plots[x][y] = p;

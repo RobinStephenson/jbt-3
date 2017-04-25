@@ -150,8 +150,6 @@ public class AIPlayer extends Player {
         } finally {
             game.nextPhase();
         }
-
-
     }
 
     /**

@@ -150,8 +150,6 @@ public class Market {
         }
     }
 
-
-
     /**
      * Set the amount of specific resource.
      * @param type   The {@link ResourceType}.
@@ -316,11 +314,3 @@ public class Market {
         }
     }
 }
-
-
-
-
-
-
-
-

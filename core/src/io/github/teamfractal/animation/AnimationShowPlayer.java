@@ -19,7 +19,6 @@ public class AnimationShowPlayer implements IAnimation {
 		this.playerNumber = playerNumber;
 	}
 
-
 	/**
 	 * Generate and concat resource strings.
 	 * @return  Generated resource generation message.
@@ -75,10 +74,6 @@ public class AnimationShowPlayer implements IAnimation {
 		batch.end();
 		return false;
 	}
-
-
-
-
 
 	@Override
 	public void setAnimationFinish(IAnimationFinish callback) {
