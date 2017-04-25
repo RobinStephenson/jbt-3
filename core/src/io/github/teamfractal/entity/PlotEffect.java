@@ -74,6 +74,7 @@ public class PlotEffect extends Array<Float[]> {
      * @param description A description of the effect
      * @param modifiers The production modifiers that the effect can impose {0: ORE | 1: ENERGY | 2: FOOD}
      * @param plot The plot which the effect is to be applied to
+     * @param mode The mode of effect [0: ADD | 1: MULTIPLY | 2: OVERWRITE]
      */
     public PlotEffect(String name, String description, Float[] modifiers, final LandPlot plot, final int mode) {
         this(name, description, modifiers, new Runnable() {

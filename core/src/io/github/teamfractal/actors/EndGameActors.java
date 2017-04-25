@@ -23,10 +23,10 @@ public class EndGameActors extends Table {
     private Label space;
     
     /**
-     -     * Creates the labels that are to appear in the end game screen
-     -     * @param game The current game
-     -     * @param screen The screen the actors are to be placed on
-     -     */
+     * Creates the labels that are to appear in the end game screen
+     * @param game The current game
+     * @param screen The screen the actors are to be placed on
+     */
     public EndGameActors(final RoboticonQuest game, EndGameScreen screen){
         this.game = game;
         this.screen = screen;

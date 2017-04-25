@@ -142,6 +142,7 @@ public class LandPlot {
     /**
      * Install a roboticon on this LandPlot.
      * @param roboticon    The roboticon to be installed.
+     * @return whether the roboticon was installed successfully
      */
     public boolean installRoboticon(Roboticon roboticon) {
         if (hasRoboticon()) {
