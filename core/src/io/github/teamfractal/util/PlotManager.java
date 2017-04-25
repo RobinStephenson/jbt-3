@@ -55,7 +55,6 @@ public class PlotManager {
         this.y = mapLayer.getHeight();
 
         this.plots = new LandPlot[x][y];
-
     }
 
 	/**
