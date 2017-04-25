@@ -12,8 +12,8 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.Random;
 
 /**
- * Added by JBT
  * Used for the catch the chancellor mini-game to hold information about a chancellor object
+ * @author JBT
  */
 public class Chancellor {
     private final Rectangle positionBounds = new Rectangle(-150,-100,650,250);
