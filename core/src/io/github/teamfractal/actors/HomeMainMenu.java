@@ -25,7 +25,6 @@ import java.nio.InvalidMarkException;
 
 
 public class HomeMainMenu extends Table {
-    private static Texture titleTexture = new Texture(Gdx.files.internal("roboticon_images/Duck-Related Roboticon Quest (Small).png"));
     private RoboticonQuest game;
 
     private TextButton btnNewGame;
@@ -50,9 +49,6 @@ public class HomeMainMenu extends Table {
 		this.game = game;
 
 		// Create UI Components
-		final Image imgTitle = new Image();
-		imgTitle.setDrawable(new TextureRegionDrawable(new TextureRegion(titleTexture)));
-
 		btnNewGame = new TextButton("Begin Game", game.skin);
 
 		btnExit = new TextButton("Exit", game.skin);

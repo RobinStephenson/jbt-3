@@ -17,7 +17,6 @@ import io.github.teamfractal.entity.enums.ResourceType;
 import io.github.teamfractal.screens.GameScreen;
 import io.github.teamfractal.screens.Overlay;
 
-
 public class PlayerEffect {
 
     /**

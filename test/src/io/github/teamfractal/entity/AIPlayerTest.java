@@ -41,7 +41,6 @@ public class AIPlayerTest extends TesterFile {
         assertEquals(20000, player.getMoney());
     }
 
-
     @Test
     public void testAIPlayerCannotSellMoreEnergyThanAllowed() {
         Market market = new Market();

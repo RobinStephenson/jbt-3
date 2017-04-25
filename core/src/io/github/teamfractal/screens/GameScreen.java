@@ -135,7 +135,6 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
 			}
 		});
 
-
 		// Set initial camera position
 		camera.position.x = 325;
 		camera.position.y = 220;

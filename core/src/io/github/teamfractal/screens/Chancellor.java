@@ -1,5 +1,5 @@
 /*  JBT Assessment 4 Page: http://robins.tech/jbt/assfour.html
- *  JBT Created this file for use with the 'Catch the Chancellor' minigame random event
+ *  JBT Created this file for use with the 'Catch the Chancellor' mini-game random event
  */
 
 package io.github.teamfractal.screens;
@@ -12,8 +12,8 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.Random;
 
 /**
- * Added by JBT
  * Used for the catch the chancellor mini-game to hold information about a chancellor object
+ * @author JBT
  */
 public class Chancellor {
     private final Rectangle positionBounds = new Rectangle(-150,-100,650,250);

@@ -156,7 +156,6 @@ public class AnimationCustomHeader implements IAnimation {
         return false;
     }
 
-
     @Override
     public void setAnimationFinish(IAnimationFinish callback) {
 
@@ -171,5 +170,4 @@ public class AnimationCustomHeader implements IAnimation {
     public void cancelAnimation() {
 
     }
-
 }

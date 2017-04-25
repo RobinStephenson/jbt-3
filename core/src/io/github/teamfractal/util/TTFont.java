@@ -33,7 +33,6 @@ public class TTFont {
     //The font-generator will serve to convert vector-type .TTF fonts into bitmapped .FNT fonts on the fly
     //Just call an instance of the setFont() function to use it
 
-
     /**
      * Constructor that automatically creates a BitmapFont object from a given .TTF file during the construction of
      * the TTFont object itself. Works by running the .TTF file through a FreeTypeFontGenerator object, which

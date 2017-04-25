@@ -3,7 +3,7 @@
  *    Removed Excess code which previously patched a bug where the AI would run a non-existent phase 4. It was removed as the bug was fixed. 
  *		Renamed methods with poor names like implementPhase to runCurrentPhase etc.
  *		Updated/Created methods used to get the winning player.
- *		Updated the constructor and implementPhase (renamed to runCurrentPhase) for 4 player support
+ *		Updated the reset and implementPhase (renamed to runCurrentPhase) for 4 player support
  */
 
 package io.github.teamfractal;
@@ -68,7 +68,6 @@ public class RoboticonQuest extends Game {
 
 	private Random random = new Random();
 
-	// Updated by JBT for 4 player support
 	public RoboticonQuest() {
 		int humanPlayers = 2;
 		int aiPlayers = 0;
@@ -169,7 +168,6 @@ public class RoboticonQuest extends Game {
 		this.phase = phase;
 		runCurrentPhase();
 	}
-
 
 	public void reset(int humanPlayers, int aiPlayers) {
 		int totalPlayers = humanPlayers + aiPlayers;
@@ -580,5 +578,3 @@ public class RoboticonQuest extends Game {
         return (int) Math.ceil((double) turnNumber / 2);
     }
 }
-
-

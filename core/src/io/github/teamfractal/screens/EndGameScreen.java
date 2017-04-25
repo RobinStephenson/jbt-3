@@ -19,7 +19,6 @@ public class EndGameScreen implements Screen {
 	final Table table;
 	private EndGameActors actors;
 
-
 	public EndGameScreen(final RoboticonQuest game) {
 		this.game = game;
 		this.stage = new Stage(new ScreenViewport());

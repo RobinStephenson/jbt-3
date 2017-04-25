@@ -61,7 +61,6 @@ public class AnimationPhaseTimeout implements IAnimation {
 		rect.setColor(r, 1 - r, 0, 0.7f);
 	}
 
-
 	/**
 	 * Draw animation on screen.
 	 *

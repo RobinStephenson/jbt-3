@@ -304,7 +304,6 @@ public class MarketAdjustableActor extends Table {
 
 	}
 
-
 	public void setButtonState (Touchable state) {
 		actButton.setTouchable(state);
 	}

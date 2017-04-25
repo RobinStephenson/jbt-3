@@ -358,7 +358,6 @@ public class PlayerTest extends TesterFile {
         assertEquals(5, player.getOre());
         assertEquals(11, market.getOre());
 
-
         playerMoney = player.getMoney();
         int energyPrice = market.getSellPrice(ResourceType.ENERGY);
         //purchase 10 energy

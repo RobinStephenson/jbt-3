@@ -55,7 +55,6 @@ public class PlotManager {
         this.y = mapLayer.getHeight();
 
         this.plots = new LandPlot[x][y];
-
     }
 
 	/**
@@ -121,7 +120,6 @@ public class PlotManager {
             energy = 2 + this.randomResourceVal();
             food = 2 + this.randomResourceVal();
         }
-
 
 		LandPlot p = new LandPlot(ore, energy, food);
 		p.setupTile(this, x, y);

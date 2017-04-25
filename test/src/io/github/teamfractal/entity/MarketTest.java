@@ -80,7 +80,6 @@ public class MarketTest extends TesterFile {
 		assertEquals(6, market.getBuyPrice(ResourceType.ROBOTICON));
 	}
 
-
 	/**
 	 * test: hasEnoughResources
 	 * player class can use this method to find out that the amount of resource
@@ -136,7 +135,6 @@ public class MarketTest extends TesterFile {
 		assertFalse(market.hasEnoughResources(ResourceType.ROBOTICON, 100));
 		assertFalse(market.hasEnoughResources(ResourceType.FOOD, 1000));
 	}
-
 
 	/**
 	 * test: getSellPrice()
