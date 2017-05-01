@@ -29,6 +29,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.teamfractal.RoboticonQuest;
 import io.github.teamfractal.actors.GameScreenActors;
 import io.github.teamfractal.entity.AIPlayer;
+import io.github.teamfractal.entity.HumanPlayer;
 import io.github.teamfractal.entity.LandPlot;
 import io.github.teamfractal.entity.Player;
 import io.github.teamfractal.entity.enums.ResourceType;
@@ -439,8 +440,13 @@ public class GameScreen extends AbstractAnimationScreen implements Screen  {
      */
 	public void startChancellorEvent()
     {
-        chancellorEvent = true;
-        chancellorEventElapsed = 0;
+        //Only start the chancellor event if the player is human
+        if(game.getPlayer() instanceof HumanPlayer)
+        {
+            System.out.println("Chancellor event started!");
+            chancellorEvent = true;
+            chancellorEventElapsed = 0;
+        }
     }
 
 	public TiledMap getTmx(){
